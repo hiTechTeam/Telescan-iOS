@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		B9559D582EBC4A0200FC3377 /* TelescaniOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TelescaniOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9559D582EBC4A0200FC3377 /* Telescan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Telescan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		B9559D6D2EBC4AAA00FC3377 /* Exceptions for "TelescaniOS" folder in "TelescaniOS" target */ = {
+		B9559D6D2EBC4AAA00FC3377 /* Exceptions for "TelescaniOS" folder in "Telescan" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Configuration/Info.plist,
 			);
-			target = B9559D572EBC4A0200FC3377 /* TelescaniOS */;
+			target = B9559D572EBC4A0200FC3377 /* Telescan */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -24,7 +24,7 @@
 		B9559D5A2EBC4A0200FC3377 /* TelescaniOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				B9559D6D2EBC4AAA00FC3377 /* Exceptions for "TelescaniOS" folder in "TelescaniOS" target */,
+				B9559D6D2EBC4AAA00FC3377 /* Exceptions for "TelescaniOS" folder in "Telescan" target */,
 			);
 			path = TelescaniOS;
 			sourceTree = "<group>";
@@ -53,7 +53,7 @@
 		B9559D592EBC4A0200FC3377 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B9559D582EBC4A0200FC3377 /* TelescaniOS.app */,
+				B9559D582EBC4A0200FC3377 /* Telescan.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,9 +61,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B9559D572EBC4A0200FC3377 /* TelescaniOS */ = {
+		B9559D572EBC4A0200FC3377 /* Telescan */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B9559D632EBC4A0500FC3377 /* Build configuration list for PBXNativeTarget "TelescaniOS" */;
+			buildConfigurationList = B9559D632EBC4A0500FC3377 /* Build configuration list for PBXNativeTarget "Telescan" */;
 			buildPhases = (
 				B9559D542EBC4A0200FC3377 /* Sources */,
 				B9559D552EBC4A0200FC3377 /* Frameworks */,
@@ -76,11 +76,11 @@
 			fileSystemSynchronizedGroups = (
 				B9559D5A2EBC4A0200FC3377 /* TelescaniOS */,
 			);
-			name = TelescaniOS;
+			name = Telescan;
 			packageProductDependencies = (
 			);
 			productName = TelescaniOS;
-			productReference = B9559D582EBC4A0200FC3377 /* TelescaniOS.app */;
+			productReference = B9559D582EBC4A0200FC3377 /* Telescan.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -103,7 +103,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				ru,
 			);
 			mainGroup = B9559D4F2EBC4A0100FC3377;
 			minimizedProjectReferenceProxies = 1;
@@ -112,7 +112,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B9559D572EBC4A0200FC3377 /* TelescaniOS */,
+				B9559D572EBC4A0200FC3377 /* Telescan */,
 			);
 		};
 /* End PBXProject section */
@@ -269,7 +269,9 @@
 				DEVELOPMENT_TEAM = UF2FP85G5V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TelescaniOS/Info.plist;
+				INFOPLIST_FILE = TelescaniOS/Configuration/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = NSBluetoothAlwaysUsageDescription;
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = NSBluetoothPeripheralUsageDescription;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -302,7 +304,9 @@
 				DEVELOPMENT_TEAM = UF2FP85G5V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TelescaniOS/Info.plist;
+				INFOPLIST_FILE = TelescaniOS/Configuration/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = NSBluetoothAlwaysUsageDescription;
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = NSBluetoothPeripheralUsageDescription;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -337,7 +341,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B9559D632EBC4A0500FC3377 /* Build configuration list for PBXNativeTarget "TelescaniOS" */ = {
+		B9559D632EBC4A0500FC3377 /* Build configuration list for PBXNativeTarget "Telescan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B9559D642EBC4A0500FC3377 /* Debug */,
