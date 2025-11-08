@@ -1,8 +1,7 @@
-// MARK: - PeopleNearView
 import SwiftUI
 
 struct PeopleNearView: View {
-    @Binding var isScanningEnabled: Bool
+    @AppStorage("isScanningEnabled") private var isScanningEnabled = false
     @Binding var profileImage: UIImage?
     
     let profileName: String
@@ -38,13 +37,23 @@ struct PeopleNearView: View {
                         }
                         VStack(alignment: .leading) {
                             Text(peer.name)
-                            if !peer.socialName.isEmpty { Text(peer.socialName).font(.caption).foregroundColor(.secondary) }
-                            if !peer.socialLink.isEmpty { Text(peer.socialLink).font(.caption2).foregroundColor(.blue) }
+                            if !peer.socialName.isEmpty {
+                                Text(peer.socialName)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            if !peer.socialLink.isEmpty {
+                                Text(peer.socialLink)
+                                    .font(.caption2)
+                                    .foregroundColor(.blue)
+                            }
                         }
                     }
                 }
             }
         }
-        .onAppear { bluetoothManager.delegate = peerStore }
+        .onAppear {
+            bluetoothManager.delegate = peerStore
+        }
     }
 }

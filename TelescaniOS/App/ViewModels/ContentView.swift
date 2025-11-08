@@ -2,9 +2,9 @@ import SwiftUI
 import PhotosUI
 
 struct ContentView: View {
-    @AppStorage("selectedTab") private var selectedTab = 1  // сохраняем выбранную вкладку
+    @AppStorage("selectedTab") private var selectedTab = 1
+    @AppStorage("isScanningEnabled") private var isScanningEnabled = false
     @State private var showSettings = false
-    @State private var isScanningEnabled = false
     
     @StateObject private var peerStore = PeerStore()
     @StateObject private var bluetoothManager = BluetoothManager()
@@ -17,7 +17,6 @@ struct ContentView: View {
             
             NavigationStack {
                 PeopleNearView(
-                    isScanningEnabled: $isScanningEnabled,
                     profileImage: $profileImage,
                     profileName: profileStore.name,
                     socialName: profileStore.socialName,
@@ -25,8 +24,8 @@ struct ContentView: View {
                 )
                 .environmentObject(peerStore)
                 .environmentObject(bluetoothManager)
-                .onChange(of: isScanningEnabled) { enabled in
-                    if enabled {
+                .onChange(of: isScanningEnabled) { oldValue, newValue in
+                    if newValue {
                         let localPeer = UserPeer(
                             id: UIDevice.current.identifierForVendor!.uuidString,
                             name: profileStore.name,
@@ -40,19 +39,26 @@ struct ContentView: View {
                         bluetoothManager.stop()
                     }
                 }
-                .navigationTitle(isScanningEnabled ? "Вокруг вас" : "")
+                .navigationTitle("Люди рядом")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button { showSettings = true } label: {
-                            Image(systemName: "wave.3.up")
+                            Image(systemName: "tornado")
                                 .resizable()
                                 .frame(width: 28, height: 28)
                         }
                     }
                 }
             }
-            .tabItem { Label("Рядом", systemImage: "shareplay") }
+            
+            .tabItem {
+                if isScanningEnabled {
+                    Label("Рядом", systemImage: "shareplay")
+                } else {
+                    Label("", systemImage: "shareplay.slash")
+                }
+            }
             .tag(0)
             .badge(peerStore.nearbyPeers.count)
             
@@ -64,7 +70,7 @@ struct ContentView: View {
             .tag(1)
         }
         .sheet(isPresented: $showSettings) {
-            SettingsView(isScanningEnabled: $isScanningEnabled)
+            SettingsView()
                 .presentationDetents([.fraction(0.33)])
                 .presentationDragIndicator(.visible)
         }

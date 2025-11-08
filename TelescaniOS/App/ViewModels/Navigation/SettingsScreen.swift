@@ -1,15 +1,13 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Binding var isScanningEnabled: Bool
+    @AppStorage("isScanningEnabled") private var isScanningEnabled = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
                 HStack(spacing: 8) {
-                    Image(systemName: "wave.3.up")
-                        .font(.title2)
-                    Text("Сканирование")
+                    Text("Принимать и делиться")
                         .font(.headline)
                 }
                 Spacer()
