@@ -21,19 +21,22 @@ class ProfileStore: ObservableObject {
     }
 }
 
+
 struct ProfileScreen: View {
-    @State private var profileImage: UIImage? = nil
+    @EnvironmentObject var profileStore: ProfileStore
     @State private var pickerItem: PhotosPickerItem? = nil
-    @State private var name: String = ""
-    @State private var socialName: String = ""
-    @State private var socialLink: String = ""
+    
+    @State private var draftName: String = ""
+    @State private var draftSocialName: String = ""
+    @State private var draftSocialLink: String = ""
+    
+    @State private var isEditing = false
     
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                // Фото профиля
                 PhotosPicker(selection: $pickerItem, matching: .images) {
-                    if let image = profileImage {
+                    if let image = profileStore.profileImage {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFill()
@@ -41,10 +44,10 @@ struct ProfileScreen: View {
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color.gray.opacity(0.5), lineWidth: 2))
                     } else {
-                        Image(systemName: "person.crop.circle.dashed.circle.fill")
+                        Image("PhotoProfileIcon")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 120, height: 120)
+                            .frame(width: 180, height: 180)
                             .foregroundColor(.gray)
                     }
                 }
@@ -53,53 +56,62 @@ struct ProfileScreen: View {
                     Task {
                         if let data = try? await item.loadTransferable(type: Data.self),
                            let uiImage = UIImage(data: data) {
-                            profileImage = uiImage
+                            profileStore.saveImage(uiImage)
                         }
                     }
                 }
                 .padding(.top, 32)
                 
-                // Имя пользователя
+                // Имя
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Введите ваше имя")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 12)
-                    TextField("Имя", text: $name)
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 12)
-                        .background(Color.gray.opacity(0.15))
-                        .cornerRadius(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1) // обводка
-                        )
+                    
+                    TextField("Имя", text: $draftName, onEditingChanged: { editing in
+                        if editing { withAnimation { isEditing = true } }
+                    })
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 12)
+                    .background(Color.gray.opacity(0.15))
+                    .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                    )
                 }
                 .padding(.horizontal, 24)
                 
-                // Соцсеть смежно с описанием
+                
                 VStack(spacing: 4) {
-                    
-                    Text("Введите название соцсети и ссылку на ваш профиль, чтобы люди могли найти вас.")
+                    Text("Введите название соцсети и никнейм, чтобы люди могли найти вас.")
                         .font(.footnote)
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 12)
                         .multilineTextAlignment(.center)
                     
-                    HStack(spacing: 16) {
-                        TextField("Название соцсети", text: $socialName)
-                            .padding(.vertical, 12)
-                            .font(.system(size: 12, weight: .regular))
+                    HStack(spacing: 12) {
+                        
+                        TextField("Соцсеть", text: $draftSocialName, onEditingChanged: { editing in
+                            if editing { withAnimation { isEditing = true } }
+                        })
+                        .font(.system(size: 12))
+                        
                         Divider()
-                            .frame(height: 40)
+                            .frame(height: 24)
                             .background(Color.gray.opacity(0.5))
-                        TextField("Ссылка на профиль", text: $socialLink)
-                            .padding(.vertical, 12)
-                            .font(.system(size: 12, weight: .regular))
+                        
+                        TextField("Никнейм", text: $draftSocialLink, onEditingChanged: { editing in
+                            if editing { withAnimation { isEditing = true } }
+                        })
+                        .font(.system(size: 12))
                     }
+                    .padding(.vertical, 12)
                     .padding(.horizontal, 12)
                     .background(Color.gray.opacity(0.15))
                     .cornerRadius(10)
+                    .frame(maxWidth: 360)
                 }
                 .padding(16)
                 .background(Color.gray.opacity(0.2))
@@ -109,10 +121,38 @@ struct ProfileScreen: View {
                 Spacer()
             }
         }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            hideKeyboard()
+        .navigationTitle(isEditing ? "" : "Профиль")
+        .navigationBarTitleDisplayMode(.inline) // именно это делает заголовок маленьким
+        .toolbar {
+            if isEditing {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Отмена") {
+                        draftName = profileStore.name
+                        draftSocialName = profileStore.socialName
+                        draftSocialLink = profileStore.socialLink
+                        withAnimation { isEditing = false }
+                        hideKeyboard()
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Готово") {
+                        profileStore.name = draftName
+                        profileStore.socialName = draftSocialName
+                        profileStore.socialLink = draftSocialLink
+                        withAnimation { isEditing = false }
+                        hideKeyboard()
+                    }
+                    .fontWeight(.semibold)
+                }
+            }
         }
+        .onAppear {
+            draftName = profileStore.name
+            draftSocialName = profileStore.socialName
+            draftSocialLink = profileStore.socialLink
+        }
+        .onTapGesture { hideKeyboard() }
     }
     
     private func hideKeyboard() {

@@ -1,9 +1,8 @@
-// MARK: - ContentView
 import SwiftUI
 import PhotosUI
 
 struct ContentView: View {
-    @State private var selectedTab = 0
+    @AppStorage("selectedTab") private var selectedTab = 1  // сохраняем выбранную вкладку
     @State private var showSettings = false
     @State private var isScanningEnabled = false
     
@@ -46,7 +45,7 @@ struct ContentView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button { showSettings = true } label: {
-                            Image(systemName: "gearshape")
+                            Image(systemName: "wave.3.up")
                                 .resizable()
                                 .frame(width: 28, height: 28)
                         }
@@ -54,24 +53,15 @@ struct ContentView: View {
                 }
             }
             .tabItem { Label("Рядом", systemImage: "shareplay") }
+            .tag(0)
             .badge(peerStore.nearbyPeers.count)
-            
-            NavigationStack {
-                PeopleMetView()
-                    .environmentObject(peerStore)
-                    .navigationTitle("Виделись сегодня")
-                    .navigationBarTitleDisplayMode(.inline)
-            }
-            .tabItem { Label("Виделись", systemImage: "person.icloud") }
-            .badge(peerStore.metPeers.count)
             
             NavigationStack {
                 ProfileScreen()
                     .environmentObject(profileStore)
-                    .navigationTitle("Профиль")
-                    .navigationBarTitleDisplayMode(.inline)
             }
             .tabItem { Label("Профиль", systemImage: "person.fill.viewfinder") }
+            .tag(1)
         }
         .sheet(isPresented: $showSettings) {
             SettingsView(isScanningEnabled: $isScanningEnabled)
