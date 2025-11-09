@@ -18,7 +18,7 @@ struct ContentView: View {
             NavigationStack {
                 PeopleNearView(
                     profileImage: $profileImage,
-                    profileName: profileStore.name,
+
                     socialName: profileStore.socialName,
                     socialLink: profileStore.socialLink
                 )
@@ -28,7 +28,6 @@ struct ContentView: View {
                     if newValue {
                         let localPeer = UserPeer(
                             id: UIDevice.current.identifierForVendor!.uuidString,
-                            name: profileStore.name,
                             socialName: profileStore.socialName,
                             socialLink: profileStore.socialLink,
                             profileImage: profileImage

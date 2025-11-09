@@ -52,7 +52,12 @@ class BluetoothManager: NSObject, ObservableObject {
     // MARK: - Реклама
     private func setupPeripheralService() {
         guard let peer = localPeer else { return }
-        let peerInfo = PeerInfo(id: peer.id, name: peer.name, socialName: peer.socialName, socialLink: peer.socialLink)
+        let peerInfo = PeerInfo(
+            id: peer.id,
+            socialName: peer.socialName,
+            socialLink: peer.socialLink,
+            profileImageData: peer.profileImageData
+        )
         let data = (try? JSONEncoder().encode(peerInfo)) ?? Data()
         profileCharacteristic = CBMutableCharacteristic(
             type: characteristicUUID,
@@ -140,9 +145,10 @@ extension BluetoothManager: CBPeripheralDelegate {
         
         let peer = UserPeer(
             id: peerInfo.id,
-            name: peerInfo.name,
             socialName: peerInfo.socialName,
-            socialLink: peerInfo.socialLink
+            socialLink: peerInfo.socialLink,
+            profileImageData: peerInfo.profileImageData,
+            
         )
         
         DispatchQueue.main.async {

@@ -4,7 +4,6 @@ import SwiftUI
 
 struct UserPeer: Identifiable, Hashable {
     let id: String
-    var name: String
     var socialName: String = ""
     var socialLink: String = ""
     var profileImageData: Data? = nil
@@ -14,18 +13,15 @@ struct UserPeer: Identifiable, Hashable {
         return UIImage(data: data)
     }
     
-    init(id: String, name: String, socialName: String = "", socialLink: String = "", profileImageData: Data? = nil) {
+    init(id: String, socialName: String = "", socialLink: String = "", profileImageData: Data? = nil) {
         self.id = id
-        self.name = name
         self.socialName = socialName
         self.socialLink = socialLink
         self.profileImageData = profileImageData
     }
     
-    // Удобный инициализатор для UIImage
-    init(id: String, name: String, socialName: String = "", socialLink: String = "", profileImage: UIImage?) {
+    init(id: String, socialName: String = "", socialLink: String = "", profileImage: UIImage?) {
         self.id = id
-        self.name = name
         self.socialName = socialName
         self.socialLink = socialLink
         self.profileImageData = profileImage?.jpegData(compressionQuality: 0.8)
@@ -37,7 +33,7 @@ struct UserPeer: Identifiable, Hashable {
 
 struct PeerInfo: Codable {
     let id: String
-    let name: String
     let socialName: String
     let socialLink: String
+    let profileImageData: Data?
 }

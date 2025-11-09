@@ -19,10 +19,14 @@ struct PeerItemView: View {
                     .foregroundColor(.gray)
             }
             
-            Text(peer.name)
-                .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.primary)
-                .multilineTextAlignment(.center)
+            if !peer.socialName.isEmpty {
+                Text(peer.socialName)
+                    .font(.system(size: 16))
+                    .foregroundColor(.primary)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .multilineTextAlignment(.center)
+            }
             
             if !peer.socialLink.isEmpty {
                 Text(peer.socialLink)
@@ -36,3 +40,4 @@ struct PeerItemView: View {
         .frame(maxWidth: .infinity)
     }
 }
+

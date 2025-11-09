@@ -4,7 +4,6 @@ import Combine
 
 class PeerStore: ObservableObject, BluetoothManagerDelegate {
     @Published var nearbyPeers: Set<UserPeer> = []
-    @Published var metPeers: Set<UserPeer> = []
     
     func didDiscoverPeer(_ peer: UserPeer) {
         DispatchQueue.main.async {
@@ -12,14 +11,7 @@ class PeerStore: ObservableObject, BluetoothManagerDelegate {
         }
     }
     
-    func addMetPeer(_ peer: UserPeer) {
-        DispatchQueue.main.async {
-            self.metPeers.insert(peer)
-        }
-    }
-    
     func clearPeers() {
         nearbyPeers.removeAll()
-        metPeers.removeAll()
     }
 }
