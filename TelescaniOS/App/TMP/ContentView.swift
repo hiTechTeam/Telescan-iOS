@@ -15,10 +15,6 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             
-<<<<<<< HEAD
-            // Near
-=======
->>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
             NavigationStack {
                 PeopleNearView(
                     profileImage: $profileImage,
@@ -65,23 +61,12 @@ struct ContentView: View {
             .tag(0)
             .badge(peerStore.nearbyPeers.count)
             
-<<<<<<< HEAD
-            
-            // Profile
-=======
->>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
             NavigationStack {
                 ProfileScreen()
                     .environmentObject(profileStore)
             }
             .tabItem { Label("Профиль", systemImage: "person.fill.viewfinder") }
             .tag(1)
-<<<<<<< HEAD
-            
-            
-        
-=======
->>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
         }
         .sheet(isPresented: $showSettings) {
             SettingsView()

@@ -1,8 +1,6 @@
 import SwiftUI
 import PhotosUI
 
-<<<<<<< HEAD
-=======
 class ProfileStore: ObservableObject {
     @AppStorage("socialName") var socialName: String = ""
     @AppStorage("socialLink") var socialLink: String = ""
@@ -30,7 +28,6 @@ class ProfileStore: ObservableObject {
     }
 }
 
->>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
 struct ProfileScreen: View {
     @EnvironmentObject var profileStore: ProfileStore
     @State private var pickerItem: PhotosPickerItem? = nil
