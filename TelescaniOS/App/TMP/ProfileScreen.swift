@@ -1,6 +1,36 @@
 import SwiftUI
 import PhotosUI
 
+<<<<<<< HEAD
+=======
+class ProfileStore: ObservableObject {
+    @AppStorage("socialName") var socialName: String = ""
+    @AppStorage("socialLink") var socialLink: String = ""
+    @AppStorage("profileImageBase64") private var profileImageBase64: String = ""
+    
+    @Published var profileImage: UIImage? {
+        didSet {
+            if let image = profileImage,
+               let data = image.jpegData(compressionQuality: 0.8) {
+                profileImageBase64 = data.base64EncodedString()
+            } else {
+                profileImageBase64 = ""
+            }
+        }
+    }
+    
+    init() {
+        if let data = Data(base64Encoded: profileImageBase64) {
+            profileImage = UIImage(data: data)
+        }
+    }
+    
+    func saveImage(_ image: UIImage) {
+        profileImage = image
+    }
+}
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
 struct ProfileScreen: View {
     @EnvironmentObject var profileStore: ProfileStore
     @State private var pickerItem: PhotosPickerItem? = nil

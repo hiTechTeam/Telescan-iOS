@@ -1,4 +1,9 @@
 import UIKit
+<<<<<<< HEAD
+=======
+import CoreBluetooth
+import SwiftUI
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
 
 struct UserPeer: Identifiable, Hashable {
     let id: String
@@ -33,4 +38,8 @@ struct PeerInfo: Codable {
     let id: String
     let socialName: String
     let socialLink: String
+<<<<<<< HEAD
+=======
+    let profileImageData: Data?
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
 }

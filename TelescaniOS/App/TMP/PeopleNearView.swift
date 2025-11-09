@@ -41,7 +41,11 @@ struct PeopleNearView: View {
                             if !peer.socialLink.isEmpty {
                                 Text(peer.socialLink)
                                     .font(.headline)
+<<<<<<< HEAD
                                 
+=======
+                                    
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
                             }
                             if !peer.socialName.isEmpty {
                                 Text(peer.socialName)

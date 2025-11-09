@@ -1,6 +1,10 @@
 import SwiftUI
 
+<<<<<<< HEAD
 extension Telescan {
+=======
+extension AirShare {
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     func configureTabBarAppearance() {
         let appearance = UITabBarAppearance()
         let attributes: [NSAttributedString.Key: Any] = [

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //// MARK: - PeerStore
 //import SwiftUI
 //import Combine
@@ -78,6 +79,12 @@ class ProfileStore: ObservableObject {
     }
 }
 
+=======
+// MARK: - PeerStore
+import SwiftUI
+import Combine
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
 class PeerStore: ObservableObject, BluetoothManagerDelegate {
     @Published var nearbyPeers: Set<UserPeer> = []
     
@@ -86,4 +93,11 @@ class PeerStore: ObservableObject, BluetoothManagerDelegate {
             self.nearbyPeers.insert(peer)
         }
     }
+<<<<<<< HEAD
+=======
+    
+    func clearPeers() {
+        nearbyPeers.removeAll()
+    }
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
 }

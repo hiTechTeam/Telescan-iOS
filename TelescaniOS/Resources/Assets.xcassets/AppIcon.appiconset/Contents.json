@@ -1,7 +1,11 @@
 {
   "images" : [
     {
+<<<<<<< HEAD
       "filename" : "TelescanIcon.png",
+=======
+      "filename" : "AirShareLogo.png",
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +17,11 @@
           "value" : "dark"
         }
       ],
+<<<<<<< HEAD
       "filename" : "TelescanIcon 1.png",
+=======
+      "filename" : "AirShareLogo 1.png",
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +33,11 @@
           "value" : "tinted"
         }
       ],
+<<<<<<< HEAD
       "filename" : "TelescanIcon 2.png",
+=======
+      "filename" : "AirShareLogo 2.png",
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

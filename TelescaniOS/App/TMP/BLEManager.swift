@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //import Foundation
 //import CoreBluetooth
 //import UIKit
@@ -208,6 +209,8 @@
 //    }
 //}
 
+=======
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
 import Foundation
 import CoreBluetooth
 import UIKit
@@ -219,6 +222,7 @@ protocol BluetoothManagerDelegate: AnyObject {
 final class BluetoothManager: NSObject, ObservableObject {
     @Published var state: CBManagerState = .unknown
     @Published var isScanning = false
+<<<<<<< HEAD
     
     weak var delegate: BluetoothManagerDelegate?
     
@@ -242,19 +246,46 @@ final class BluetoothManager: NSObject, ObservableObject {
     // для отправки изображения
     private var outgoingImageChunks: [Data] = []
     
+=======
+
+    private var central: CBCentralManager!
+    private var peripheral: CBPeripheralManager!
+
+    weak var delegate: BluetoothManagerDelegate?
+
+    private let serviceUUID = CBUUID(string: "12345678-1234-1234-1234-1234567890AB")
+    private let infoUUID = CBUUID(string: "11111111-1111-1111-1111-111111111111")
+    private let imageUUID = CBUUID(string: "22222222-2222-2222-2222-222222222222")
+
+    private var profile: UserPeer?
+    private var infoCharacteristic: CBMutableCharacteristic!
+    private var imageCharacteristic: CBMutableCharacteristic!
+
+    private var discoveredPeripherals: [UUID: CBPeripheral] = [:]
+    private var imageDataCache: [UUID: Data] = [:]
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     override init() {
         super.init()
         central = CBCentralManager(delegate: self, queue: .main)
         peripheral = CBPeripheralManager(delegate: self, queue: .main)
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     func start(peer: UserPeer) {
         profile = peer
         isScanning = true
         configurePeripheral()
         updateState()
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     func stop() {
         isScanning = false
         peripheral.stopAdvertising()
@@ -267,16 +298,30 @@ final class BluetoothManager: NSObject, ObservableObject {
 private extension BluetoothManager {
     func configurePeripheral() {
         guard let peer = profile else { return }
+<<<<<<< HEAD
         
         let info = PeerInfo(id: peer.id, socialName: peer.socialName, socialLink: peer.socialLink)
         let infoData = try? JSONEncoder().encode(info)
         
+=======
+
+        let peerInfo = PeerInfo(
+            id: peer.id,
+            socialName: peer.socialName,
+            socialLink: peer.socialLink,
+            profileImageData: nil 
+        )
+
+        let infoData = try? JSONEncoder().encode(peerInfo)
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
         infoCharacteristic = CBMutableCharacteristic(
             type: infoUUID,
             properties: [.read],
             value: infoData,
             permissions: [.readable]
         )
+<<<<<<< HEAD
         
         imageCharacteristic = CBMutableCharacteristic(
             type: imageUUID,
@@ -294,6 +339,23 @@ private extension BluetoothManager {
         startAdvertising()
     }
     
+=======
+
+        imageCharacteristic = CBMutableCharacteristic(
+            type: imageUUID,
+            properties: [.read],
+            value: nil,
+            permissions: [.readable]
+        )
+
+        let service = CBMutableService(type: serviceUUID, primary: true)
+        service.characteristics = [infoCharacteristic, imageCharacteristic]
+
+        peripheral.removeAllServices()
+        peripheral.add(service)
+    }
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     func startAdvertising() {
         guard let peer = profile else { return }
         peripheral.startAdvertising([
@@ -301,6 +363,7 @@ private extension BluetoothManager {
             CBAdvertisementDataLocalNameKey: peer.socialName
         ])
     }
+<<<<<<< HEAD
     
     func prepareImageChunks() {
         outgoingImageChunks.removeAll()
@@ -326,53 +389,91 @@ private extension BluetoothManager {
             outgoingImageChunks.removeFirst()
         }
     }
+=======
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
 }
 
 // MARK: - Central (Scanning)
 
 private extension BluetoothManager {
     func startScanning() {
+<<<<<<< HEAD
         central.scanForPeripherals(withServices: [serviceUUID])
     }
     
+=======
+        central.scanForPeripherals(withServices: [serviceUUID], options: nil)
+    }
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     func connect(_ peripheral: CBPeripheral) {
         discoveredPeripherals[peripheral.identifier] = peripheral
         peripheral.delegate = self
         central.connect(peripheral)
     }
+<<<<<<< HEAD
 }
 
 // MARK: - CBCentralManagerDelegate & CBPeripheralDelegate
+=======
+
+    func readImage(for peripheral: CBPeripheral, characteristic: CBCharacteristic) {
+        peripheral.readValue(for: characteristic)
+    }
+}
+
+// MARK: - Delegate Implementations
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
 
 extension BluetoothManager: CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         state = central.state
         updateState()
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     private func updateState() {
         guard isScanning else { return }
         if central.state == .poweredOn { startScanning() }
         if peripheral.state == .poweredOn { startAdvertising() }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,
                         advertisementData: [String : Any], rssi RSSI: NSNumber) {
         guard discoveredPeripherals[peripheral.identifier] == nil else { return }
         connect(peripheral)
     }
+<<<<<<< HEAD
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheral.discoverServices([serviceUUID])
     }
     
+=======
+
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        peripheral.discoverServices([serviceUUID])
+    }
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else { return }
         for s in services where s.uuid == serviceUUID {
             peripheral.discoverCharacteristics([infoUUID, imageUUID], for: s)
         }
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     func peripheral(_ peripheral: CBPeripheral,
                     didDiscoverCharacteristicsFor service: CBService,
                     error: Error?) {
@@ -381,21 +482,37 @@ extension BluetoothManager: CBCentralManagerDelegate, CBPeripheralDelegate {
             if c.uuid == infoUUID {
                 peripheral.readValue(for: c)
             } else if c.uuid == imageUUID {
+<<<<<<< HEAD
                 peripheral.setNotifyValue(true, for: c)
             }
         }
     }
     
+=======
+                peripheral.readValue(for: c)
+            }
+        }
+    }
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
     func peripheral(_ peripheral: CBPeripheral,
                     didUpdateValueFor characteristic: CBCharacteristic,
                     error: Error?) {
         guard error == nil else { return }
+<<<<<<< HEAD
         
         if characteristic.uuid == infoUUID,
            let data = characteristic.value,
            let info = try? JSONDecoder().decode(PeerInfo.self, from: data) {
             
             let image = incomingImageBuffer[peripheral.identifier].flatMap { UIImage(data: $0) }
+=======
+
+        if characteristic.uuid == infoUUID,
+           let data = characteristic.value,
+           let info = try? JSONDecoder().decode(PeerInfo.self, from: data) {
+            let image = imageDataCache[peripheral.identifier].flatMap { UIImage(data: $0) }
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
             let peer = UserPeer(
                 id: info.id,
                 socialName: info.socialName,
@@ -404,6 +521,7 @@ extension BluetoothManager: CBCentralManagerDelegate, CBPeripheralDelegate {
             )
             delegate?.didDiscoverPeer(peer)
         }
+<<<<<<< HEAD
         
         if characteristic.uuid == imageUUID,
            let chunk = characteristic.value {
@@ -438,16 +556,26 @@ extension BluetoothManager: CBCentralManagerDelegate, CBPeripheralDelegate {
                     }
                 }
             }
+=======
+
+        if characteristic.uuid == imageUUID,
+           let data = characteristic.value {
+            imageDataCache[peripheral.identifier] = data
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
         }
     }
 }
 
+<<<<<<< HEAD
 // MARK: - CBPeripheralManagerDelegate
 
+=======
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
 extension BluetoothManager: CBPeripheralManagerDelegate {
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         updateState()
     }
+<<<<<<< HEAD
     
     func peripheralManager(_ peripheral: CBPeripheralManager,
                            didSubscribeTo characteristic: CBCharacteristic) {
@@ -461,3 +589,24 @@ extension BluetoothManager: CBPeripheralManagerDelegate {
         sendNextChunk()
     }
 }
+=======
+
+    func peripheralManager(_ peripheral: CBPeripheralManager,
+                           didReceiveRead request: CBATTRequest) {
+        guard let peer = profile else { return }
+
+        if request.characteristic.uuid == imageUUID {
+            if let data = peer.profileImageData {
+                let range = Int(request.offset)..<data.count
+                request.value = data.subdata(in: range)
+            }
+        } else if request.characteristic.uuid == infoUUID {
+            request.value = infoCharacteristic.value
+        }
+
+        peripheral.respond(to: request, withResult: .success)
+    }
+}
+
+
+>>>>>>> 0737f3bef726169980a7f7b16f757ee1159fde4b
