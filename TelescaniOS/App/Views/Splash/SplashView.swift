@@ -3,21 +3,17 @@ import SwiftUI
 struct SplashView: View {
     var body: some View {
         VStack(spacing: 20) {
-            
             Spacer()
-            
-            Image("AirShareIcon")
+            Image("TsLogo")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 120, height: 120)
-            
+                .frame(width: 80, height: 80)
             Spacer()
-            
-            Text("AirShare")
+            Text("Telescan")
                 .font(.headline)
                 .foregroundColor(.white)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.dblue)
+        .background(Color.black)
     }
 }
