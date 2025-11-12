@@ -9,9 +9,8 @@ struct SplashView: View {
                 .scaledToFit()
                 .frame(width: 80, height: 80)
             Spacer()
-            Text("Telescan")
-                .font(.headline)
-                .foregroundColor(.white)
+            PoweredDescription()
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)

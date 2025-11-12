@@ -1,8 +1,11 @@
 import SwiftUI
 
 struct RegView: View {
+    
     @FocusState private var isFocused: Bool
-    @State private var codeStatus: Bool? = nil  // поднимаем сюда
+    @State private var codeStatus: Bool? = nil
+    
+    let paddingBottom: CGFloat = 16
     
     var body: some View {
         NavigationStack {
@@ -13,12 +16,12 @@ struct RegView: View {
                         Spacer()
                     }
                     .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, paddingBottom)
                 }
                 .contentShape(Rectangle())
                 .onTapGesture { isFocused = false }
                 
-                MainButton(title: Inc.goNext, codeStatus: codeStatus ?? false) { }
+                MainButton(title: Inc.goNext, codeStatus: codeStatus ?? false)
             }
             .navigationTitle(Inc.registration)
             .toolbar {

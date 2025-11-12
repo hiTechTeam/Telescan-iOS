@@ -8,11 +8,9 @@ struct Inc {
     static let code = "Code"
     static let registration = "Registration"
     static let goNext = "Next"
-    
+    static let incorrectCode = "Couldn't find a telegram username"
     static let warningCharactersEight = "maximum of 8 characters"
-    
     static let telescanBot = "Telescan_bot"
-    
     static let regDescription = "Enter the code that our bot sand you and the app can detect you telegram @username"
 }
 
@@ -23,6 +21,7 @@ struct IncLogos {
 
 struct Links {
     static let telescanBot = "https://t.me/tgtelescan_bot"
+    static let telescanApi = "http://localhost:8000/v1/code/"
 }
 
 enum SelectedTab: Int {

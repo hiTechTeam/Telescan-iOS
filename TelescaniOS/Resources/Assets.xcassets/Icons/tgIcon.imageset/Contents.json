@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "tsicon.pdf",
+      "filename" : "tgIcon.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "tsicon 1.pdf",
+      "filename" : "tgIcon 1.pdf",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "tsicon 2.pdf",
+      "filename" : "tgIcon 2.pdf",
       "idiom" : "universal",
       "scale" : "3x"
     }
