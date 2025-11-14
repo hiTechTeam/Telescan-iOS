@@ -21,7 +21,7 @@ struct RegView: View {
                 .contentShape(Rectangle())
                 .onTapGesture { isFocused = false }
                 
-                MainButton(title: Inc.goNext, codeStatus: codeStatus ?? false)
+                MainButton(title: Inc.goNext, codeStatus: $codeStatus)
             }
             .navigationTitle(Inc.registration)
             .toolbar {

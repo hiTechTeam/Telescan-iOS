@@ -13,7 +13,9 @@ struct CodeSpace: View {
                     .focused($isFocused)
                     .onChange(of: viewModel.code) { _, newValue in
                         viewModel.checkCode(newValue)
-                        codeStatus = viewModel.codeStatus
+                    }
+                    .onReceive(viewModel.$codeStatus) { status in
+                        codeStatus = status
                     }
             }
             .padding(.top, 10)

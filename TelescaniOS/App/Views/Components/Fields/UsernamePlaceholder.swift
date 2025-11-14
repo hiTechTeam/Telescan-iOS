@@ -3,6 +3,7 @@ import SwiftUI
 struct UsernamePlaceholder: View {
     @State private var animate = false
     @State private var shakeOffset: CGFloat = 0
+    
     var username: String? = nil
     var codeStatus: Bool?
     let placeholder: String = Inc.usernamePlaceholder

@@ -11,7 +11,7 @@ final class FieldViewModel: ObservableObject {
     let fontSizeSmall: CGFloat = 12
     
     
-    func handleTextChange(_ newValue: String) {
+    func handleTextChange(_ newValue: inout String) {
         if newValue.count > maxLength {
             text = String(newValue.prefix(maxLength))
             showWarning = true

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct BotButton: View {
     @StateObject private var viewModel = BotButtonViewModel()
+    
     let fontSize: CGFloat = 14
     let buttonWidth: CGFloat = 100
     let buttonHeight: CGFloat = 36

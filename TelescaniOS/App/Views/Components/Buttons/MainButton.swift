@@ -4,7 +4,7 @@ struct MainButton: View {
     @StateObject private var viewModel = NextButtonViewModel()
     
     var title: String
-    var codeStatus: Bool
+    @Binding var codeStatus: Bool?
     
     let fontSize: CGFloat = 17
     let buttonWidth: CGFloat = 360
@@ -20,11 +20,11 @@ struct MainButton: View {
                 viewModel.nextAction()
             }
         }) {
-            Text(Inc.goNext)
-                .font(.system(size: cornerRadius, weight: .semibold))
-                .foregroundColor(codeStatus ? Color.white : Color.primary.opacity(foregroundOpacity))
+            Text(title)
+                .font(.system(size: fontSize, weight: .semibold))
+                .foregroundColor(codeStatus == true ? Color.white : Color.primary.opacity(foregroundOpacity))
                 .frame(width: buttonWidth, height: buttonHeight)
-                .background(codeStatus ? Color.deepblue : Color.gray.opacity(backgroundOpacity))
+                .background(codeStatus == true ? Color.deepblue : Color.gray.opacity(backgroundOpacity))
                 .cornerRadius(cornerRadius)
         }
         .disabled(codeStatus != true)
