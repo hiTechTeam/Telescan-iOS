@@ -9,7 +9,7 @@ struct CodeSpace: View {
         VStack(spacing: 16) {
             VStack(spacing: 0) {
                 TitleField(text: Inc.enterCode)
-                Field(text: $viewModel.code, placeholder: Inc.code)
+                CodeField(text: $viewModel.code, placeholder: Inc.code)
                     .focused($isFocused)
                     .onChange(of: viewModel.code) { _, newValue in
                         viewModel.checkCode(newValue)

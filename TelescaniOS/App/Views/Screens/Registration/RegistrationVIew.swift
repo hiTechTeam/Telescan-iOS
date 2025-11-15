@@ -29,6 +29,7 @@ struct RegView: View {
                     BotButton()
                 }
             }
+            .background(Color.tsBackground)
         }
     }
 }

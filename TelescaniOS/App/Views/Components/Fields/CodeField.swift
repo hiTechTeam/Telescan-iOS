@@ -1,7 +1,7 @@
 import SwiftUI
 import Combine
 
-struct Field: View {
+struct CodeField: View {
     @State private var showWarning: Bool = false
     @State private var warningCancellable: AnyCancellable?
     @Binding var text: String
@@ -17,8 +17,6 @@ struct Field: View {
     private let fontSizeCode: CGFloat = 20
     private let fontSizeSmall: CGFloat = 12
     private var paddingLeading: CGFloat { fieldWidth / 2 }
-
-    
 
     private func handleTextChange(_ newValue: String) {
         if newValue.count > maxLength {

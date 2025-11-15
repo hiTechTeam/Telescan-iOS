@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+struct ContentView2: View {
+    @State private var isScanning: Bool = false
+    
+    var body: some View {
+        ScanToggle(isOn: $isScanning)
+        //        RegView()
+        
+    }
+}
+
 @main
 struct Telescan: App {
     @State private var showSplash = true
@@ -20,9 +30,8 @@ struct Telescan: App {
             ZStack {
                 Color(Color.tsBackground)
                     .ignoresSafeArea()
-                RegView()
-                //                ContentView()
                 //                BotButton ()
+                ContentView2()
                 SplashOverlay(isVisible: $showSplash)
             }
         }

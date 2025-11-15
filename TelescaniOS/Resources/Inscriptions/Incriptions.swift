@@ -12,6 +12,8 @@ struct Inc {
     static let warningCharactersEight = "maximum of 8 characters"
     static let telescanBot = "Telescan_bot"
     static let regDescription = "Enter the code that our bot sand you and the app can detect you telegram @username"
+    
+    static let scanning = "Scanning"
 }
 
 struct IncLogos {

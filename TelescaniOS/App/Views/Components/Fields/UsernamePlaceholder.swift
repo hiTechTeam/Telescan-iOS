@@ -6,6 +6,7 @@ struct UsernamePlaceholder: View {
     
     var username: String? = nil
     var codeStatus: Bool?
+    
     let placeholder: String = Inc.usernamePlaceholder
     let fieldWidth: CGFloat = 360
     let fieldHeight: CGFloat = 46
