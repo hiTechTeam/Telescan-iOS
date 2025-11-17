@@ -6,6 +6,7 @@ struct UsernamePlaceholder: View {
     
     var username: String? = nil
     var codeStatus: Bool?
+    var isLoading: Bool = false
     
     let placeholder: String = Inc.usernamePlaceholder
     let fieldWidth: CGFloat = 360
@@ -78,11 +79,18 @@ struct UsernamePlaceholder: View {
                 .offset(x: shakeOffset)
                 .animation(.easeInOut(duration: 0.25), value: animate)
             
-            Text(displayedText)
-                .foregroundColor(textColor)
-                .font(.system(size: fontSize))
-                .padding(.horizontal, paddingH)
-                .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
+            if isLoading {
+                ProgressView()
+                    .frame(height: fieldHeight)
+                    .padding(.leading, paddingH)
+            } else {
+                Text(displayedText)
+                    .foregroundColor(textColor)
+                    .font(.system(size: fontSize))
+                    .padding(.horizontal, paddingH)
+                    .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
+            }
+            
         }
         .onChange(of: codeStatus) { _, newValue in
             if newValue == false {

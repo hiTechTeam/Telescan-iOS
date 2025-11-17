@@ -6,6 +6,7 @@ final class CodeViewModel: ObservableObject {
     @Published var code: String = ""
     @Published var username: String? = nil
     @Published var codeStatus: Bool? = nil
+    @Published var isLoading = false
     private var didReactToFullCode: Bool = true
     private let codeCount: Int = 8
     
@@ -16,6 +17,8 @@ final class CodeViewModel: ObservableObject {
             username = nil
             return
         }
+        
+        isLoading = true
         
         Task {
             let generator = UINotificationFeedbackGenerator()
@@ -29,6 +32,10 @@ final class CodeViewModel: ObservableObject {
                 self.codeStatus = false
                 generator.notificationOccurred(.error)
             }
+            
+            self.isLoading = false
         }
+        
+        
     }
 }

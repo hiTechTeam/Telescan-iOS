@@ -22,7 +22,11 @@ struct CodeSpace: View {
             
             VStack(spacing: 0) {
                 TitleField(text: Inc.tgUsername)
-                UsernamePlaceholder(username: viewModel.username, codeStatus: viewModel.codeStatus)
+                UsernamePlaceholder(
+                    username: viewModel.username,
+                    codeStatus: viewModel.codeStatus,
+                    isLoading: viewModel.isLoading
+                )
             }
             
             RegDescription(text: Inc.regDescription)

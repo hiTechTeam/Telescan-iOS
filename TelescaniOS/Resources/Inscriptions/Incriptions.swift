@@ -23,7 +23,8 @@ struct IncLogos {
 
 struct Links {
     static let telescanBot = "https://t.me/tgtelescan_bot"
-    static let telescanApi = "http://localhost:8000/v1/code/"
+    static let telescanApiTunnel = "https://tchog-172-245-109-174.a.free.pinggy.link/v1/code/"
+    static let telescanApiLocal = "https:/localhost:80/v1/code/"
 }
 
 enum SelectedTab: Int {

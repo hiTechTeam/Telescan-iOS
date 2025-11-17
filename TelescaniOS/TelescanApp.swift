@@ -11,8 +11,8 @@ struct ContentView2: View {
     @State private var isScanning: Bool = false
     
     var body: some View {
-        ScanToggle(isOn: $isScanning)
-        //        RegView()
+        //        ScanToggle(isOn: $isScanning)
+        RegView()
         
     }
 }
