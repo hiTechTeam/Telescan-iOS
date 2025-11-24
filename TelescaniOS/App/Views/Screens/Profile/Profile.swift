@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct Profile: View {
+    @State private var savedCode: String = ""
+
     var body: some View {
         NavigationStack {
             

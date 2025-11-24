@@ -1,96 +1,123 @@
 import SwiftUI
 
 struct UsernamePlaceholder: View {
-    @State private var animate = false
-    @State private var shakeOffset: CGFloat = 0
-    
+
+    // MARK: - Inputs
     var username: String? = nil
     var codeStatus: Bool?
     var isLoading: Bool = false
-    
-    let placeholder: String = Inc.usernamePlaceholder
-    let fieldWidth: CGFloat = 360
-    let fieldHeight: CGFloat = 46
-    let cornerRadius: CGFloat = 13
-    let paddingH: CGFloat = 13
-    
+
+    // MARK: - State
+    @State private var animate = false
+    @State private var shakeOffset: CGFloat = .zero
+
+    // MARK: - Constants
+    private let placeholderText: String = Inc.usernamePlaceholder
+    private let incorrectCodeText: String = Inc.incorrectCode
+    private let fieldWidth: CGFloat = 360
+    private let fieldHeight: CGFloat = 46
+    private let cornerRadius: CGFloat = 13
+    private let paddingHorizontal: CGFloat = 13
+    private let fontSizeNormal: CGFloat = 20
+    private let fontSizeIncorrect: CGFloat = 14
+    private let activeOpacity: CGFloat = 0.2
+    private let animatedOpacity: CGFloat = 0.4
+    private let scaleSmall: CGFloat = 1.0
+    private let scaleLarge: CGFloat = 1.1
+    private let scaleAnimDuration: Double = 0.3
+    private let generalAnimDuration: Double = 0.25
+    private let shakeInitialIndex: Int = 0
+    private let shakeRepeats: Int = 2
+    private let shakeOffsetAbs: CGFloat = 4
+    private let shakeStepDuration: Double = 0.05
+
+    // MARK: - Computed values
     private var displayedText: String {
         if let name = username {
             return name
-        } else if codeStatus == false {
-            return Inc.incorrectCode
-        } else {
-            return placeholder
         }
+        if codeStatus == false {
+            return incorrectCodeText
+        }
+        return placeholderText
     }
-    private var fontSize: CGFloat {
+    private var computedFontSize: CGFloat {
         if let status = codeStatus {
-            return status ? 20 : 14
-        } else {
-            return 20
+            return status ? fontSizeNormal : fontSizeIncorrect
         }
+        return fontSizeNormal
     }
     private var backgroundColor: Color {
         if let name = username, !name.isEmpty {
-            return Color.blue.opacity(animate ? 0.4 : 0.2)
-        } else if codeStatus == false {
-            return Color.red.opacity(0.2)
-        } else {
-            return Color.clear
+            return Color.blue.opacity(animate ? animatedOpacity : activeOpacity)
         }
+        if codeStatus == false {
+            return Color.red.opacity(activeOpacity)
+        }
+        return .clear
     }
     private var textColor: Color {
         if let name = username, !name.isEmpty {
             return .blue
-        } else if codeStatus == false {
-            return .red
-        } else {
-            return .gray
         }
+        if codeStatus == false {
+            return .red
+        }
+        return .gray
     }
-    
+
+    // MARK: - Functions
     private func animateField() {
-        withAnimation(.easeOut(duration: 0.3)) { animate = true }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            withAnimation(.easeIn(duration: 0.3)) { animate = false }
+        withAnimation(.easeOut(duration: scaleAnimDuration)) {
+            animate = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + scaleAnimDuration) {
+            withAnimation(.easeIn(duration: scaleAnimDuration)) {
+                animate = false
+            }
         }
     }
     private func shakeField() {
-        let times = 2
-        let offset: CGFloat = 4
-        for i in 0..<times {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.05) {
-                withAnimation(.linear(duration: 0.05)) {
-                    shakeOffset = i % 2 == 0 ? -offset : offset
+        for index in shakeInitialIndex ..< (shakeInitialIndex + shakeRepeats) {
+            let delay = Double(index - shakeInitialIndex) * shakeStepDuration
+            let target: CGFloat = (index.isMultiple(of: shakeRepeats) ? -shakeOffsetAbs : shakeOffsetAbs)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                withAnimation(.linear(duration: shakeStepDuration)) {
+                    shakeOffset = target
                 }
             }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + Double(times) * 0.05) {
-            withAnimation(.linear(duration: 0.05)) { shakeOffset = 0 }
+
+        let resetDelay = Double(shakeRepeats) * shakeStepDuration
+        DispatchQueue.main.asyncAfter(deadline: .now() + resetDelay) {
+            withAnimation(.linear(duration: shakeStepDuration)) {
+                shakeOffset = .zero
+            }
         }
     }
-    
+
+    // MARK: - Body
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: cornerRadius)
                 .fill(backgroundColor)
                 .frame(width: fieldWidth, height: fieldHeight)
-                .scaleEffect(animate ? 1.1 : 1.0)
+                .scaleEffect(animate ? scaleLarge : scaleSmall)
                 .offset(x: shakeOffset)
-                .animation(.easeInOut(duration: 0.25), value: animate)
-            
+                .animation(.easeInOut(duration: generalAnimDuration), value: animate)
+
             if isLoading {
                 ProgressView()
                     .frame(height: fieldHeight)
-                    .padding(.leading, paddingH)
+                    .padding(.leading, paddingHorizontal)
             } else {
                 Text(displayedText)
                     .foregroundColor(textColor)
-                    .font(.system(size: fontSize))
-                    .padding(.horizontal, paddingH)
+                    .font(.system(size: computedFontSize))
+                    .padding(.horizontal, paddingHorizontal)
                     .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
             }
-            
         }
         .onChange(of: codeStatus) { _, newValue in
             if newValue == false {

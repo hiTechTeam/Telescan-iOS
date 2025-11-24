@@ -7,13 +7,22 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct ContentView2: View {
-    @State private var isScanning: Bool = false
+    
+    private static let regKey: String = "isReg"
+    
+    @State private var isReg: Bool = UserDefaults.standard.bool(forKey: ContentView2.regKey)
+    @State private var onStart: Bool = false
     
     var body: some View {
-        //        ScanToggle(isOn: $isScanning)
-        RegView()
         
+        if isReg {
+            MainContentView()
+        } else {
+            FirstRegView(onStart: $onStart)
+        }
     }
 }
 
@@ -22,6 +31,11 @@ struct Telescan: App {
     @State private var showSplash = true
     
     init() {
+        
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
+        
         configureTabBarAppearance()
     }
     
@@ -30,7 +44,6 @@ struct Telescan: App {
             ZStack {
                 Color(Color.tsBackground)
                     .ignoresSafeArea()
-                //                BotButton ()
                 ContentView2()
                 SplashOverlay(isVisible: $showSplash)
             }

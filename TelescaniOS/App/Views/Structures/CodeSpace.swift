@@ -1,13 +1,24 @@
 import SwiftUI
 
 struct CodeSpace: View {
-    @Binding var codeStatus: Bool?
+    
+    // MARK: - State
     @FocusState var isFocused: Bool
     @StateObject private var viewModel = CodeViewModel()
     
+    // MARK: - Binds
+    @Binding var codeStatus: Bool?
+    
+    // MARK: - Constants
+    private let paddingTop: CGFloat = 10
+    private let spacing1: CGFloat = 16
+    private let spacing2: CGFloat = 0
+    private let frameWidth: CGFloat = 360
+    
+    // MARK: - Body
     var body: some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 0) {
+        VStack(spacing: spacing1) {
+            VStack(spacing: spacing2) {
                 TitleField(text: Inc.enterCode)
                 CodeField(text: $viewModel.code, placeholder: Inc.code)
                     .focused($isFocused)
@@ -18,9 +29,8 @@ struct CodeSpace: View {
                         codeStatus = status
                     }
             }
-            .padding(.top, 10)
-            
-            VStack(spacing: 0) {
+            .padding(.top, paddingTop)
+            VStack(spacing: spacing2) {
                 TitleField(text: Inc.tgUsername)
                 UsernamePlaceholder(
                     username: viewModel.username,
@@ -28,9 +38,8 @@ struct CodeSpace: View {
                     isLoading: viewModel.isLoading
                 )
             }
-            
-            RegDescription(text: Inc.regDescription)
+            Description(text: Inc.regDescription)
         }
-        .frame(width: 360)
+        .frame(width: frameWidth)
     }
 }

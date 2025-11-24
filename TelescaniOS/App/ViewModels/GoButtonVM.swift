@@ -2,14 +2,15 @@ import Foundation
 import UIKit
 
 @MainActor
-final class NextButtonViewModel: ObservableObject {
+final class GoButtonViewModel: ObservableObject {
     
     // MARK: - Constants and Variables
     var action: () -> Void = {}
     
     // MARK: - Functions
-    /// Go next registrationa - toggle the scan
-    func nextAction() {
+    /// Action to finish registration and use app
+    func goAction() {
         action()
     }
 }
+

@@ -4,16 +4,30 @@ import CryptoKit
 @MainActor
 final class CodeService {
     
+    // MARK: - Singleton
     static let shared = CodeService()
     
+    // MARK: - Init
     private init() {}
     
+    // MARK: - Constants
+    private let POST: String = "POST"
+    private let formatJSON: String = "application/json"
+    private let contentType: String = "Content-Type"
+    private let hashedCode: String = "hashed_code"
+    private let dog: String = "@"
+    private let hexoFOrmat: String = "%02x"
+    private let statusSuccess: Int = 200
+    
+    // MARK: - Functions
+    /// Make sha256 code hash
     func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashed = SHA256.hash(data: inputData)
-        return hashed.compactMap { String(format: "%02x", $0) }.joined()
+        return hashed.compactMap { String(format: hexoFOrmat, $0) }.joined()
     }
     
+    /// Fetching tg username from database
     func fetchUsername(for code: String) async throws -> String {
         let hashedCode = sha256(code)
         
@@ -22,19 +36,22 @@ final class CodeService {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = POST
+        request.setValue(formatJSON, forHTTPHeaderField: contentType)
         
-        let body: [String: String] = ["hashed_code": hashedCode]
+        let body: [String: String] = [hashedCode: hashedCode]
         request.httpBody = try JSONEncoder().encode(body)
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == statusSuccess else {
             throw URLError(.badServerResponse)
         }
         
-        let json = try JSONDecoder().decode(GetUsernameResponse.self, from: data)
-        return "@" + json.tg_username
+        let json = try JSONDecoder().decode(
+            GetUsernameResponse.self,
+            from: data
+        )
+        return dog + json.tg_username
     }
 }

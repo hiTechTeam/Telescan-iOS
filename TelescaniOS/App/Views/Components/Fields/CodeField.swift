@@ -2,12 +2,18 @@ import SwiftUI
 import Combine
 
 struct CodeField: View {
+    
+    // MARK: - State
     @State private var showWarning: Bool = false
     @State private var warningCancellable: AnyCancellable?
+    
+    // MARK: - Binds
     @Binding var text: String
     
+    // MARK: - Inputs
     var placeholder: String
 
+    // MARK: - Constants
     private let maxLength: Int = 8
     private let fieldWidth: CGFloat = 360
     private let fieldHeight: CGFloat = 46
@@ -17,7 +23,9 @@ struct CodeField: View {
     private let fontSizeCode: CGFloat = 20
     private let fontSizeSmall: CGFloat = 12
     private var paddingLeading: CGFloat { fieldWidth / 2 }
+    private let delayWarning: TimeInterval = 3
 
+    // MARK: - Functions
     private func handleTextChange(_ newValue: String) {
         if newValue.count > maxLength {
             text = String(newValue.prefix(maxLength))
@@ -28,7 +36,7 @@ struct CodeField: View {
 
             warningCancellable?.cancel()
             warningCancellable = Just(())
-                .delay(for: .seconds(3), scheduler: RunLoop.main)
+                .delay(for: .seconds(delayWarning), scheduler: RunLoop.main)
                 .sink {
                     withAnimation {
                         showWarning = false
@@ -39,6 +47,7 @@ struct CodeField: View {
         }
     }
 
+    // MARK: - Body
     var body: some View {
         ZStack {
             TextField(placeholder, text: $text)

@@ -2,17 +2,22 @@ import SwiftUI
 
 struct PoweredDescription: View {
     
-    let fontSize: CGFloat = 14
-    let iconWidth: CGFloat = 14
-    let iconHeight: CGFloat = 17
-    let paddingButtom: CGFloat = 16
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
+    // MARK: - Constants
+    private let fontSize: CGFloat = 14
+    private let iconWidth: CGFloat = 14
+    private let iconHeight: CGFloat = 17
+    private let paddingButtom: CGFloat = 16
+    private let hSpacing: CGFloat = 4
+    
+    // MARK: - Body
     var body: some View {
-        HStack(spacing: 4){
-            Text("Powered by Telegram")
+        HStack(spacing: hSpacing){
+            Text(Inc.poweredBy)
                 .font(.system(size: fontSize, weight: .medium))
-                .foregroundColor(.white)
-            Image("tgIcon")
+                .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
+            Image.tgIcon
                 .resizable()
                 .scaledToFit()
                 .frame(width: iconWidth, height: iconHeight)

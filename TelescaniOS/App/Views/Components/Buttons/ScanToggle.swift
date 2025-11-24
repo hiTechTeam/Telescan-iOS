@@ -1,32 +1,32 @@
 import SwiftUI
 
 struct ScanToggle: View {
-    @Binding var isOn: Bool
     
+    // MARK: - Binds
+    @Binding var isToggleOn: Bool
+    
+    // MARK: - Constants
     private let frameWidth: CGFloat = 360
     private let frameHeight: CGFloat = 46
     private let cornerRadius: CGFloat = 13
     private let paddingHorizontal: CGFloat = 14
     private let fontSize: CGFloat = 16
+    private let imageSize: CGFloat = 24
     
+    // MARK: - Body
     var body: some View {
-        VStack{
-            HStack {
-                Text(Inc.scanning)
-                    .foregroundColor(.primary)
-                    .font(.system(size: fontSize, weight: .medium))
-                
-                Spacer()
-                
-                Toggle("", isOn: $isOn)
-                    .toggleStyle(SwitchToggleStyle(tint: .blue))
-            }
-            .padding(.horizontal, paddingHorizontal)
-            .frame(width: frameWidth, height: frameHeight)
-            .background(Color.grOne)
-            .cornerRadius(cornerRadius)
-        }.background(Color.tsBackground)
+        HStack {
+            Image(systemName: "dot.radiowaves.forward")
+                .resizable()
+                .scaledToFit()
+                .frame(width: imageSize, height: imageSize)
+
+            Toggle(Inc.scanning, isOn: $isToggleOn)
+                .toggleStyle(SwitchToggleStyle(tint: .green))
+        }
+        .padding(.horizontal, paddingHorizontal)
+        .frame(width: frameWidth, height: frameHeight)
+        .background(Color.grOne)
+        .cornerRadius(cornerRadius)
     }
-    
-    
 }
