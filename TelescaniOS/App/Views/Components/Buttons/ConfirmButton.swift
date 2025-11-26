@@ -1,13 +1,10 @@
 import SwiftUI
 
-struct GoButton: View {
+struct ConfirmButton: View {
     
-    // MARK: - Binds
-    @Binding var isToggleOn: Bool
-    
-    // MARK: - Inputs
-    var title: String
-    var onGo: () -> Void
+    // MARK: - Inputs and Binds
+    @Binding var codeStatus: Bool?
+    var onConfirm: () -> Void
     
     // MARK: - Constants
     private let fontSize: CGFloat = 20
@@ -18,23 +15,26 @@ struct GoButton: View {
     private let backgroundOpacity: CGFloat = 0.2
     private let paddingButtom: CGFloat = 16
     private let tracking: CGFloat = 1.05
+    private let strokeIfTrue: CGFloat = 6
+    private let strokeIfFalse: CGFloat = 3
+    private let textButton: String = "Confirm"
     
     // MARK: - Body
     var body: some View {
         Button(action: {
-            if isToggleOn == true {
-                onGo()
+            if codeStatus == true {
+                onConfirm()
             }
         }) {
-            Text(title)
+            Text(textButton)
                 .font(.system(size: fontSize, weight: .bold))
                 .tracking(tracking)
-                .foregroundColor(isToggleOn == true ? Color.white : Color.primary.opacity(foregroundOpacity))
+                .foregroundColor(codeStatus == true ? Color.white : Color.primary.opacity(foregroundOpacity))
                 .frame(width: buttonWidth, height: buttonHeight)
-                .background(isToggleOn == true ? Color.deepblue : Color.gray.opacity(backgroundOpacity))
+                .background(codeStatus == true ? Color.bl2 :  Color.primary.opacity(foregroundOpacity))
                 .cornerRadius(cornerRadius)
                 .padding(.bottom, paddingButtom)
         }
-        .disabled(isToggleOn != true)
+        .disabled(codeStatus != true)
     }
 }

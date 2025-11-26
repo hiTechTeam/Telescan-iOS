@@ -14,7 +14,7 @@ final class CodeService {
     private let POST: String = "POST"
     private let formatJSON: String = "application/json"
     private let contentType: String = "Content-Type"
-    private let hashedCode: String = "hashed_code"
+    private let hashedCodeKey: String = "hashed_code"
     private let dog: String = "@"
     private let hexoFOrmat: String = "%02x"
     private let statusSuccess: Int = 200
@@ -28,10 +28,10 @@ final class CodeService {
     }
     
     /// Fetching tg username from database
-    func fetchUsername(for code: String) async throws -> String {
+    func fetchUsername(for code: String) async throws -> (String, String) {
         let hashedCode = sha256(code)
         
-        guard let url = URL(string: Links.telescanApiTunnel) else {
+        guard let url = URL(string: Links.telescanApiLocal) else {
             throw URLError(.badURL)
         }
         
@@ -39,7 +39,7 @@ final class CodeService {
         request.httpMethod = POST
         request.setValue(formatJSON, forHTTPHeaderField: contentType)
         
-        let body: [String: String] = [hashedCode: hashedCode]
+        let body: [String: String] = [hashedCodeKey: hashedCode]
         request.httpBody = try JSONEncoder().encode(body)
         
         let (data, response) = try await URLSession.shared.data(for: request)
@@ -52,6 +52,6 @@ final class CodeService {
             GetUsernameResponse.self,
             from: data
         )
-        return dog + json.tg_username
+        return (dog + json.tg_username, hashedCode)
     }
 }

@@ -1,42 +1,30 @@
 import SwiftUI
 
 struct RegView: View {
-    
-    // MARK: - State
+    @Binding var isRegistered: Bool
+    @StateObject private var viewModel = CodeViewModel()
     @FocusState private var isFocused: Bool
-    @State private var codeStatus: Bool? = nil
     @State private var goNext: Bool = false
-    
-    // MARK: - Constants
-    private let paddingHorizontal: CGFloat = 16
-    private let spacing: CGFloat = 0
-    
-    // MARK: - Body
+
     var body: some View {
         VStack {
             ScrollView {
-                VStack(spacing: spacing) {
-                    CodeSpace(isFocused: _isFocused, codeStatus: $codeStatus)
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, paddingHorizontal)
+                CodeSpace(isFocused: _isFocused, viewModel: viewModel)
             }
-            .contentShape(Rectangle())
             .onTapGesture { isFocused = false }
-            
-            NextButton(title: Inc.goNext, codeStatus: $codeStatus) {
+
+            NextButton(codeStatus: $viewModel.codeStatus) {
+                viewModel.confirmCode()
                 goNext = true
             }
         }
         .navigationDestination(isPresented: $goNext) {
-            ScanToggleView()
+            ScanToggleView(isRegistered: $isRegistered)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 BotButton()
             }
         }
-        .background(Color.tsBackground)
     }
 }

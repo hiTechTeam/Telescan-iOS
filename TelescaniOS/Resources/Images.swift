@@ -6,4 +6,6 @@ extension Image {
     static let tgIcon = Image("tg-icon")
     static let gradientCircleLight = Image("gradient-circle-light")
     static let gradientCircleDark = Image("gradient-circle-dark")
+    static let upChevron = Image("up-chevron")
+    static let photoProfile = Image("photo-profile")
 }

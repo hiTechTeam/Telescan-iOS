@@ -6,6 +6,7 @@ struct Inc {
     static let tgUsername = "Telegram username"
     static let usernamePlaceholder = "@_"
     static let code = "Code"
+    static let currentCode = "Current code: "
     static let registration = "Registration"
     static let goNext = "Next"
     static let go = "Go"
@@ -21,8 +22,10 @@ struct Inc {
     static let Telescan = "Telescan"
     static let Welcome = "Welcome to"
     static let aboutOnBoardingMsg = "Telescan lets you instantly find and share Telegram profiles with people nearby. It’s your local connector for quick and secure connections."
-    static let shortOnboardingMsg = "Share you telegram using bluetooth"
+    static let shortOnboardingMsg = "Share you telegram with people around you."
     static let scanToggleDescription = "Turn on Bluetooth scanning so that you can see the people around you, and also allow this device to do this in your device settings."
+    
+    static let profileSettingsDescription = "We use telegram to communicate, you can make change profile data in telegram profile."
 }
 
 struct IncLogos {
@@ -32,7 +35,7 @@ struct IncLogos {
 
 struct Links {
     static let telescanBot = "https://t.me/tgtelescan_bot"
-    static let telescanApiTunnel = "https://mghcz-172-245-109-174.a.free.pinggy.link/v1/code/"
+    static let telescanApiTunnel = "https://cwgvn-172-245-109-174.a.free.pinggy.link/v1/code/"
     static let telescanApiLocal = "http:/localhost:80/v1/code/"
 }
 

@@ -20,6 +20,7 @@ struct BotButton: View {
                 .font(.system(size: fontSize, weight: .semibold))
                 .foregroundColor(.blue)
                 .frame(width: buttonWidth, height: buttonHeight)
+//                .background(Color.bl2.opacity(0.3))
                 .cornerRadius(cornerRadius)
         }
     }

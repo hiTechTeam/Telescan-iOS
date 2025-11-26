@@ -7,47 +7,35 @@
 
 import SwiftUI
 
-import SwiftUI
-
-struct ContentView2: View {
-    
-    private static let regKey: String = "isReg"
-    
-    @State private var isReg: Bool = UserDefaults.standard.bool(forKey: ContentView2.regKey)
-    @State private var onStart: Bool = false
-    
-    var body: some View {
-        
-        if isReg {
-            MainContentView()
-        } else {
-            FirstRegView(onStart: $onStart)
-        }
-    }
-}
-
 @main
 struct Telescan: App {
     @State private var showSplash = true
+    @State private var isRegistered: Bool = UserDefaults.standard.bool(forKey: "isReg")
     
     init() {
-        
         if let bundleID = Bundle.main.bundleIdentifier {
             UserDefaults.standard.removePersistentDomain(forName: bundleID)
+            UserDefaults.standard.synchronize()
         }
-        
         configureTabBarAppearance()
     }
     
     var body: some Scene {
         WindowGroup {
             ZStack {
-                Color(Color.tsBackground)
-                    .ignoresSafeArea()
-                ContentView2()
-                SplashOverlay(isVisible: $showSplash)
+                if isRegistered {
+                    MainContentView()
+                        .overlay(
+                            SplashOverlay(isVisible: $showSplash)
+                        )
+                } else {
+                    FirstRegView(isRegistered: $isRegistered)
+                        .overlay(
+                            SplashOverlay(isVisible: $showSplash)
+                        )
+                }
             }
+            .background(Color.tsBackground)
         }
     }
 }
-

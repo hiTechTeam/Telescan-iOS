@@ -2,17 +2,15 @@ import SwiftUI
 
 struct ScanToggleView: View {
     
-    // MARK: - State
+    @Binding var isRegistered: Bool
     @State private var isToggleOn: Bool = false
-    @State private var goRun: Bool = false
     
     // MARK: - Constants
-    private let paddingBottom: CGFloat = 16
     private let paddingVertical: CGFloat = 24
     private let spacing: CGFloat = 0
     private let regKey: String = "isReg"
+    private let toggleKey: String = "scanToggle"
     
-    // MARK: - Body
     var body: some View {
         VStack {
             ScrollView {
@@ -25,14 +23,13 @@ struct ScanToggleView: View {
             .padding(.vertical, paddingVertical)
             
             GoButton(isToggleOn: $isToggleOn, title: Inc.go) {
+                // Сохраняем состояние
                 UserDefaults.standard.set(true, forKey: regKey)
-                goRun = true
+                UserDefaults.standard.set(isToggleOn, forKey: toggleKey)
+                
+                // Переходим на главный экран через App
+                isRegistered = true
             }
         }
-        .navigationDestination(isPresented: $goRun) {
-            MainContentView()
-                .navigationBarBackButtonHidden(true)
-        }
-        .background(Color.tsBackround)
     }
 }

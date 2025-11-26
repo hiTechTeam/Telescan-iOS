@@ -5,8 +5,10 @@ struct FirstRegView: View {
     // MARK: - Env
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
-    // MARK: - Binds
-    @Binding var onStart: Bool
+    // MARK: - Bind
+    @Binding var isRegistered: Bool
+    
+    @State var onStart: Bool = false
     
     // MARK: - Сonstants
     private let gradientSize: CGFloat = 750
@@ -23,9 +25,62 @@ struct FirstRegView: View {
     private let telescanSpacing: CGFloat = 4
     private let iconSize: CGFloat = 110
     private let contentFrameWidth: CGFloat = 360
-    private let aboutFontSize: CGFloat = 36
+    private let aboutFontSize: CGFloat = 30
     private let shareFontSize: CGFloat = 14
     private let zOne: Double = 1
+    
+    // MARK: - Calculated VIew properties
+    private var backroundCircle: some View {
+        Image(colorScheme == .dark ? .gradientCircleDark : .gradientCircleLight)
+            .resizable()
+            .scaledToFill()
+            .frame(width: gradientSize, height: gradientSize)
+            .offset(x: gradientOffsetX, y: gradientOffsetY)
+            .ignoresSafeArea()
+            .zIndex(.zero)
+    }
+    private var mainContent: some View {
+        VStack(spacing: containerSpacing) {
+            VStack(alignment: .center) {
+                Spacer()
+                VStack(spacing: telescanSpacing) {
+                    Text(Inc.Welcome)
+                        .font(.system(size: welcomeFontSize, weight: .heavy))
+                        .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
+                        .opacity(welcomeOpacity)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    HStack {
+                        Text(Inc.Telescan)
+                            .font(.system(size: telescanFontSize, weight: .heavy))
+                            .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
+                        Spacer()
+                        Image.tsIcon100
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: iconSize, height: iconSize)
+                    }
+                    .frame(maxWidth: .infinity)
+                    Text(Inc.shortOnboardingMsg)
+                        .font(.system(size: aboutFontSize, weight: .semibold))
+                        .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .frame(width: contentFrameWidth)
+                Spacer()
+            }
+            .frame(width: welcomeFrameWidth)
+            
+            Text(Inc.letsGo)
+                .font(.system(size: shareFontSize, weight: .regular))
+                .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
+                .frame(width: contentFrameWidth)
+            
+            StartButton(title: Inc.start) {
+                    onStart = true
+            }
+        }
+        .zIndex(zOne)
+    }
     
     // MARK: - Body
     var body: some View {
@@ -33,66 +88,11 @@ struct FirstRegView: View {
             ZStack {
                 Color(colorScheme == .dark ? Color.dark : Color.bl2)
                     .ignoresSafeArea()
-                
-                Image(colorScheme == .dark ? .gradientCircleDark : .gradientCircleLight)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: gradientSize, height: gradientSize)
-                    .offset(x: gradientOffsetX, y: gradientOffsetY)
-                    .ignoresSafeArea()
-                    .zIndex(.zero)
-                
-                VStack(spacing: containerSpacing) {
-                    VStack(alignment: .center) {
-                        
-                        Spacer()
-                        
-                        VStack(spacing: telescanSpacing) {
-                            Text(Inc.Welcome)
-                                .font(.system(size: welcomeFontSize, weight: .heavy))
-                                .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
-                                .opacity(welcomeOpacity)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            HStack {
-                                Text(Inc.Telescan)
-                                    .font(.system(size: telescanFontSize, weight: .heavy))
-                                    .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
-                                Spacer()
-                                Image.tsIcon100
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: iconSize, height: iconSize)
-                            }
-                            .frame(maxWidth: .infinity)
-                            
-                            Text(Inc.shortOnboardingMsg)
-                                .font(.system(size: aboutFontSize, weight: .semibold))
-                                .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        .frame(width: contentFrameWidth)
-                        
-                        Spacer()
-                        
-                    }
-                    .frame(width: welcomeFrameWidth)
-                    
-                    Text(Inc.letsGo)
-                        .font(.system(size: shareFontSize, weight: .regular))
-                        .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
-                        .frame(width: contentFrameWidth)
-                    
-                    StartButton(title: Inc.start) {
-                        onStart = true
-                    }
-                    
-                }
-                .zIndex(zOne)
-                
+                backroundCircle
+                mainContent
             }
             .navigationDestination(isPresented: $onStart) {
-                RegView()
+                RegView(isRegistered: $isRegistered)
                     .navigationBarBackButtonHidden(true)
             }
         }

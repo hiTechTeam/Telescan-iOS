@@ -6,13 +6,30 @@ struct MainContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             
-            Near()
-                .tabItem { Label(Inc.people, systemImage: IncLogos.shareplay) }
-                .tag(SelectedTab.near)
+            NavigationStack {
+                NearView()
+                    .navigationTitle("People")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            .tabItem { Label("People", systemImage: IncLogos.shareplay) }
+            .tag(SelectedTab.near)
             
-            Profile()
-                .tabItem { Label(Inc.profile, systemImage: IncLogos.personFillViewwfinder) }
-                .tag(SelectedTab.profile)
+            NavigationStack {
+                ProfileView()
+                    .navigationTitle("Profile")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                // действие info
+                            }) {
+                                Image(systemName: "info.circle")
+                            }
+                        }
+                    }
+            }
+            .tabItem { Label("Profile", systemImage: IncLogos.personFillViewwfinder) }
+            .tag(SelectedTab.profile)
         }
     }
 }

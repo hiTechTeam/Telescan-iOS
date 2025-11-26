@@ -17,7 +17,7 @@ struct UsernamePlaceholder: View {
     private let fieldWidth: CGFloat = 360
     private let fieldHeight: CGFloat = 46
     private let cornerRadius: CGFloat = 13
-    private let paddingHorizontal: CGFloat = 13
+    private let paddingHorizontal: CGFloat = 12
     private let fontSizeNormal: CGFloat = 20
     private let fontSizeIncorrect: CGFloat = 14
     private let activeOpacity: CGFloat = 0.2
@@ -118,6 +118,7 @@ struct UsernamePlaceholder: View {
                     .padding(.horizontal, paddingHorizontal)
                     .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
             }
+            
         }
         .onChange(of: codeStatus) { _, newValue in
             if newValue == false {

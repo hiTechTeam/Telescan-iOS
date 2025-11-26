@@ -3,11 +3,11 @@ import SwiftUI
 struct NextButton: View {
     
     // MARK: - Inputs and Binds
-    var title: String
     @Binding var codeStatus: Bool?
     var onNext: () -> Void
     
     // MARK: - Constants
+    private let title: String = "Next"
     private let fontSize: CGFloat = 20
     private let buttonWidth: CGFloat = 360
     private let buttonHeight: CGFloat = 60
@@ -29,15 +29,9 @@ struct NextButton: View {
             Text(title)
                 .font(.system(size: fontSize, weight: .bold))
                 .tracking(tracking)
-                .foregroundColor(codeStatus == true ? Color.deepblue : Color.primary.opacity(foregroundOpacity))
+                .foregroundColor(codeStatus == true ? Color.white : Color.primary.opacity(foregroundOpacity))
                 .frame(width: buttonWidth, height: buttonHeight)
-                .overlay(
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .stroke(
-                            codeStatus == true ? Color.bl2 :  Color.primary.opacity(foregroundOpacity),
-                            lineWidth: codeStatus == true ? strokeIfTrue : strokeIfFalse
-                        )
-                )
+                .background(codeStatus == true ? Color.bl2 :  Color.primary.opacity(foregroundOpacity))
                 .cornerRadius(cornerRadius)
                 .padding(.bottom, paddingButtom)
         }
