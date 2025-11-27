@@ -5,25 +5,32 @@ struct RegView: View {
     @StateObject private var viewModel = CodeViewModel()
     @FocusState private var isFocused: Bool
     @State private var goNext: Bool = false
-
+    
     var body: some View {
-        VStack {
-            ScrollView {
-                CodeSpace(isFocused: _isFocused, viewModel: viewModel)
+        ZStack {
+            Color.tsBackground
+                .ignoresSafeArea()
+            
+            VStack {
+                ScrollView {
+                    CodeSpace(isFocused: _isFocused, viewModel: viewModel)
+                    Color.clear
+                        .frame(maxWidth: .infinity)
+                }
+                .onTapGesture { isFocused = false }
+                
+                NextButton(codeStatus: $viewModel.codeStatus) {
+                    viewModel.confirmCode()
+                    goNext = true
+                }
             }
-            .onTapGesture { isFocused = false }
-
-            NextButton(codeStatus: $viewModel.codeStatus) {
-                viewModel.confirmCode()
-                goNext = true
+            .navigationDestination(isPresented: $goNext) {
+                ScanToggleView(isRegistered: $isRegistered)
             }
-        }
-        .navigationDestination(isPresented: $goNext) {
-            ScanToggleView(isRegistered: $isRegistered)
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                BotButton()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    BotButton()
+                }
             }
         }
     }

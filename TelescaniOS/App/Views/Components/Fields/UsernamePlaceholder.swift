@@ -1,16 +1,16 @@
 import SwiftUI
 
 struct UsernamePlaceholder: View {
-
+    
     // MARK: - Inputs
     var username: String? = nil
     var codeStatus: Bool?
     var isLoading: Bool = false
-
+    
     // MARK: - State
     @State private var animate = false
     @State private var shakeOffset: CGFloat = .zero
-
+    
     // MARK: - Constants
     private let placeholderText: String = Inc.usernamePlaceholder
     private let incorrectCodeText: String = Inc.incorrectCode
@@ -30,7 +30,7 @@ struct UsernamePlaceholder: View {
     private let shakeRepeats: Int = 2
     private let shakeOffsetAbs: CGFloat = 4
     private let shakeStepDuration: Double = 0.05
-
+    
     // MARK: - Computed values
     private var displayedText: String {
         if let name = username {
@@ -65,7 +65,7 @@ struct UsernamePlaceholder: View {
         }
         return .gray
     }
-
+    
     // MARK: - Functions
     private func animateField() {
         withAnimation(.easeOut(duration: scaleAnimDuration)) {
@@ -81,14 +81,14 @@ struct UsernamePlaceholder: View {
         for index in shakeInitialIndex ..< (shakeInitialIndex + shakeRepeats) {
             let delay = Double(index - shakeInitialIndex) * shakeStepDuration
             let target: CGFloat = (index.isMultiple(of: shakeRepeats) ? -shakeOffsetAbs : shakeOffsetAbs)
-
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 withAnimation(.linear(duration: shakeStepDuration)) {
                     shakeOffset = target
                 }
             }
         }
-
+        
         let resetDelay = Double(shakeRepeats) * shakeStepDuration
         DispatchQueue.main.asyncAfter(deadline: .now() + resetDelay) {
             withAnimation(.linear(duration: shakeStepDuration)) {
@@ -96,7 +96,7 @@ struct UsernamePlaceholder: View {
             }
         }
     }
-
+    
     // MARK: - Body
     var body: some View {
         ZStack {
@@ -106,7 +106,7 @@ struct UsernamePlaceholder: View {
                 .scaleEffect(animate ? scaleLarge : scaleSmall)
                 .offset(x: shakeOffset)
                 .animation(.easeInOut(duration: generalAnimDuration), value: animate)
-
+            
             if isLoading {
                 ProgressView()
                     .frame(height: fieldHeight)

@@ -76,7 +76,7 @@ struct FirstRegView: View {
                 .frame(width: contentFrameWidth)
             
             StartButton(title: Inc.start) {
-                    onStart = true
+                onStart = true
             }
         }
         .zIndex(zOne)
@@ -84,17 +84,16 @@ struct FirstRegView: View {
     
     // MARK: - Body
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color(colorScheme == .dark ? Color.dark : Color.bl2)
-                    .ignoresSafeArea()
-                backroundCircle
-                mainContent
-            }
-            .navigationDestination(isPresented: $onStart) {
-                RegView(isRegistered: $isRegistered)
-                    .navigationBarBackButtonHidden(true)
-            }
+        ZStack {
+            Color(colorScheme == .dark ? Color.dark : Color.bl2)
+                .ignoresSafeArea()
+            backroundCircle
+            mainContent
         }
+        .navigationDestination(isPresented: $onStart) {
+            RegView(isRegistered: $isRegistered)
+                .navigationBarBackButtonHidden(true)
+        }
+        
     }
 }

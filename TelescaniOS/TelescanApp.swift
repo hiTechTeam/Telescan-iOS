@@ -20,22 +20,22 @@ struct Telescan: App {
         configureTabBarAppearance()
     }
     
+    private var contentView: some View {
+        Group {
+            if isRegistered {
+                MainContentView()
+            } else {
+                RegistrationFlow(isRegistered: $isRegistered)
+            }
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
             ZStack {
-                if isRegistered {
-                    MainContentView()
-                        .overlay(
-                            SplashOverlay(isVisible: $showSplash)
-                        )
-                } else {
-                    FirstRegView(isRegistered: $isRegistered)
-                        .overlay(
-                            SplashOverlay(isVisible: $showSplash)
-                        )
-                }
+                contentView
+                    .overlay(SplashOverlay(isVisible: $showSplash))
             }
-            .background(Color.tsBackground)
         }
     }
 }

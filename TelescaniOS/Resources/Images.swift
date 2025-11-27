@@ -8,4 +8,6 @@ extension Image {
     static let gradientCircleDark = Image("gradient-circle-dark")
     static let upChevron = Image("up-chevron")
     static let photoProfile = Image("photo-profile")
+    static let infoImage: Image = Image(systemName: "info.circle.fill")
+    static let iconEye: Image = Image("icon-eye")
 }

@@ -11,12 +11,12 @@ struct ScanToggle: View {
     private let cornerRadius: CGFloat = 13
     private let paddingHorizontal: CGFloat = 14
     private let fontSize: CGFloat = 16
-    private let imageSize: CGFloat = 24
+    private let imageSize: CGFloat = 28
     
     // MARK: - Body
     var body: some View {
         HStack {
-            Image(systemName: "dot.radiowaves.forward")
+            Image.iconEye // "dot.radiowaves.forward"
                 .resizable()
                 .scaledToFit()
                 .frame(width: imageSize, height: imageSize)
@@ -30,3 +30,5 @@ struct ScanToggle: View {
         .cornerRadius(cornerRadius)
     }
 }
+
+

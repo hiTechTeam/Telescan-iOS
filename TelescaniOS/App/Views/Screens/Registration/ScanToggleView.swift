@@ -12,24 +12,31 @@ struct ScanToggleView: View {
     private let toggleKey: String = "scanToggle"
     
     var body: some View {
-        VStack {
-            ScrollView {
-                VStack(spacing: spacing) {
-                    ScanToggleReg(isToggleOn: $isToggleOn)
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity)
-            }
-            .padding(.vertical, paddingVertical)
+        ZStack {
             
-            GoButton(isToggleOn: $isToggleOn, title: Inc.go) {
-                // Сохраняем состояние
-                UserDefaults.standard.set(true, forKey: regKey)
-                UserDefaults.standard.set(isToggleOn, forKey: toggleKey)
+            Color.tsBackground
+                .ignoresSafeArea()
+            
+            VStack {
+                ScrollView {
+                    VStack(spacing: spacing) {
+                        ScanToggleReg(isToggleOn: $isToggleOn)
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .padding(.vertical, paddingVertical)
                 
-                // Переходим на главный экран через App
-                isRegistered = true
+                GoButton(isToggleOn: $isToggleOn, title: Inc.go) {
+                    
+                    UserDefaults.standard.set(true, forKey: regKey)
+                    UserDefaults.standard.set(isToggleOn, forKey: toggleKey)
+                    
+                    isRegistered = true
+                }
             }
         }
+        
+        
     }
 }

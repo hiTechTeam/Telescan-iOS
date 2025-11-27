@@ -33,6 +33,7 @@ struct CodeSpace: View {
                     isLoading: viewModel.isLoading
                 )
             }
+            
             Description(text: Inc.regDescription)
         }
         .frame(width: frameWidth)

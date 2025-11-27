@@ -43,7 +43,6 @@ struct UpButton: View {
                 ConfirmButton(codeStatus: $viewModel.codeStatus) {
                     viewModel.confirmCode()
                     
-                    // ВАЖНО: закрываем sheet только если код валидный
                     if viewModel.codeStatus == true {
                         showSheet = false
                     }
