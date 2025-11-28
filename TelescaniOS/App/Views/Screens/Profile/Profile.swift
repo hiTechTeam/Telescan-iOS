@@ -1,13 +1,16 @@
 import SwiftUI
 
 struct Profile: View {
+    @State private var savedName: String = ""
     @State private var savedCode: String = ""
     @State private var showInfoSheet = false
+    
+    private let tgNameKey = "tgName"
     
     var body: some View {
         NavigationStack {
             ProfileData()
-                .navigationTitle(Inc.profile)
+                .navigationTitle(savedName.isEmpty ? Inc.profile : savedName)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -24,6 +27,11 @@ struct Profile: View {
                         .presentationDetents([.large])
                         .presentationDragIndicator(.visible)
                 }
+        }
+        .onAppear {
+            if let name = UserDefaults.standard.string(forKey: tgNameKey) {
+                savedName = name
+            }
         }
         .tabItem { Label(Inc.profile, systemImage: IncLogos.personFillViewwfinder) }
         .tag(SelectedTab.profile)

@@ -3,9 +3,8 @@ import SwiftUI
 struct InfoSheetView: View {
     var body: some View {
         VStack(spacing: 20) {
-            
             VStack(spacing: 16) {
-                Text("Telegram Integration")
+                Text("Telescan")
                     .font(.system(size: 20, weight: .medium))
                     .multilineTextAlignment(.center)
                 Text("The app extends Telegram's functionality and uses it as the main communication channel. Telescan enables instant exchange of Telegram usernames via Bluetooth.")

@@ -29,6 +29,7 @@ struct FirstRegView: View {
     private let shareFontSize: CGFloat = 14
     private let zOne: Double = 1
     
+    
     // MARK: - Calculated VIew properties
     private var backroundCircle: some View {
         Image(colorScheme == .dark ? .gradientCircleDark : .gradientCircleLight)
@@ -70,7 +71,7 @@ struct FirstRegView: View {
             }
             .frame(width: welcomeFrameWidth)
             
-            Text(Inc.letsGo)
+            Text(Inc.logIn)
                 .font(.system(size: shareFontSize, weight: .regular))
                 .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
                 .frame(width: contentFrameWidth)
@@ -78,6 +79,7 @@ struct FirstRegView: View {
             StartButton(title: Inc.start) {
                 onStart = true
             }
+            
         }
         .zIndex(zOne)
     }

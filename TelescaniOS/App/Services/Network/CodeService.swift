@@ -28,7 +28,7 @@ final class CodeService {
     }
     
     /// Fetching tg username from database
-    func fetchUsername(for code: String) async throws -> (String, String) {
+    func fetchUsername(for code: String) async throws -> (String, String, String) {
         let hashedCode = sha256(code)
         
         guard let url = URL(string: Links.telescanApiLocal) else {
@@ -52,6 +52,6 @@ final class CodeService {
             GetUsernameResponse.self,
             from: data
         )
-        return (dog + json.tg_username, hashedCode)
+        return (json.tg_name, dog + json.tg_username, hashedCode)
     }
 }
