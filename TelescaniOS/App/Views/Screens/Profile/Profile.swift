@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct Profile: View {
+    
     @State private var savedName: String = ""
     @State private var savedCode: String = ""
     @State private var showInfoSheet = false

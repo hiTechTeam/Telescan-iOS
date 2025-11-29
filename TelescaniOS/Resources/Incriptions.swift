@@ -42,7 +42,7 @@ struct IncLogos {
 
 struct Links {
     static let telescanBot = "https://t.me/tgtelescan_bot"
-    static let telescanApiTunnel = "https://etctk-172-245-109-174.a.free.pinggy.link/v1/code/"
+    static let telescanApiTunnel = "https://arrkv-62-212-74-163.a.free.pinggy.link/v1/code/"
     static let telescanApiLocal = "http:/localhost:80/v1/code/"
 }
 
@@ -51,3 +51,5 @@ enum SelectedTab: Int {
     case profile = 1
 }
 
+
+// ssh -p 443 -R0:localhost:8000 -L4300:localhost:4300 qr@free.pinggy.io

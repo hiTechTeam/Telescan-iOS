@@ -4,13 +4,15 @@ import SwiftUI
 @MainActor
 final class CodeViewModel: ObservableObject {
 
-    @Published var code: String = ""
+    @Published var tgId: Int? = nil
     @Published var tgName: String? = nil
-    @Published var username: String? = nil          // имя, полученное из проверки (видно сразу)
+    @Published var username: String? = nil
+    @Published var photoS3Url: String? = nil
+    @Published var code: String = ""
+    
     @Published var codeStatus: Bool? = nil
     @Published var isLoading = false
 
-    // подтверждённые значения (для UI/профиля)
     @Published var confirmedCode: String? = nil
     @Published var confirmedTgName: String? = nil
     @Published var confirmedUsername: String? = nil
@@ -18,15 +20,16 @@ final class CodeViewModel: ObservableObject {
 
     private let codeCount = 8
     private let userCodeKey = "userCode"
+    private let tgIdKey = "tg_id"
     private let tgNameKey = "tgName"
     private let usernameKey = "username"
+    private let photoS3UrlKey = "photoS3Url"
     private let hashedCodeKey = "hashedCode"
-
+    
     private var pendingHashedCode: String?
 
     func checkCode(_ input: String) {
         guard input.count == codeCount else {
-            // если длина не равна — сброс статуса проверки, но не трогаем confirmed*
             codeStatus = nil
             username = nil
             return
@@ -37,13 +40,14 @@ final class CodeViewModel: ObservableObject {
         Task {
             let generator = UINotificationFeedbackGenerator()
             do {
-                let (tgName, tgUsername, hashedCode) = try await CodeService.shared.fetchUsername(for: input)
-                // обновляем username и статус — видно сразу в UI
-                self.tgName = tgName
-                self.username = tgUsername
+                let responseData: GetUsernameResponse = try await CodeService.shared.fetchUsername(for: input)
+                self.tgId = responseData.tg_id
+                self.tgName = responseData.tg_name
+                self.username = responseData.tg_username
+                self.photoS3Url = responseData.photoS3Url
+                self.pendingHashedCode = responseData.hashedCode
                 self.codeStatus = true
                 self.code = input
-                self.pendingHashedCode = hashedCode
                 generator.notificationOccurred(.success)
             } catch {
                 self.tgName = nil
@@ -66,7 +70,10 @@ final class CodeViewModel: ObservableObject {
         self.isUsernameConfirmed = true
 
         // сохраняем в UserDefaults
-        UserDefaults.standard.set(code, forKey: userCodeKey)
+        
+        if let tgId = tgId {
+            UserDefaults.standard.set(tgId, forKey: tgIdKey)
+        }
         
         if let name = tgName {
             UserDefaults.standard.set(name, forKey: tgNameKey)
@@ -74,6 +81,10 @@ final class CodeViewModel: ObservableObject {
         
         if let u = username {
             UserDefaults.standard.set(u, forKey: usernameKey)
+        }
+        
+        if let photoS3UrlLink = photoS3Url {
+            UserDefaults.standard.set(photoS3UrlLink, forKey: photoS3UrlKey)
         }
        
         UserDefaults.standard.set(hashed, forKey: hashedCodeKey)

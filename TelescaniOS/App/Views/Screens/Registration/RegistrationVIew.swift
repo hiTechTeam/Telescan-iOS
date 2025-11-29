@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct RegView: View {
+    
     @Binding var isRegistered: Bool
     @StateObject private var viewModel = CodeViewModel()
     @FocusState private var isFocused: Bool

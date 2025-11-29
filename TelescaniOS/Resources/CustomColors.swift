@@ -8,4 +8,5 @@ extension Color {
     static let tField = Color("textField")
     static let dark = Color("dark-18")
     static let bl2 = Color("blue2")
+    static let thinblue = Color("thin-blue")
 }
