@@ -7,6 +7,7 @@ struct MainContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             People()
+//            LocalChats()
             Profile()
         }
     }

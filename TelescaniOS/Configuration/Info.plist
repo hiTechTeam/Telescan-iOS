@@ -8,6 +8,8 @@
 		<string>processing</string>
 		<string>remote-notification</string>
 		<string>bluetooth-peripheral</string>
+		<string>fetch</string>
+		<string>nearby-interaction</string>
 	</array>
 </dict>
 </plist>

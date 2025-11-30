@@ -2,9 +2,9 @@ import SwiftUI
 import CoreBluetooth
 
 struct ScanToggle: View {
-    @EnvironmentObject var peopleViewModel: PeopleViewModel
-    @Binding var isToggleOn: Bool
     
+    @Binding var isToggleOn: Bool
+    @EnvironmentObject var peopleViewModel: PeopleViewModel
     
     private let frameWidth: CGFloat = 360
     private let frameHeight: CGFloat = 46
@@ -26,7 +26,11 @@ struct ScanToggle: View {
             Toggle(Inc.scanning, isOn: $isToggleOn)
                 .toggleStyle(SwitchToggleStyle(tint: .green))
                 .onChange(of: isToggleOn) { _, newValue in
+                    
+                    peopleViewModel.toggleScanning(newValue)
+                    
                     guard let tgId = UserDefaults.standard.object(forKey: tgIdKey) as? Int else { return }
+                    
                     if newValue {
                         if bleManager.isBluetoothAvailable {
                             bleManager.startAdvertising(id: String(tgId))
@@ -35,7 +39,6 @@ struct ScanToggle: View {
                         }
                     } else {
                         bleManager.stopAdvertising()
-                        peopleViewModel.clearDevices()
                     }
                 }
                 .alert("Включите Bluetooth", isPresented: $showBluetoothAlert) {

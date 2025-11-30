@@ -40,7 +40,7 @@ final class CodeViewModel: ObservableObject {
         Task {
             let generator = UINotificationFeedbackGenerator()
             do {
-                let responseData: GetUsernameResponse = try await CodeService.shared.fetchUsername(for: input)
+                let responseData: GetUserDataByHashedCodeResponse = try await FetchService.fetch.fetchUserDataByHashedCode(for: input)
                 self.tgId = responseData.tg_id
                 self.tgName = responseData.tg_name
                 self.username = responseData.tg_username

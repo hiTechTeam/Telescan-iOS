@@ -11,5 +11,7 @@ extension Image {
     static let photoProfile = Image("photo-profile")
     static let infoImage: Image = Image(systemName: "info.circle.fill")
     static let iconEye: Image = Image("icon-eye")
-    
+    static let plusChat: Image = Image(systemName: "plus.bubble")
+    static let tempChat: Image = Image(systemName: "bubble")
+    static let met: Image = Image(systemName: "clock.fill")
 }

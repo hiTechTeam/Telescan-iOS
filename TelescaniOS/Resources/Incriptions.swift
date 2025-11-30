@@ -1,5 +1,6 @@
 struct Inc {
     static let people = "People"
+    static let localChats = "Chats"
     static let profile = "Profile"
     static let placeCode = "Code"
     static let enterCode = "Enter the code"
@@ -42,14 +43,19 @@ struct IncLogos {
 
 struct Links {
     static let telescanBot = "https://t.me/tgtelescan_bot"
-    static let telescanApiTunnel = "https://arrkv-62-212-74-163.a.free.pinggy.link/v1/code/"
+    static let telescanApiTunnel =  "https://ojhuy-109-252-147-215.a.free.pinggy.link/v1/code/"
+    static let telescanApiGetuser = "https://ojhuy-109-252-147-215.a.free.pinggy.link/v1/users/"
     static let telescanApiLocal = "http:/localhost:80/v1/code/"
 }
 
 enum SelectedTab: Int {
     case near = 0
+    case localChats = 2
     case profile = 1
 }
 
 
 // ssh -p 443 -R0:localhost:8000 -L4300:localhost:4300 qr@free.pinggy.io
+
+
+
