@@ -1,13 +1,19 @@
 import SwiftUI
 
 struct InfoSheetView: View {
+    
+    private let person2Fill: String = "person.2.fill"
+    private let boltFill: String = "bolt.fill"
+    private let lockFill: String = "lock.fill"
+    private let netWork: String = "network"
+    
     var body: some View {
         VStack(spacing: 20) {
             VStack(spacing: 16) {
-                Text("Telescan")
-                    .font(.system(size: 20, weight: .medium))
+                Text(Inc.Info.Telescan)
+                    .font(.system(size: 24, weight: .medium))
                     .multilineTextAlignment(.center)
-                Text("The app extends Telegram's functionality and uses it as the main communication channel. Telescan enables instant exchange of Telegram usernames via Bluetooth.")
+                Text(Inc.Info.mainDescription.localized)
                     .font(.system(size: 12, weight: .medium))
                     .frame(maxWidth: 360)
                     .multilineTextAlignment(.center)
@@ -17,27 +23,27 @@ struct InfoSheetView: View {
             VStack(alignment: .leading, spacing: 16) {
                 
                 InfoItem(
-                    icon: "person.2.fill",
-                    title: "Instant Contact Exchange",
-                    description: "Exchange contact information with other participants instantly."
+                    icon: person2Fill,
+                    title: Inc.Info.instantExchangeTitle.localized,
+                    description: Inc.Info.instantExchangeDesc.localized
                 )
                 
                 InfoItem(
-                    icon: "bolt.fill",
-                    title: "Fast and Offline",
-                    description: "Uses Bluetooth for offline code hash exchange."
+                    icon: boltFill,
+                    title: Inc.Info.fastOfflineTitle.localized,
+                    description: Inc.Info.fastOfflineDesc.localized
                 )
                 
                 InfoItem(
-                    icon: "lock.fill",
-                    title: "Data Protection",
-                    description: "All data is securely protected: code hashes are stored on the server, and only the account owner can link their Telegram."
+                    icon: lockFill,
+                    title: Inc.Info.dataProtectionTitle.localized,
+                    description: Inc.Info.dataProtectionDesc.localized
                 )
                 
                 InfoItem(
-                    icon: "network",
-                    title: "Ideal for Events",
-                    description: "Perfect for conferences, business events, professional meetups, networking, and dating."
+                    icon: netWork,
+                    title: Inc.Info.idealForEventsTitle.localized,
+                    description: Inc.Info.idealForEventsDesc.localized
                 )
             }
             .padding(.horizontal)

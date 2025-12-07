@@ -1,7 +1,7 @@
 import SwiftUI
 
+@MainActor
 protocol AppCoordinatorProtocol: AnyObject {
-    var state: AppCoordinatorState { get set}
     
     func start() -> AnyView
     func completedRegistration()

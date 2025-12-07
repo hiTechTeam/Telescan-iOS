@@ -7,7 +7,7 @@ final class CodeViewModel: ObservableObject {
     @Published var tgId: Int? = nil
     @Published var tgName: String? = nil
     @Published var username: String? = nil
-    @Published var photoS3Url: String? = nil
+    @Published var photoS3URL: String? = nil
     @Published var code: String = ""
     
     @Published var codeStatus: Bool? = nil
@@ -37,14 +37,14 @@ final class CodeViewModel: ObservableObject {
 
         isLoading = true
 
-        Task {
+        Task { 
             let generator = UINotificationFeedbackGenerator()
             do {
                 let responseData: GetUserDataByHashedCodeResponse = try await FetchService.fetch.fetchUserDataByHashedCode(for: input)
                 self.tgId = responseData.tg_id
                 self.tgName = responseData.tg_name
                 self.username = responseData.tg_username
-                self.photoS3Url = responseData.photoS3Url
+                self.photoS3URL = responseData.photoS3URL
                 self.pendingHashedCode = responseData.hashedCode
                 self.codeStatus = true
                 self.code = input
@@ -83,12 +83,13 @@ final class CodeViewModel: ObservableObject {
             UserDefaults.standard.set(u, forKey: usernameKey)
         }
         
-        if let photoS3UrlLink = photoS3Url {
+        if let photoS3UrlLink = photoS3URL {
             UserDefaults.standard.set(photoS3UrlLink, forKey: photoS3UrlKey)
         }
        
         UserDefaults.standard.set(hashed, forKey: hashedCodeKey)
 
         pendingHashedCode = nil
+        
     }
 }

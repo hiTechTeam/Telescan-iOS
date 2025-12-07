@@ -1,26 +1,38 @@
 import SwiftUI
 
+@MainActor
 final class AppCoordinator: ObservableObject, AppCoordinatorProtocol {
     
-    @Published var state: AppCoordinatorState
-    private let regKey = "isReg"
-
+    @Published var isRegistered: Bool
+    @Published var showSplash: Bool = true
+    @Published var isScaning: Bool
+    
+    let authCodeViewModel = CodeViewModel()
+    let peopleViewModel = PeopleViewModel()
+    
+    private let regKey: String = GlobalVars.regKey
+    private let isScaningKey: String = GlobalVars.isScaningKey
+    
     init() {
-        let isReg = UserDefaults.standard.bool(forKey: regKey)
-        self.state = AppCoordinatorState(isRegistered: isReg)
+        self.isRegistered = UserDefaults.standard.bool(forKey: regKey)
+        self.isScaning = UserDefaults.standard.bool(forKey: isScaningKey)
     }
-
+    
     func start() -> AnyView {
-        AnyView(AppCoordinatorView(coordinator: self))
+        AnyView(AppCoordinatorView()
+            .environmentObject(self)
+            .environmentObject(authCodeViewModel)
+            .environmentObject(peopleViewModel)
+        )
     }
-
+    
     func completedRegistration() {
-        state.isRegistered = true
+        isRegistered = true
         UserDefaults.standard.set(true, forKey: regKey)
     }
-
+    
     func logout() {
-        state.isRegistered = false
+        isRegistered = false
         UserDefaults.standard.set(false, forKey: regKey)
     }
 }

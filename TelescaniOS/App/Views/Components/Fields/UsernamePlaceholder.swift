@@ -12,8 +12,8 @@ struct UsernamePlaceholder: View {
     @State private var shakeOffset: CGFloat = .zero
     
     // MARK: - Constants
-    private let placeholderText: String = Inc.usernamePlaceholder
-    private let incorrectCodeText: String = Inc.incorrectCode
+    private let usernameField: String = Inc.Registration.usernamePlaceholder
+    private let incorrectCodeText: String = Inc.Registration.incorrectCode.localized
     private let fieldWidth: CGFloat = 360
     private let fieldHeight: CGFloat = 46
     private let cornerRadius: CGFloat = 13
@@ -39,7 +39,7 @@ struct UsernamePlaceholder: View {
         if codeStatus == false {
             return incorrectCodeText
         }
-        return placeholderText
+        return usernameField
     }
     private var computedFontSize: CGFloat {
         if let status = codeStatus {

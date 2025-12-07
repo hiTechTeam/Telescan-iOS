@@ -1,0 +1,66 @@
+/* Alerts */
+"turnOnBLE" = "Turn on Bluetooth";
+
+/* Common */
+"SignIn" = "Sign in";
+"ok" = "OK";
+"cancel" = "Cancel";
+
+/* Tabs */
+"people" = "People";
+"chats" = "Chats";
+"profile" = "Profile";
+
+/* Registration */
+"placeCode" = "Code";
+"codePlaceholder" = "Code";
+"enterCode" = "Enter code";
+"code" = "Code";
+"currentCode" = "Current code: ";
+"registration" = "Registration";
+"incorrectCode" = "Couldn't find a Telegram username";
+"warningCharactersEight" = "Maximum of 8 characters";
+"regDescription" = "Enter the code that the bot sent so that the application can link your Telegram username.";
+"tgUsername" = "Telegram username";
+"usernamePlaceholder" = "@_";
+
+/* Onboarding */
+"welcome_title" = "Welcome to";
+"poweredByTG" = "Powered by Telegram";
+"aboutOnBoardingMsg" = "Telescan lets you instantly find and share Telegram profiles with people nearby.";
+"shortOnboardingMsg" = "Share your Telegram with people around you.";
+"start" = "Get started with Telegram";
+"goNext" = "Next";
+"go" = "Go";
+"confirmButton" = "Confirm";
+
+/* Scanning */
+"scanning" = "Scanning";
+"scanToggleDescription" = "Turn on Bluetooth scanning so that you can see the people around you.";
+"turnedOffScaning" = "Scanning is turned off. Enable scanning in the app to see nearby people. Background scanning is not available.";
+"noPeopleNearby" = "Scanning is active… Nearby people will appear here. Keep the app open — background scanning is not available.";
+
+/* Profile */
+"photoOptions" = "Photo Options";
+"takePhoto" = "Take Photo";
+"galleryPhoto" = "Choose from Gallery";
+"deletePhoto" = "Delete Photo";
+"shareUtg" = "Share your profile";
+"profileSettingsDescription" = "You can change profile data in Telegram settings.";
+
+
+/* Info Sheet */
+"Telescan" = "Telescan";
+"info_main_description" = "The app extends Telegram's functionality and uses it as the main communication channel. Telescan enables instant exchange of Telegram usernames via Bluetooth.";
+
+"info_instant_exchange_title" = "Instant Contact Exchange";
+"info_instant_exchange_desc" = "Exchange contact information with other participants instantly.";
+
+"info_fast_offline_title" = "Fast and Offline";
+"info_fast_offline_desc" = "Uses Bluetooth for offline code hash exchange.";
+
+"info_data_protection_title" = "Data Protection";
+"info_data_protection_desc" = "All data is securely protected: code hashes are stored on the server, and only the account owner can link their Telegram.";
+
+"info_ideal_events_title" = "Ideal for Events";
+"info_ideal_events_desc" = "Perfect for conferences, business events, professional meetups, networking, and dating.";

@@ -3,17 +3,11 @@ import Combine
 
 struct CodeField: View {
     
-    // MARK: - State
     @State private var showWarning: Bool = false
     @State private var warningCancellable: AnyCancellable?
     
-    // MARK: - Binds
     @Binding var text: String
-    
-    // MARK: - Inputs
-    var placeholder: String
 
-    // MARK: - Constants
     private let maxLength: Int = 8
     private let fieldWidth: CGFloat = 360
     private let fieldHeight: CGFloat = 46
@@ -24,16 +18,13 @@ struct CodeField: View {
     private let fontSizeSmall: CGFloat = 12
     private var paddingLeading: CGFloat { fieldWidth / 2 }
     private let delayWarning: TimeInterval = 3
+    private let generator = UINotificationFeedbackGenerator()
 
-    // MARK: - Functions
     private func handleTextChange(_ newValue: String) {
         if newValue.count > maxLength {
             text = String(newValue.prefix(maxLength))
             showWarning = true
-
-            let generator = UINotificationFeedbackGenerator()
             generator.notificationOccurred(.warning)
-
             warningCancellable?.cancel()
             warningCancellable = Just(())
                 .delay(for: .seconds(delayWarning), scheduler: RunLoop.main)
@@ -47,10 +38,9 @@ struct CodeField: View {
         }
     }
 
-    // MARK: - Body
     var body: some View {
         ZStack {
-            TextField(placeholder, text: $text)
+            TextField(Inc.Registration.codePlaceholder.localized, text: $text)
                 .padding(.horizontal, paddingH)
                 .frame(width: fieldWidth, height: fieldHeight)
                 .background(Color.tField)
@@ -68,7 +58,7 @@ struct CodeField: View {
                 }
 
             if showWarning {
-                Text(Inc.warningCharactersEight)
+                Text(Inc.Registration.warningCharactersEight.localized)
                     .foregroundColor(.gray)
                     .font(.system(size: fontSizeSmall))
                     .frame(width: fieldWidth, height: fieldHeight, alignment: .center)

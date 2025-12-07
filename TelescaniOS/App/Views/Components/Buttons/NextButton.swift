@@ -7,7 +7,7 @@ struct NextButton: View {
     var onNext: () -> Void
     
     // MARK: - Constants
-    private let title: String = "Next"
+    private let title: String = Inc.Onboarding.goNext.localized
     private let fontSize: CGFloat = 20
     private let buttonWidth: CGFloat = 360
     private let buttonHeight: CGFloat = 60

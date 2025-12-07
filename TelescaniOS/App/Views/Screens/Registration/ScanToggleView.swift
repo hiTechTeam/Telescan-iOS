@@ -2,14 +2,12 @@ import SwiftUI
 
 struct ScanToggleView: View {
     
-    @Binding var isRegistered: Bool
-    @State private var isToggleOn: Bool = false
+    @EnvironmentObject var coordinator: AppCoordinator
     
-    // MARK: - Constants
     private let paddingVertical: CGFloat = 24
     private let spacing: CGFloat = 0
-    private let regKey: String = "isReg"
-    private let toggleKey: String = "scanToggle"
+    private let regKey: String = GlobalVars.regKey
+    private let isScaningKey: String = GlobalVars.isScaningKey
     
     var body: some View {
         ZStack {
@@ -20,19 +18,16 @@ struct ScanToggleView: View {
             VStack {
                 ScrollView {
                     VStack(spacing: spacing) {
-                        ScanToggleReg(isToggleOn: $isToggleOn)
+                        ScanToggleReg(isScaning: $coordinator.isScaning)
                         Spacer()
                     }
                     .frame(maxWidth: .infinity)
                 }
                 .padding(.vertical, paddingVertical)
                 
-                GoButton(isToggleOn: $isToggleOn, title: Inc.go) {
-                    
-                    UserDefaults.standard.set(true, forKey: regKey)
-                    UserDefaults.standard.set(isToggleOn, forKey: toggleKey)
-                    
-                    isRegistered = true
+                GoButton(isScanning: $coordinator.isScaning) {
+                    coordinator.completedRegistration()
+                    UserDefaults.standard.set(coordinator.isScaning, forKey: isScaningKey)
                 }
             }
         }

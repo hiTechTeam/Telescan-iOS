@@ -3,7 +3,7 @@ import SwiftUI
 struct UsernamePlaceholderProfile: View {
     
     @ObservedObject var viewModel: CodeViewModel
-    @State var savedUsername: String = "@_"
+    @State var savedUsername: String = Inc.Registration.usernamePlaceholder
     
     private let cornerRadius: CGFloat = 13
     private let fieldWidth: CGFloat = 360

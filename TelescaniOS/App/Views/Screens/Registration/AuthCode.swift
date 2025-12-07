@@ -1,32 +1,30 @@
 import SwiftUI
 
-struct RegView: View {
+struct AuthCode: View {
     
-    @Binding var isRegistered: Bool
-    @StateObject private var viewModel = CodeViewModel()
-    @FocusState private var isFocused: Bool
+    @EnvironmentObject var authCodeViewModel: CodeViewModel
     @State private var goNext: Bool = false
     
     var body: some View {
         ZStack {
+            
             Color.tsBackground
                 .ignoresSafeArea()
             
             VStack {
                 ScrollView {
-                    CodeSpace(isFocused: _isFocused, viewModel: viewModel)
-                    Color.clear
-                        .frame(maxWidth: .infinity)
+                    CodeSpace()
+                    Color.clear.frame(width: 390, height: 8)
                 }
-                .onTapGesture { isFocused = false }
                 
-                NextButton(codeStatus: $viewModel.codeStatus) {
-                    viewModel.confirmCode()
+                NextButton(codeStatus: $authCodeViewModel.codeStatus) {
+                    authCodeViewModel.confirmCode()
                     goNext = true
                 }
+                
             }
             .navigationDestination(isPresented: $goNext) {
-                ScanToggleView(isRegistered: $isRegistered)
+                ScanToggleView()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

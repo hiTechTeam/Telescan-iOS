@@ -2,16 +2,18 @@ import SwiftUI
 
 struct Profile: View {
     
+//    @EnvironmentObject var coordinator: AppCoordinator
+    @ObservedObject var authVM: CodeViewModel
     @State private var savedName: String = ""
-    @State private var savedCode: String = ""
     @State private var showInfoSheet = false
     
     private let tgNameKey = "tgName"
+    private let profileInc: String = Inc.Tabs.profile.localized
     
     var body: some View {
         NavigationStack {
-            ProfileData()
-                .navigationTitle(savedName.isEmpty ? Inc.profile : savedName)
+            ProfileDataView(authCodeViewModel: authVM)
+                .navigationTitle(authVM.confirmedTgName ?? profileInc)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -29,12 +31,7 @@ struct Profile: View {
                         .presentationDragIndicator(.visible)
                 }
         }
-        .onAppear {
-            if let name = UserDefaults.standard.string(forKey: tgNameKey) {
-                savedName = name
-            }
-        }
-        .tabItem { Label(Inc.profile, systemImage: IncLogos.personFillViewwfinder) }
+        .tabItem { Label(profileInc, systemImage: IncLogos.personFillViewwfinder) }
         .tag(SelectedTab.profile)
     }
 }

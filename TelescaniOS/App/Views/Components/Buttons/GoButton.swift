@@ -2,11 +2,8 @@ import SwiftUI
 
 struct GoButton: View {
     
-    // MARK: - Binds
-    @Binding var isToggleOn: Bool
+    @Binding var isScanning: Bool
     
-    // MARK: - Inputs
-    var title: String
     var onGo: () -> Void
     
     // MARK: - Constants
@@ -18,23 +15,24 @@ struct GoButton: View {
     private let backgroundOpacity: CGFloat = 0.2
     private let paddingButtom: CGFloat = 16
     private let tracking: CGFloat = 1.05
+
     
     // MARK: - Body
     var body: some View {
         Button(action: {
-            if isToggleOn == true {
+            if isScanning {
                 onGo()
             }
         }) {
-            Text(title)
+            Text(Inc.Onboarding.go.localized)
                 .font(.system(size: fontSize, weight: .bold))
                 .tracking(tracking)
-                .foregroundColor(isToggleOn == true ? Color.white : Color.primary.opacity(foregroundOpacity))
+                .foregroundColor(isScanning ? Color.white : Color.primary.opacity(foregroundOpacity))
                 .frame(width: buttonWidth, height: buttonHeight)
-                .background(isToggleOn == true ? Color.deepblue : Color.gray.opacity(backgroundOpacity))
+                .background(isScanning ? Color.bl2 : Color.gray.opacity(backgroundOpacity))
                 .cornerRadius(cornerRadius)
                 .padding(.bottom, paddingButtom)
         }
-        .disabled(isToggleOn != true)
+        .disabled(isScanning != true)
     }
 }

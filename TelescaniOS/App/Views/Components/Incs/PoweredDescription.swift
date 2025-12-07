@@ -14,7 +14,7 @@ struct PoweredDescription: View {
     // MARK: - Body
     var body: some View {
         HStack(spacing: hSpacing){
-            Text(Inc.poweredBy)
+            Text(Inc.Onboarding.poweredByTG.localized)
                 .font(.system(size: fontSize, weight: .medium))
                 .foregroundColor(colorScheme == .dark ? Color.bl2 : Color.white)
             Image.tgIcon

@@ -1,0 +1,65 @@
+/* Alerts */
+"turnOnBLE" = "Включите Bluetooth";
+
+/* Common */
+"ok" = "Ок";
+"cancel" = "Отмена";
+
+/* Tabs */
+"people" = "Люди";
+"chats" = "Чаты";
+"profile" = "Профиль";
+
+/* Registration */
+"placeCode" = "Код";
+"codePlaceholder" = "Код";
+"code" = "Код";
+"enterCode" = "Введите код";
+"currentCode" = "Текущий код: ";
+"registration" = "Регистрация";
+"incorrectCode" = "Не удалось найти Telegram username";
+"warningCharactersEight" = "Максимум 8 символов";
+"regDescription" = "Введите код, который отправил бот, для того чтобы приложение могло привязать ваш Telegram username.";
+"tgUsername" = "Telegram username";
+"usernamePlaceholder" = "@_";
+
+/* Onboarding */
+"welcome_title" = "Добро пожаловать в";
+"poweredByTG" = "Работает от Telegram";
+"aboutOnBoardingMsg" = "Telescan позволяет быстро находить и обмениваться Telegram-профилями.";
+"shortOnboardingMsg" = "Делитесь вашим Telegram с людьми рядом.";
+"start" = "Начать с Telegram";
+"goNext" = "Далее";
+"go" = "Начать";
+"confirmButton" = "Применить";
+
+/* Scanning */
+"scanning" = "Сканирование";
+"scanToggleDescription" = "Включите Bluetooth-сканирование, чтобы видеть людей рядом.";
+"turnedOffScaning" = "Сканирование отключено. Включите сканирование в приложении, чтобы видеть людей, находящихся поблизости. Фоновое сканирование недоступно.";
+"noPeopleNearby" = "Сканирование запущено… Здесь будут отображаться люди, находящиеся поблизости. Оставьте приложение открытым — фоновое сканирование недоступно.";
+
+/* Profile */
+"photoOptions" = "Параметры фото";
+"takePhoto" = "Сделать фото";
+"galleryPhoto" = "Выбрать из галереи";
+"deletePhoto" = "Удалить фото";
+"shareUtg" = "Поделиться профилем";
+"SignIn" = "Войти";
+"profileSettingsDescription" = "Изменить данные профиля можно в настройках Telegram.";
+
+/* Info Sheet */
+"Telescan" = "Telescan";
+"info_main_description" = "Приложение расширяет возможности Telegram и использует его как основной канал связи. Telescan позволяет мгновенно обмениваться Telegram-юзернеймами через Bluetooth.";
+
+"info_instant_exchange_title" = "Мгновенный обмен контактами";
+"info_instant_exchange_desc" = "Мгновенно обменивайтесь контактной информацией с другими участниками.";
+
+"info_fast_offline_title" = "Быстро и офлайн";
+"info_fast_offline_desc" = "Использует Bluetooth для офлайн-обмена хэшами кода.";
+
+"info_data_protection_title" = "Защита данных";
+"info_data_protection_desc" = "Все данные надежно защищены: хэши кодов хранятся на сервере, и только владелец аккаунта может привязать свой Telegram.";
+
+"info_ideal_events_title" = "Идеально для мероприятий";
+"info_ideal_events_desc" = "Подходит для конференций, бизнес-встреч, профессиональных мероприятий, нетворкинга и знакомств.";

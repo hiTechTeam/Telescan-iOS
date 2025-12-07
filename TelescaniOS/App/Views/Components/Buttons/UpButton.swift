@@ -33,10 +33,7 @@ struct UpButton: View {
                 .frame(width: 360, height: 46, alignment: .trailing)
                 .padding(.top, 24)
                 
-                CodeSpace(
-                    isFocused: _isFocused,
-                    viewModel: viewModel
-                )
+                CodeSpace()
                 
                 Spacer()
                 

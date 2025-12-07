@@ -30,7 +30,7 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
                     id: tgID,
                     tgName: data.tg_name,
                     tgUsername: data.tg_username,
-                    photoURL: data.photoS3Url
+                    photoURL: data.photoS3URL
                 )
                 userCache[tgID] = user
             } catch {

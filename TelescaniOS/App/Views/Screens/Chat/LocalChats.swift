@@ -4,7 +4,7 @@ struct LocalChats: View {
     var body: some View {
         NavigationStack {
             LocalChatsView()
-                .navigationTitle(Inc.localChats)
+                .navigationTitle(Inc.Tabs.chats.localized)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {

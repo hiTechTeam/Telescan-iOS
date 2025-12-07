@@ -2,44 +2,49 @@ import SwiftUI
 
 struct CodeSpace: View {
     
-    // MARK: - State
-    @FocusState var isFocused: Bool
-    @ObservedObject var viewModel: CodeViewModel
+    @EnvironmentObject var authCodeViewModel: CodeViewModel
+    @FocusState private var isCodeFocused: Bool
     
-    // MARK: - Constants
     private let paddingTop: CGFloat = 10
-    private let spacing1: CGFloat = 16
-    private let spacing2: CGFloat = 0
+    private let spacing16: CGFloat = 16
     private let frameWidth: CGFloat = 360
     
-    // MARK: - Calculated VIew properties
     private var codeSpace: some View {
-        VStack(spacing: spacing1) {
-            VStack(spacing: spacing2) {
-                TitleField(text: Inc.enterCode)
-                CodeField(text: $viewModel.code, placeholder: Inc.code)
-                    .focused($isFocused)
-                    .onChange(of: viewModel.code) { _, newValue in
-                        viewModel.checkCode(newValue)
+        VStack(spacing: spacing16) {
+            VStack {
+                TitleField(text: Inc.Registration.enterCode.localized)
+                CodeField(text: $authCodeViewModel.code)
+                    .focused($isCodeFocused)
+                    .onTapGesture {
+                        isCodeFocused = true
+                    }
+                    .onChange(of: authCodeViewModel.code) { _, newValue in
+                        authCodeViewModel.checkCode(newValue)
                     }
             }
             .padding(.top, paddingTop)
             
-            VStack(spacing: spacing2) {
-                TitleField(text: Inc.tgUsername)
+            VStack {
+                TitleField(text: Inc.Registration.tgUsername)
                 UsernamePlaceholder(
-                    username: viewModel.username,
-                    codeStatus: viewModel.codeStatus,
-                    isLoading: viewModel.isLoading
+                    username: authCodeViewModel.username,
+                    codeStatus: authCodeViewModel.codeStatus,
+                    isLoading: authCodeViewModel.isLoading
                 )
             }
             
-            Description(text: Inc.regDescription)
+            Description(text: Inc.Registration.regDescription.localized)
         }
         .frame(width: frameWidth)
+        .onTapGesture {
+            isCodeFocused = false
+        }
+        
+        
+        
+        
     }
     
-    // MARK: - Body
     var body: some View {
         codeSpace
     }

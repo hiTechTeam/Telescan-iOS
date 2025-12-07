@@ -17,7 +17,7 @@ struct ConfirmButton: View {
     private let tracking: CGFloat = 1.05
     private let strokeIfTrue: CGFloat = 6
     private let strokeIfFalse: CGFloat = 3
-    private let textButton: String = "Confirm"
+    private let confirmButton: String = Inc.Onboarding.confirmButton.localized
     
     // MARK: - Body
     var body: some View {
@@ -26,7 +26,7 @@ struct ConfirmButton: View {
                 onConfirm()
             }
         }) {
-            Text(textButton)
+            Text(confirmButton)
                 .font(.system(size: fontSize, weight: .bold))
                 .tracking(tracking)
                 .foregroundColor(codeStatus == true ? Color.white : Color.primary.opacity(foregroundOpacity))

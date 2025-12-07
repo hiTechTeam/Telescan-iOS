@@ -16,11 +16,10 @@ struct BotButton: View {
         Button(action: {
             viewModel.openBot()
         }) {
-            Text(Inc.telescanBot)
+            Text(Inc.Profile.telescanBot)
                 .font(.system(size: fontSize, weight: .semibold))
                 .foregroundColor(.blue)
                 .frame(width: buttonWidth, height: buttonHeight)
-//                .background(Color.bl2.opacity(0.3))
                 .cornerRadius(cornerRadius)
         }
     }

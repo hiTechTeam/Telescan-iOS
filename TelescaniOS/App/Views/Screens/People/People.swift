@@ -4,10 +4,12 @@ struct People: View {
     
     @EnvironmentObject var peopleViewModel: PeopleViewModel
     
+    private let peopleInc: String = Inc.Tabs.people.localized
+    
     var body: some View {
         NavigationStack {
             PeopleView()
-                .navigationTitle(Inc.people)
+                .navigationTitle(peopleInc)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     
@@ -23,7 +25,7 @@ struct People: View {
         }
         .tabItem {
             if peopleViewModel.isScanningEnabled {
-                Label(Inc.people, systemImage: IncLogos.shareplay)
+                Label(peopleInc, systemImage: IncLogos.shareplay)
             } else {
                 Label("", systemImage: "shareplay.slash")
             }

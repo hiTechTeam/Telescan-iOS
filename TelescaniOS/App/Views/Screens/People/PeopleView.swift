@@ -20,12 +20,9 @@ struct PeopleView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 60, height: 60)
-                                .foregroundColor(.blue)
+                                .foregroundColor(.gray)
                             
-                            Text("""
-                                 Scanning is active…
-                                 Nearby people will appear here. Keep the app open — background scanning is not available.
-                                 """)
+                            Text(Inc.Scanning.noPeopleNeaby.localized)
                             .font(.system(size: 20, weight: .semibold))
                             .multilineTextAlignment(.center)
                             .foregroundColor(.gray)
@@ -56,10 +53,7 @@ struct PeopleView: View {
                             .frame(width: 60, height: 60)
                             .foregroundColor(.gray)
                         
-                        Text("""
-                             Scanning is turned off.
-                             Enable scanning in the app to see nearby people. Background scanning is not available.
-                             """)
+                        Text(Inc.Scanning.turnedOffScanning.localized)
                         .font(.system(size: 20, weight: .semibold))
                         .multilineTextAlignment(.center)
                         .foregroundColor(.gray)
