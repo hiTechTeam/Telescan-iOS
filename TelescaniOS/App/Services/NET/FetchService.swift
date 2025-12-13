@@ -2,167 +2,141 @@ import Foundation
 import CryptoKit
 import PhotosUI
 
-@MainActor
+//@MainActor
 final class FetchService {
     
     // MARK: - Singleton
     static let fetch = FetchService()
     
-    // MARK: - Init
     private init() {}
     
-    // MARK: - Constants
     private let POST: String = "POST"
     private let formatJSON: String = "application/json"
     private let contentType: String = "Content-Type"
-    private let hashedCodeKey: String = "hashed_code"
-    private let tgIDKey: String = "tg_id"
-    private let at: String = "@"
-    private let hexoFOrmat: String = "%02x"
-    private let statusSuccess: Int = 200
     
-    // MARK: - Functions
-    /// Make sha256 code hash
+    private let at: String = "@"
+    private let hashedCode: String = "hashed_code"
+    private let hexoFormat: String = "%02x"
+    
     func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashed = SHA256.hash(data: inputData)
-        return hashed.compactMap { String(format: hexoFOrmat, $0) }.joined()
+        return hashed.compactMap { String(format: hexoFormat, $0) }.joined()
     }
     
-    func fetchUserDataByHashedCode(for code: String) async throws -> GetUserDataByHashedCodeResponse
-    {
-        let hashedCode = sha256(code)
+    private func _fetch<T: Decodable>(
+        url: URL,
+        method: String = HTTPMethods.GET.rawValue,
+        queryItems: [URLQueryItem]? = nil,
+        headers: [String: String]? = nil,
+        body: Data? = nil
+    ) async throws -> T {
         
-        guard let url = URL(string: Links.telescanApiTunnel) else {
+        var components = URLComponents(string: url.absoluteString)
+        if let queryItems = queryItems {
+            components?.queryItems = queryItems
+        }
+        
+        guard let finalURL = components?.url else {
             throw URLError(.badURL)
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = POST
-        request.setValue(formatJSON, forHTTPHeaderField: contentType)
+        var request = URLRequest(url: finalURL)
+        request.httpMethod = method
         
-        let body: [String: String] = [hashedCodeKey: hashedCode]
-        request.httpBody = try JSONEncoder().encode(body)
+        if let headers = headers {
+            for (key, value) in headers {
+                request.setValue(value, forHTTPHeaderField: key)
+            }
+        }
+        
+        if let body = body, method != HTTPMethods.GET.rawValue {
+            request.httpBody = body
+        }
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == statusSuccess else {
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
             throw URLError(.badServerResponse)
         }
         
-        let json = try JSONDecoder().decode(
-            GetUserDataByHashedCodeResponse.self,
-            from: data
+        return try JSONDecoder().decode(T.self, from: data)
+    }
+    
+    func fetchUserDataByHashedCode(for code: String) async throws -> GetUserDataByHashedCodeResponse {
+        let hashedCodeData = sha256(code)
+        
+        var components = URLComponents(string: Links.telescanApiTunnel)
+        components?.queryItems = [
+            URLQueryItem(name: hashedCode, value: hashedCodeData)
+        ]
+        
+        guard let url = components?.url else {
+            throw URLError(.badURL)
+        }
+        
+        let json: GetUserDataByHashedCodeResponse = try await _fetch(
+            url: url,
+            method: HTTPMethods.GET.rawValue
         )
         
-        let tg_id = json.tg_id
-        let tg_name = json.tg_name
-        let tg_username = json.tg_username
-        let photoS3URL = json.photoS3URL
-        
         let responseData = GetUserDataByHashedCodeResponse(
-            tg_id: tg_id,
-            tg_name: tg_name,
-            tg_username: tg_username != nil ? (at + tg_username!) : nil,
-            photoS3URL: photoS3URL,
-            hashedCode: hashedCode
+            tg_id: json.tg_id,
+            tg_name: json.tg_name,
+            tg_username: json.tg_username != nil ? (at + json.tg_username!) : nil,
+            photoS3URL: json.photoS3URL,
+            hashedCode: hashedCodeData
         )
         
         return responseData
     }
     
-    
-    func fetchUserDataByTGID(for tgID: Int) async throws -> GetUserDataByTGID
-    {
+    func fetchUserDataByTGID(for tgID: Int) async throws -> GetUserDataByTGID {
         
-        guard let url = URL(string: Links.telescanApiGetuser) else {
+        var components = URLComponents(string: Links.telescanApiGetuser)
+        components?.queryItems = [
+            URLQueryItem(name: Keys.tgIdKey.rawValue, value: String(tgID))
+        ]
+        
+        guard let url = components?.url else {
             throw URLError(.badURL)
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = POST
-        request.setValue(formatJSON, forHTTPHeaderField: contentType)
-        
-        let body: [String: Int] = [tgIDKey: tgID]
-        request.httpBody = try JSONEncoder().encode(body)
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == statusSuccess else {
-            throw URLError(.badServerResponse)
-        }
-        
-        let json = try JSONDecoder().decode(
-            GetUserDataByHashedCodeResponse.self,
-            from: data
+        let json: GetUserDataByHashedCodeResponse = try await _fetch(
+            url: url,
+            method: HTTPMethods.GET.rawValue
         )
         
-        let tg_name = json.tg_name
-        let tg_username = json.tg_username
-        let photoS3URL = json.photoS3URL
-        
         let responseData = GetUserDataByTGID(
-            tg_name: tg_name,
-            tg_username: tg_username != nil ? (at + tg_username!) : nil,
-            photoS3URL: photoS3URL,
+            tg_name: json.tg_name,
+            tg_username: json.tg_username != nil ? ("@" + json.tg_username!) : nil,
+            photoS3URL: json.photoS3URL
         )
         
         return responseData
     }
     
     func uploadProfileImage(tgID: Int, image: UIImage) async throws -> String {
-        // Кодируем UIImage в JPEG
+        
         guard let imageData = image.jpegData(compressionQuality: 0.9) else {
             throw NSError(domain: "encode_error", code: 0)
         }
-
-        // Структуры запроса и ответа
-        struct Request: Encodable {
-            let tg_id: Int
-            let img: String // Base64
-        }
-
-        struct Response: Decodable {
-            let tg_id: Int
-            let photoS3URL: String
-        }
-
-        // Формируем URL и запрос
+        
+        let body = UploadProfileImageRequest(tg_id: tgID, img: imageData.base64EncodedString())
+        let bodyData = try JSONEncoder().encode(body)
+        
         guard let url = URL(string: Links.telescanApiUploadPhoto) else {
             throw URLError(.badURL)
         }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let body = Request(tg_id: tgID, img: imageData.base64EncodedString())
-        request.httpBody = try JSONEncoder().encode(body)
-
-        // Выполняем запрос
-        let (data, response) = try await URLSession.shared.data(for: request)
-
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw URLError(.badServerResponse)
-        }
-
-        // Декодируем ответ
-        let decoded = try JSONDecoder().decode(Response.self, from: data)
+        
+        let decoded: UploadProfileImageResponse = try await _fetch(
+            url: url,
+            method: HTTPMethods.POST.rawValue,
+            headers: ["Content-Type": "application/json"],
+            body: bodyData
+        )
+        
         return decoded.photoS3URL
-    }
-    
-    func deleteProfileImage(tgID: Int) async throws {
-        guard let url = URL(string: "\(Links.telescanApiDeletePhoto)/\(tgID)") else {
-            throw URLError(.badURL)
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
-
-        let (_, response) = try await URLSession.shared.data(for: request)
-
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw URLError(.badServerResponse)
-        }
     }
 }

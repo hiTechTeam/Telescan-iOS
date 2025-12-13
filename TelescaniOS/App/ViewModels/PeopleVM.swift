@@ -3,10 +3,10 @@ import SwiftUI
 import CoreBluetooth
 
 final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
+    
     @Published var devices: [String: Int] = [:]
     @Published var distances: [String: Int] = [:]
     @Published var userCache: [String: NearbyUser] = [:]
-    @Published var isScanningEnabled: Bool = false
     
     private var distanceTimer: Timer?
     private let validIDPattern = #"^\d+$"#
@@ -20,6 +20,7 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
         distanceTimer?.invalidate()
     }
     
+    
     func loadUserIfNeeded(tgID: String) async {
         guard userCache[tgID] == nil else { return }
         
@@ -32,7 +33,9 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
                     tgUsername: data.tg_username,
                     photoURL: data.photoS3URL
                 )
-                userCache[tgID] = user
+                Task { @MainActor in
+                    self.userCache[tgID] = user
+                }
             } catch {
                 print("Failed to load user: \(error)")
             }
@@ -41,7 +44,6 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
     
     // MARK: - Toggle управление сканированием
     func toggleScanning(_ enabled: Bool) {
-        isScanningEnabled = enabled
         if enabled {
             BLEManager.shared.startScanning()
         } else {
@@ -58,8 +60,10 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
     }
     
     private func recalculateDistances() {
-        for (id, rssi) in devices {
-            distances[id] = distanceFromRSSI(rssi)
+        Task { @MainActor in
+            for (id, rssi) in devices {
+                distances[id] = distanceFromRSSI(rssi)
+            }
         }
     }
     
@@ -72,16 +76,23 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
     // MARK: - BLEManagerDelegate
     func didDiscoverDevice(id: String, rssi: Int) {
         guard id.range(of: validIDPattern, options: .regularExpression) != nil else { return }
-        DispatchQueue.main.async { self.devices[id] = rssi }
+        Task { @MainActor in
+            self.devices[id] = rssi
+        }
     }
     
     func didUpdateDevice(id: String, rssi: Int) {
         guard id.range(of: validIDPattern, options: .regularExpression) != nil else { return }
-        DispatchQueue.main.async { self.devices[id] = rssi }
+        Task { @MainActor in
+            self.devices[id] = rssi
+        }
     }
     
     func didLoseDevice(id: String) {
-        DispatchQueue.main.async { self.devices.removeValue(forKey: id) }
+        Task { @MainActor in
+            self.devices.removeValue(forKey: id)
+            self.distances.removeValue(forKey: id)
+        }
     }
     
     func didFail(with error: Error) {
@@ -89,9 +100,10 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
     }
     
     func clearDevices() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.devices.removeAll()
             self.distances.removeAll()
         }
     }
 }
+

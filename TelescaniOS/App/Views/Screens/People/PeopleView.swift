@@ -1,33 +1,40 @@
 import SwiftUI
 
 struct PeopleView: View {
+    
+    @EnvironmentObject var coordinator: AppCoordinator
     @EnvironmentObject var peopleViewModel: PeopleViewModel
     @State private var selectedID: String? = nil
     @State private var showProfileSheet = false
     
     var body: some View {
         ZStack {
+            
             Color.tsBackground.ignoresSafeArea()
             
             VStack(alignment: .leading) {
                 
                 // MARK: - SCANNING ENABLED
-                if peopleViewModel.isScanningEnabled {
+                if  coordinator.isScaning {
                     
                     if peopleViewModel.devices.isEmpty {
-                        VStack(spacing: 20) {
-                            Image(systemName: "wave.3.up")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                                .foregroundColor(.gray)
-                            
-                            Text(Inc.Scanning.noPeopleNeaby.localized)
-                            .font(.system(size: 20, weight: .semibold))
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.gray)
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Image(systemName: "wave.3.up")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 28, height: 28)
+                                    .foregroundColor(.gray)
+                                
+                                Text(Inc.Scanning.noPeopleNeaby.localized)
+                                    .font(.system(size: 14, weight: .regular))
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.top, 20)       // отступ сверху от таб-вью
+                            .padding(.horizontal, 16) // отступ слева/справа
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
-                        .frame(maxWidth: 320, maxHeight: .infinity)
+                        
                         
                     } else {
                         List {
@@ -43,30 +50,37 @@ struct PeopleView: View {
                                 }
                             }
                         }
+                        .scrollContentBackground(.hidden)
                     }
                     
                 } else {
-                    VStack(spacing: 20) {
-                        Image(systemName: "pause.circle")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60, height: 60)
-                            .foregroundColor(.gray)
-                        
-                        Text(Inc.Scanning.turnedOffScanning.localized)
-                        .font(.system(size: 20, weight: .semibold))
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.gray)
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Image(systemName: "pause.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 28, height: 28)
+                                .foregroundColor(.gray)
+                            
+                            Text(Inc.Scanning.turnedOffScanning.localized)
+                                .font(.system(size: 14, weight: .regular))
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.top, 20)       // отступ сверху от таб-вью
+                        .padding(.horizontal, 16) // отступ слева/справа
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .frame(maxWidth: 320, maxHeight: .infinity)
                 }
             }
         }
-        // MARK: - Sheet
         .sheet(isPresented: $showProfileSheet) {
             if let id = selectedID {
                 ProfileSheetView(id: id)
                     .environmentObject(peopleViewModel)
+                    .presentationDetents([.large])                // на весь экран
+                    .presentationDragIndicator(.hidden)           // без индикатора
+                //                    .presentationBackground(.ultraThinMaterial)
+                
             }
         }
     }
@@ -124,51 +138,85 @@ struct PeopleRowContent: View {
 
 
 struct ProfileSheetView: View {
+    
     @EnvironmentObject var peopleViewModel: PeopleViewModel
+    @Environment(\.dismiss) private var dismiss
     let id: String
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            // Фото 360
-            if let user = peopleViewModel.userCache[id],
-               let url = user.photoURL,
-               let imageURL = URL(string: url) {
-                AsyncImage(url: imageURL) { image in
-                    image.resizable()
-                        .scaledToFit()
-                        .frame(width: 360, height: 360)
-                        .clipShape(Circle())
-                        .shadow(radius: 10)
-                } placeholder: {
+        ZStack {
+            // Основной контент
+            VStack {
+                Spacer(minLength: 0)
+                
+                // Фото по центру
+                if let user = peopleViewModel.userCache[id],
+                   let url = user.photoURL,
+                   let imageURL = URL(string: url) {
+                    AsyncImage(url: imageURL) { image in
+                        image.resizable()
+                            .scaledToFit()
+                            .frame(width: 390, height: 390)
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle()
+                                    .strokeBorder(Color.primary.opacity(0.5), lineWidth: 4)
+                                    .padding(-4)
+                                    .opacity(0.5)
+                            )
+                            .shadow(radius: 10)
+                    } placeholder: {
+                        Image(systemName: "person.crop.circle.fill")
+                            .resizable()
+                            .foregroundColor(.gray)
+                            .frame(width: 300, height: 300)
+                    }
+                } else {
                     Image(systemName: "person.crop.circle.fill")
                         .resizable()
                         .foregroundColor(.gray)
-                        .frame(width: 360, height: 360)
+                        .frame(width: 300, height: 300)
                 }
-            } else {
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .foregroundColor(.gray)
-                    .frame(width: 360, height: 360)
-            }
-            
-            Spacer()
-            
-            // Имя и username
-            VStack(spacing: 4) {
-                Text(peopleViewModel.userCache[id]?.tgName ?? "Unknown")
-                    .font(.title)
-                    .bold()
                 
-                Text(peopleViewModel.userCache[id]?.tgUsername ?? "")
-                    .font(.title2)
-                    .foregroundColor(.gray)
+                Spacer()
+                
+                // Нижняя часть
+                VStack(alignment: .leading, spacing: 28) {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(peopleViewModel.userCache[id]?.tgName ?? "Unknown")
+                            .font(.title)
+                            .bold()
+                        HStack(spacing: 8) {
+                            Text(Inc.Common.nearby.localized)
+                                .font(.system(size: 14))
+                                .foregroundColor(.gray)
+                            
+                            if let meters = peopleViewModel.distances[id] {
+                                Text("\(meters) m")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                    }
+                    
+                    if let username = peopleViewModel.userCache[id]?.tgUsername {
+                        CopyUsernameField(username: username)
+                    }
+                }
+                .padding(.bottom, 16)
             }
-            .padding(.bottom, 40)
+            .padding(.top, 60) // отступ чтобы фото не налезало на кнопку
+            
+            // Кнопка закрытия поверх контента
+            Button(action: { dismiss() }) {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.system(size: 28))
+                    .foregroundColor(.gray)
+                    .opacity(0.5)
+            }
+            .padding(.top, 20)
+            .padding(.trailing, 20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.tsBackground)
     }
 }

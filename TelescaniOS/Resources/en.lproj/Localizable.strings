@@ -3,13 +3,17 @@
 
 /* Common */
 "SignIn" = "Sign in";
-"ok" = "OK";
+"ok" = "Okey";
 "cancel" = "Cancel";
+"copied_sheet" = "Copied";
+"nearby" = "Nearby";
 
 /* Tabs */
+"peopleNearby" = "People nearby";
 "people" = "People";
 "chats" = "Chats";
 "profile" = "Profile";
+"metTitle" = "Met";
 
 /* Registration */
 "placeCode" = "Code";
@@ -36,9 +40,11 @@
 
 /* Scanning */
 "scanning" = "Scanning";
+"justTurnScaning" = "Turn on scaning";
 "scanToggleDescription" = "Turn on Bluetooth scanning so that you can see the people around you.";
-"turnedOffScaning" = "Scanning is turned off. Enable scanning in the app to see nearby people. Background scanning is not available.";
-"noPeopleNearby" = "Scanning is active… Nearby people will appear here. Keep the app open — background scanning is not available.";
+"turnedOffScaning" = "Scanning is turned off. Enable scanning in the app to see nearby people.";
+"noPeopleNearby" = "Scanning is activ! Nearby people will appear here. Keep the app open. Background scanning will be available in new versions of the app";
+"scanAlertText" = "To switch over, you need to enable scanning mode.";
 
 /* Profile */
 "photoOptions" = "Photo Options";

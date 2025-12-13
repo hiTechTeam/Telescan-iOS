@@ -2,32 +2,29 @@ import SwiftUI
 
 struct CodeSpace: View {
     
+    @EnvironmentObject var coordinator: AppCoordinator
     @EnvironmentObject var authCodeViewModel: CodeViewModel
     @FocusState private var isCodeFocused: Bool
     
-    private let paddingTop: CGFloat = 10
-    private let spacing16: CGFloat = 16
     private let frameWidth: CGFloat = 360
     
     private var codeSpace: some View {
-        VStack(spacing: spacing16) {
-            VStack {
+        VStack(spacing: 16) {
+            VStack(spacing: 4) {
                 TitleField(text: Inc.Registration.enterCode.localized)
-                CodeField(text: $authCodeViewModel.code)
+                CodeField(text: $authCodeViewModel.tmpCode)
                     .focused($isCodeFocused)
                     .onTapGesture {
                         isCodeFocused = true
                     }
-                    .onChange(of: authCodeViewModel.code) { _, newValue in
+                    .onChange(of: authCodeViewModel.tmpCode) { _, newValue in
                         authCodeViewModel.checkCode(newValue)
                     }
             }
-            .padding(.top, paddingTop)
-            
-            VStack {
+            VStack(spacing: 4) {
                 TitleField(text: Inc.Registration.tgUsername)
                 UsernamePlaceholder(
-                    username: authCodeViewModel.username,
+                    username: authCodeViewModel.tmpTgUsername,
                     codeStatus: authCodeViewModel.codeStatus,
                     isLoading: authCodeViewModel.isLoading
                 )
@@ -35,14 +32,11 @@ struct CodeSpace: View {
             
             Description(text: Inc.Registration.regDescription.localized)
         }
+        .padding(.top, 10)
         .frame(width: frameWidth)
         .onTapGesture {
             isCodeFocused = false
         }
-        
-        
-        
-        
     }
     
     var body: some View {

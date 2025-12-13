@@ -3,7 +3,8 @@ import CoreBluetooth
 
 struct ScanToggle: View {
     
-    @EnvironmentObject var peopleViewModel: PeopleViewModel
+    @EnvironmentObject var coordinator: AppCoordinator
+    @EnvironmentObject var peopleVM: PeopleViewModel
     @Binding var isScaning: Bool
     @State private var showBluetoothAlert = false
     
@@ -21,12 +22,15 @@ struct ScanToggle: View {
             .scaledToFit()
             .frame(width: imageSize, height: imageSize)
     }
+    
     private var scanToggle: some View {
         Toggle(Inc.Scanning.scanning.localized, isOn: $isScaning)
             .toggleStyle(SwitchToggleStyle(tint: .green))
             .onChange(of: isScaning) { _, newValue in
                 
-                peopleViewModel.toggleScanning(newValue)
+                peopleVM.toggleScanning(newValue)
+                coordinator.isScaning = newValue
+                UserDefaults.standard.set(newValue, forKey: Keys.isScaning.rawValue)
                 
                 guard let tgId = UserDefaults.standard.object(forKey: tgIdKey) as? Int else { return }
                 
@@ -44,6 +48,7 @@ struct ScanToggle: View {
                 Button(Inc.Common.ok) { }
             }
     }
+    
     private var scanToggleView: some View {
         HStack {
             iconEye

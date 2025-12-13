@@ -2,14 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>bluetooth-central</string>
-		<string>processing</string>
-		<string>remote-notification</string>
-		<string>bluetooth-peripheral</string>
-		<string>fetch</string>
-		<string>nearby-interaction</string>
-	</array>
+    <!-- ...  остальное ...  -->
+    
+    <!-- Запросы доступа к Bluetooth -->
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>We need Bluetooth to discover and connect to nearby mesh peers</string>
+    
+    <key>NSBluetoothAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need Bluetooth to discover and connect to nearby mesh peers</string>
+    
+    <!-- Background modes для работы в фоне -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>bluetooth-central</string>
+        <string>bluetooth-peripheral</string>
+        <string>fetch</string>
+        <string>processing</string>
+    </array>
+    
+    <!-- Для более надежного сканирования -->
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>com. raketa. ble.background. scan</string>
+    </array>
 </dict>
 </plist>

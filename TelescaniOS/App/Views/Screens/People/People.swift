@@ -2,29 +2,36 @@ import SwiftUI
 
 struct People: View {
     
+    @EnvironmentObject var coordinator: AppCoordinator
     @EnvironmentObject var peopleViewModel: PeopleViewModel
+    @ObservedObject var authVM: CodeViewModel
     
+    private let peopNearleInc: String = Inc.Common.nearby.localized
     private let peopleInc: String = Inc.Tabs.people.localized
+    
+    @State private var showMet = false
     
     var body: some View {
         NavigationStack {
             PeopleView()
-                .navigationTitle(peopleInc)
-                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle(peopNearleInc)
+                .navigationBarTitleDisplayMode(.automatic)
                 .toolbar {
-                    
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        HStack(spacing: 16) {
-                            Button(action: {}) {
-                                Image.met
-                                    .foregroundColor(.blue)
-                            }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            showMet = true
+                        } label: {
+                            Image.met
+                                .foregroundColor(.gray)
                         }
                     }
                 }
+                .navigationDestination(isPresented: $showMet) {
+                    MetScreen()
+                }
         }
         .tabItem {
-            if peopleViewModel.isScanningEnabled {
+            if coordinator.isScaning {
                 Label(peopleInc, systemImage: IncLogos.shareplay)
             } else {
                 Label("", systemImage: "shareplay.slash")
@@ -32,6 +39,14 @@ struct People: View {
         }
         .tag(SelectedTab.near)
         .badge(peopleViewModel.devices.count)
-        
     }
 }
+
+struct MetScreen: View {
+    var body: some View {
+        Text("Met Screen")
+            .navigationTitle(Inc.Tabs.metTitle.localized)
+            .navigationBarTitleDisplayMode(.inline)
+    }
+}
+

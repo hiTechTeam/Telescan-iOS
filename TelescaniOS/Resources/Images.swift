@@ -14,4 +14,5 @@ extension Image {
     static let plusChat: Image = Image(systemName: "plus.bubble")
     static let tempChat: Image = Image(systemName: "bubble")
     static let met: Image = Image(systemName: "clock.fill")
+    static let copyUsernameButton: Image = Image("copy-icon")
 }

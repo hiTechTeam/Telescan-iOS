@@ -2,19 +2,16 @@ import SwiftUI
 
 struct Profile: View {
     
-//    @EnvironmentObject var coordinator: AppCoordinator
     @ObservedObject var authVM: CodeViewModel
-    @State private var savedName: String = ""
     @State private var showInfoSheet = false
     
-    private let tgNameKey = "tgName"
     private let profileInc: String = Inc.Tabs.profile.localized
     
     var body: some View {
         NavigationStack {
             ProfileDataView(authCodeViewModel: authVM)
-                .navigationTitle(authVM.confirmedTgName ?? profileInc)
-                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle(authVM.TgName ?? profileInc)
+                .navigationBarTitleDisplayMode(.automatic)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
@@ -30,6 +27,19 @@ struct Profile: View {
                         .presentationDetents([.large])
                         .presentationDragIndicator(.visible)
                 }
+        }
+        .onAppear {
+            if let tgName = UserDefaults.standard.string(forKey: Keys.tgNameKey.rawValue) {
+                authVM.TgName = tgName
+            }
+            
+            if let code = UserDefaults.standard.string(forKey: Keys.cleanCodeKey.rawValue) {
+                authVM.Code = code
+            }
+            
+            if let username = UserDefaults.standard.string(forKey: Keys.usernameKey.rawValue) {
+                authVM.TgUsername = username
+            }
         }
         .tabItem { Label(profileInc, systemImage: IncLogos.personFillViewwfinder) }
         .tag(SelectedTab.profile)

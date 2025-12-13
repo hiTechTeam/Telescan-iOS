@@ -18,6 +18,14 @@ struct Inc {
         // EN: Cancel
         // RU: Отмена
         
+        static let copiedSheet: String = "copied_sheet"
+        // EN: Copied
+        // RU: Скопировано
+        
+        static let nearby: String = "nearby"
+        // EN: Nearby
+        // RU: Рядом
+        
         static let ok: String = "Ok"
         static let Telescan: String = "Telescan"
     }
@@ -28,6 +36,10 @@ struct Inc {
         // EN: Chats
         // RU: Чаты
         
+        static let peopleNearby: String = "peopleNearby"
+        // EN: People nearby
+        // RU: Люди рядом
+        
         static let people: String = "people"
         // EN: People
         // RU: Люди
@@ -35,6 +47,10 @@ struct Inc {
         static let profile: String = "profile"
         // EN: Profile
         // RU: Профиль
+        
+        static let metTitle: String = "metTitle"
+        // EN: Met recently
+        // RU: Виделись недавно
     }
     
     // MARK: - Registration
@@ -114,6 +130,11 @@ struct Inc {
         // EN: Scanning
         // RU: Сканирование
         
+        
+        static let justTurnScaning: String = "justTurnScaning"
+        // EN: Turn on scaning
+        // RU: Включите сканирование
+        
         static let scanToggleDescription: String = "scanToggleDescription"
         // EN: Turn on Bluetooth scanning so that you can see people around you.
         // RU: Включите Bluetooth-сканирование, чтобы видеть людей рядом.
@@ -123,8 +144,13 @@ struct Inc {
         // RU: Сканирование отключено. Включите сканирование в приложении, чтобы видеть людей, находящихся поблизости. Фоновое сканирование недоступно.
         
         static let noPeopleNeaby: String = "noPeopleNearby"
-        // EN: Scanning is active… Nearby people will appear here. Keep the app open — background scanning is not available.
-        // Ru: Сканирование запущено… Здесь будут отображаться люди, находящиеся поблизости. Оставьте приложение открытым — фоновое сканирование недоступно.
+        // EN: Scanning is active… Nearby people will appear here. Keep the app open - background scanning is not available.
+        // Ru: Сканирование запущено… Здесь будут отображаться люди, находящиеся поблизости. Оставьте приложение открытым - фоновое сканирование недоступно.
+        
+        static let scanAlertText: String = "scanAlertText"
+        // EN: To switch over, you need to enable scanning mode.
+        // RU: Для перехода необходимо включить режим сканирования.
+        
     }
     
     // MARK: - Profile
@@ -201,7 +227,7 @@ struct IncLogos {
 struct Links {
     
     static let local = "http:/localhost:80/v1/code/"
-    static let tunnel = "https://pxvyz-109-252-147-215.a.free.pinggy.link"
+    static let tunnel = "https://tqref-80-91-223-73.a.free.pinggy.link"
     
     static let telescanBot = "https://t.me/tgtelescan_bot"
     static let telescanApiTunnel =  tunnel + "/v1/code/"
@@ -215,4 +241,34 @@ enum SelectedTab: Int {
     case near = 0
     case localChats = 2
     case profile = 1
+}
+
+enum Keys: String {
+    case tgIdKey = "tg_id"
+    case tgNameKey = "tgName"
+    case userCodeKey = "userCode"
+    case usernameKey = "username"
+    case photoS3URLKey = "photoS3Url"
+    case hashedCodeKey = "hashedCode"
+    case cleanCodeKey = "cleanCode"
+    case isScaning = "isScaning"
+    case isReg = "isReg"
+}
+
+
+enum HTTPStatus: Int {
+    case ok = 200
+    case created = 201
+    case badRequest = 400
+    case unauthorized = 401
+    case forbidden = 403
+    case notFound = 404
+    case serverError = 500
+}
+
+enum HTTPMethods: String {
+    case GET = "GET"
+    case POST = "POST"
+    case PUT = "PUT"
+    case DELETE = "DELETE"
 }

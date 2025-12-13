@@ -11,3 +11,9 @@ struct GetUserDataByTGID: Codable {
     let tg_username: String?
     let photoS3URL: String?
 }
+
+
+struct UploadProfileImageResponse: Codable {
+    let tg_id: Int
+    let photoS3URL: String
+}

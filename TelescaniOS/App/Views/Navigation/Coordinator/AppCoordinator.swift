@@ -10,8 +10,8 @@ final class AppCoordinator: ObservableObject, AppCoordinatorProtocol {
     let authCodeViewModel = CodeViewModel()
     let peopleViewModel = PeopleViewModel()
     
-    private let regKey: String = GlobalVars.regKey
-    private let isScaningKey: String = GlobalVars.isScaningKey
+    private let regKey: String = Keys.isReg.rawValue
+    private let isScaningKey: String = Keys.isScaning.rawValue
     
     init() {
         self.isRegistered = UserDefaults.standard.bool(forKey: regKey)
@@ -19,10 +19,19 @@ final class AppCoordinator: ObservableObject, AppCoordinatorProtocol {
     }
     
     func start() -> AnyView {
-        AnyView(AppCoordinatorView()
-            .environmentObject(self)
-            .environmentObject(authCodeViewModel)
-            .environmentObject(peopleViewModel)
+        AnyView(
+            AppCoordinatorView()
+                .environmentObject(self)
+                .environmentObject(authCodeViewModel)
+                .environmentObject(peopleViewModel)
+                .onAppear {
+                    guard self.isRegistered, self.isScaning else { return }
+                    self.peopleViewModel.toggleScanning(true)
+                    
+                    if let tgID = UserDefaults.standard.object(forKey: Keys.tgIdKey.rawValue) as? Int {
+                        BLEManager.shared.startAdvertising(id: String(tgID))
+                    }
+                }
         )
     }
     
