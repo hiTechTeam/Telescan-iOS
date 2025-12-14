@@ -82,6 +82,13 @@ struct CopyUsernameField: View {
                         .transition(.opacity.combined(with: .move(edge: .top)))
                 }
             }
+            
+            Text(Inc.Info.copyUsername.localized)
+                .foregroundColor(.gray)
+                .font(.system(size: 12, weight: .light))
+                .frame(width: fieldWidth)
+                .multilineTextAlignment(.center)
+                .padding(.top, 4)
         }
     }
 }

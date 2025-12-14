@@ -77,9 +77,9 @@ struct PeopleView: View {
             if let id = selectedID {
                 ProfileSheetView(id: id)
                     .environmentObject(peopleViewModel)
-                    .presentationDetents([.large])                // на весь экран
-                    .presentationDragIndicator(.hidden)           // без индикатора
-                //                    .presentationBackground(.ultraThinMaterial)
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.hidden)
+            
                 
             }
         }
@@ -203,7 +203,7 @@ struct ProfileSheetView: View {
                         CopyUsernameField(username: username)
                     }
                 }
-                .padding(.bottom, 16)
+//                .padding(.bottom, 4)
             }
             .padding(.top, 60) // отступ чтобы фото не налезало на кнопку
             

@@ -216,6 +216,24 @@ struct Inc {
         static let idealForEventsDesc = "info_ideal_events_desc"
         // EN: Perfect for conferences, business events, professional meetups, networking, and dating.
         // RU: Подходит для конференций, бизнес-встреч, профессиональных мероприятий, нетворкинга и знакомств.
+        
+        static let version = "version"
+        // EN: Version
+        // RU: Версия
+        
+        static let copyUsername = "copyUsername"
+        // EN: Copy and past username in Telegram search field
+        // RU: Скопируйте и вставьте в поле поиска Telegram
+        
+        static let licenseMIT = "licenseMIT"
+        // EN: License: MIT
+        // RU: Лицензия: MIT
+        
+        static let openSourceText = "openSourceText"
+        // EN: This is an open-source project developed in the open and driven by the community. If you’re interested in contributing, shaping the architecture, improving features, or sharing     your ideas, you’re very welcome to join the development. Any contribution — from feedback to pull requests, is appreciated and helps the project grow.
+        // RU: Проект развивается как open-source, и мы открыты к сообществу. Если вам интересно поучаствовать в создании продукта, повлиять на архитектуру и функциональность или предложить       свои идеи, вы можете свободно подключиться к разработке. Любой вклад, от замечаний до pull request’ов, приветствуется и влияет на развитие проекта.
+        
+        static let currentVersion = " 0.0.0"
     }
 }
 
@@ -227,7 +245,7 @@ struct IncLogos {
 struct Links {
     
     static let local = "http:/localhost:80/v1/code/"
-    static let tunnel = "https://tqref-80-91-223-73.a.free.pinggy.link"
+    static let tunnel = "https://irryn-206-217-134-170.a.free.pinggy.link"
     
     static let telescanBot = "https://t.me/tgtelescan_bot"
     static let telescanApiTunnel =  tunnel + "/v1/code/"

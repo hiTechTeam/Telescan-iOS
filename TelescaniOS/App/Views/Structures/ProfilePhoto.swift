@@ -12,36 +12,61 @@ struct ProfilePhotoView: View {
     @State private var showPhotoOptions: Bool = false
     @State private var showCameraPicker: Bool = false
     @State private var showGalleryPicker: Bool = false
+    @State private var isPreviewing = false
     
     private let imageSizeEmpty: CGFloat = 120
     private let imageSizeFilled: CGFloat = 250
     private let photoS3UrlKey: String = "photoS3Url"
     
     var body: some View {
-        Group {
-            if let _ = uiImage {
-                profileImage
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: imageSizeFilled, height: imageSizeFilled)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle()
-                            .strokeBorder(Color.primary.opacity(0.5), lineWidth: 4)
-                            .padding(-4)
-                            .opacity(0.5)
-                    )
-                    .shadow(radius: 5)
-            } else {
-                profileImage
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: imageSizeEmpty, height: imageSizeEmpty)
-                    .foregroundColor(.gray)
+        ZStack {
+            // основной контент
+            Group {
+                if let _ = uiImage {
+                    profileImage
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: imageSizeFilled, height: imageSizeFilled)
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .strokeBorder(Color.primary.opacity(0.5), lineWidth: 4)
+                                .padding(-4)
+                                .opacity(0.5)
+                        )
+                        .shadow(radius: 5)
+                } else {
+                    profileImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: imageSizeEmpty, height: imageSizeEmpty)
+                        .foregroundColor(.gray)
+                }
+            }
+            .padding(.vertical, 40)
+            .onTapGesture { showPhotoOptions = true }
+            .onLongPressGesture(
+                pressing: { pressing in
+                    isPreviewing = pressing
+                },
+                perform: {}
+            )
+            
+            // fullscreen preview
+            if isPreviewing, let uiImage {
+                ZStack {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 390, height: 390)
+                        .padding(.vertical, 20)
+                        .clipShape(Circle())
+                        .shadow(radius: 20)
+                }
+                .transition(.opacity)
+                .zIndex(10)
             }
         }
-        .padding(.vertical, 40)
-        .onTapGesture { showPhotoOptions = true }
         .onChange(of: authCodeViewModel.PhotoS3URL) { _, _ in
             loadPhotoIfNeeded()
         }
@@ -70,16 +95,12 @@ struct ProfilePhotoView: View {
         }
         .fullScreenCover(isPresented: $showCameraPicker) {
             CameraPicker(image: $uiImage)
-                .edgesIgnoringSafeArea(.all)
-                .onDisappear {
-                    updateProfileImage()
-                }
+                .onDisappear { updateProfileImage() }
         }
         .photosPicker(
             isPresented: $showGalleryPicker,
             selection: $selectedItem,
-            matching: .images,
-            photoLibrary: .shared()
+            matching: .images
         )
         .onChange(of: selectedItem) { _, newItem in
             Task {

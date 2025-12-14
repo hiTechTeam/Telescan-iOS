@@ -69,4 +69,8 @@
 "info_data_protection_desc" = "All data is securely protected: code hashes are stored on the server, and only the account owner can link their Telegram.";
 
 "info_ideal_events_title" = "Ideal for Events";
-"info_ideal_events_desc" = "Perfect for conferences, business events, professional meetups, networking, and dating.";
+"info_ideal_events_desc" = "Perfect for conferences, business events, professional meetups, networking, dating and other meets.";
+"copyUsername" = "Copy and past username in Telegram search field";
+"licenseMIT" = "License: MIT";
+"openSourceText" = "This is an open-source project developed in the open and driven by the community. If you’re interested in contributing, shaping the architecture, improving features, or sharing your ideas, you’re very welcome to join the development. Any contribution from feedback to pull requests, is appreciated and helps the project grow.";
+"version" = "Version";

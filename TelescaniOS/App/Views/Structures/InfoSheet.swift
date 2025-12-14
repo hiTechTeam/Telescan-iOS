@@ -2,56 +2,104 @@ import SwiftUI
 
 struct InfoSheetView: View {
     
-    private let person2Fill: String = "person.2.fill"
-    private let boltFill: String = "bolt.fill"
-    private let lockFill: String = "lock.fill"
-    private let netWork: String = "network"
+    private let boltFill = "bolt.fill"
+    private let lockFill = "lock.fill"
+    private let netWork = "network"
+    
+    private let boxWidth: CGFloat = 360
+    private let boxHeight: CGFloat = 52
+    private let cornerRadius: CGFloat = 13
+    
+    private let githubURL = URL(string: "https://github.com/orgs/hiTechTeam/repositories")!
+    private let githubURLString = "https://github.com/orgs/hiTechTeam/repositories"
     
     var body: some View {
-        VStack(spacing: 20) {
-            VStack(spacing: 16) {
-                Text(Inc.Info.Telescan)
-                    .font(.system(size: 24, weight: .medium))
-                    .multilineTextAlignment(.center)
-                Text(Inc.Info.mainDescription.localized)
-                    .font(.system(size: 12, weight: .medium))
-                    .frame(maxWidth: 360)
-                    .multilineTextAlignment(.center)
-            }
-            .padding(.top, 48)
+        
+        List {
             
-            VStack(alignment: .leading, spacing: 16) {
-                
-                InfoItem(
-                    icon: person2Fill,
-                    title: Inc.Info.instantExchangeTitle.localized,
-                    description: Inc.Info.instantExchangeDesc.localized
-                )
-                
-                InfoItem(
-                    icon: boltFill,
-                    title: Inc.Info.fastOfflineTitle.localized,
-                    description: Inc.Info.fastOfflineDesc.localized
-                )
-                
-                InfoItem(
-                    icon: lockFill,
-                    title: Inc.Info.dataProtectionTitle.localized,
-                    description: Inc.Info.dataProtectionDesc.localized
-                )
-                
-                InfoItem(
-                    icon: netWork,
-                    title: Inc.Info.idealForEventsTitle.localized,
-                    description: Inc.Info.idealForEventsDesc.localized
-                )
+            Section {
+                VStack(spacing: 20) {
+                    
+                    VStack(spacing: 16) {
+                        Text(Inc.Info.Telescan)
+                            .font(.system(size: 24, weight: .medium))
+                            .multilineTextAlignment(.center)
+                        
+                        Text(Inc.Info.mainDescription.localized)
+                            .font(.system(size: 12, weight: .medium))
+                            .multilineTextAlignment(.center)
+                    }
+                    
+                    Divider()
+                    
+                    VStack(alignment: .leading, spacing: 16) {
+                        InfoItem(
+                            icon: boltFill,
+                            title: Inc.Info.instantExchangeTitle.localized,
+                            description: Inc.Info.instantExchangeDesc.localized
+                        )
+                        
+                        Divider()
+                        
+                        InfoItem(
+                            icon: lockFill,
+                            title: Inc.Info.dataProtectionTitle.localized,
+                            description: Inc.Info.dataProtectionDesc.localized
+                        )
+                        
+                        Divider()
+                        
+                        InfoItem(
+                            icon: netWork,
+                            title: Inc.Info.idealForEventsTitle.localized,
+                            description: Inc.Info.idealForEventsDesc.localized
+                        )
+                    }
+                }
             }
-            .padding(.horizontal)
-            .padding(.top, 24)
-            Spacer()
+            
+            Section (
+                
+                header: Text(Inc.Info.openSourceText.localized)
+                    .font(.system(size: 12))
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(.gray),
+                
+                footer:
+                    Text(Inc.Info.licenseMIT.localized)
+                    .font(.system(size: 12, weight: .light))
+                    .foregroundColor(.gray)
+                    .frame(width: boxWidth, alignment: .center)
+                
+            ) {
+                
+                VStack {
+                    HStack(spacing: 12) {
+                        Image.tsIconGraySmall
+                            .resizable()
+                            .frame(width: 24, height: 25)
+                        
+                        Text(Inc.Info.version.localized + Inc.Info.currentVersion)
+                            .font(.system(size: 14))
+                            .foregroundColor(.gray)
+                    }
+                    .frame(maxWidth: boxWidth, alignment: .center)
+                    
+                    Divider()
+                    
+                    Link(githubURLString, destination: githubURL)
+                        .font(.system(size: 12, weight: .medium))
+                        .frame(width: boxWidth, height: boxHeight, alignment: .center)
+                }
+                
+            }
+            
         }
+        .listStyle(.insetGrouped)
     }
 }
+
+
 
 struct InfoItem: View {
     var icon: String

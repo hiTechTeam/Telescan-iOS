@@ -11,7 +11,7 @@ struct Profile: View {
         NavigationStack {
             ProfileDataView(authCodeViewModel: authVM)
                 .navigationTitle(authVM.TgName ?? profileInc)
-                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {

@@ -15,20 +15,20 @@ struct People: View {
         NavigationStack {
             PeopleView()
                 .navigationTitle(peopNearleInc)
-                .navigationBarTitleDisplayMode(.automatic)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            showMet = true
-                        } label: {
-                            Image.met
-                                .foregroundColor(.gray)
-                        }
-                    }
-                }
-                .navigationDestination(isPresented: $showMet) {
-                    MetScreen()
-                }
+                .navigationBarTitleDisplayMode(.large)
+            //                .toolbar {
+            //                    ToolbarItem(placement: .navigationBarTrailing) {
+            //                        Button {
+            //                            showMet = true
+            //                        } label: {
+            //                            Image.met
+            //                                .foregroundColor(.gray)
+            //                        }
+            //                    }
+            //                }
+            //                .navigationDestination(isPresented: $showMet) {
+            //                    MetView()
+            //                }
         }
         .tabItem {
             if coordinator.isScaning {
@@ -42,11 +42,4 @@ struct People: View {
     }
 }
 
-struct MetScreen: View {
-    var body: some View {
-        Text("Met Screen")
-            .navigationTitle(Inc.Tabs.metTitle.localized)
-            .navigationBarTitleDisplayMode(.inline)
-    }
-}
 
