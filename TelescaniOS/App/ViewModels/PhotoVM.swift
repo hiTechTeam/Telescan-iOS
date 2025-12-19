@@ -1,83 +1,76 @@
+
 import SwiftUI
+import PhotosUI
 
 final class ProfilePhotoViewModel: ObservableObject {
-
-    @Published var profileImage: Image = Image.noPhoto
+    
+    @Published var profileImage: Image = Image(systemName: "person.crop.square.on.square.angled.fill")
     @Published var uiImage: UIImage? = nil
     
     private let photoS3UrlKey = "photoS3Url"
-    @Published var tgID: Int?
+    private let tgID: Int?
     
-    init() {
+    init(tgID: Int?) {
+        self.tgID = tgID
         loadPhotoIfNeeded()
     }
     
     func loadPhotoIfNeeded() {
+        // Локальное фото
         if let saved = ProfileImageStorage.load() {
             uiImage = saved
             profileImage = Image(uiImage: saved)
             return
         }
-        if let urlString = UserDefaults.standard.string(forKey: photoS3UrlKey) {
-            loadPhotoFromURL(urlString)
-        }
-    }
-    
-    func loadPhotoFromURL(_ urlString: String?) {
-        guard let urlString, let url = URL(string: urlString) else { return }
+        
+        // Фото с S3
+        guard let photoUrlString = UserDefaults.standard.string(forKey: photoS3UrlKey),
+              let url = URL(string: photoUrlString) else { return }
+        
         Task {
             do {
                 let data = try await fetchData(from: url)
                 if let uiImg = UIImage(data: data) {
-                    await MainActor.run {
-                        self.uiImage = uiImg
-                        self.profileImage = Image(uiImage: uiImg)
-                        ProfileImageStorage.save(uiImg)
-                    }
+                    uiImage = uiImg
+                    profileImage = Image(uiImage: uiImg)
+                    ProfileImageStorage.save(uiImg)
                 }
             } catch {
-                print("Failed to load photo:", error)
+                print("Failed to load photo from S3:", error)
             }
         }
     }
     
     func updateProfileImage(with newImage: UIImage?) {
         Task {
-            await MainActor.run {
-                self.uiImage = newImage
-            }
-
-            guard let uiImg = newImage else {
-                await MainActor.run {
-                    self.profileImage = .noPhoto
+            uiImage = newImage
+            
+            if let uiImg = newImage {
+                profileImage = Image(uiImage: uiImg)
+                ProfileImageStorage.save(uiImg)
+                
+                guard let tgID else { return }
+                do {
+                    let photoURL = try await FetchService.fetch.uploadProfileImage(tgID: tgID, image: uiImg)
+                    UserDefaults.standard.set(photoURL, forKey: photoS3UrlKey)
+                } catch {
+                    print("Failed to upload profile image:", error)
                 }
+            } else {
+                profileImage = Image(systemName: "person.crop.square.on.square.angled.fill")
                 ProfileImageStorage.delete()
                 UserDefaults.standard.removeObject(forKey: photoS3UrlKey)
-                return
-            }
-
-            await MainActor.run {
-                self.profileImage = Image(uiImage: uiImg)
-            }
-
-            ProfileImageStorage.save(uiImg)
-
-            guard let tgID else { return }
-
-            do {
-                let photoURL = try await FetchService.fetch
-                    .updateProfileImage(tgID: tgID, image: uiImg)
-
-                UserDefaults.standard.set(photoURL, forKey: photoS3UrlKey)
-            } catch {
-                print("Failed to upload profile image:", error)
+                // TODO: Delete Photo on server if needed
             }
         }
     }
     
     private func fetchData(from url: URL) async throws -> Data {
         let (data, response) = try await URLSession.shared.data(from: url)
-        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            throw URLError(.badServerResponse)
+        }
         return data
     }
 }

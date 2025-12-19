@@ -59,7 +59,7 @@ final class FetchService {
         guard let httpResponse = response as? HTTPURLResponse,
               (200...299).contains(httpResponse.statusCode) else {
             if let str = String(data: data, encoding: .utf8) {
-                print("Server response error:", str)  
+                print("Server response error:", str)
             }
             throw URLError(.badServerResponse)
         }
