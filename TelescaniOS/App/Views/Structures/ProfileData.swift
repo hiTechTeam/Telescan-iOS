@@ -48,10 +48,10 @@ struct ProfileDataView: View {
             }
         }
         .onAppear {
-            photoVM.tgID = authCodeViewModel.tgID
+            photoVM.setTGID(authCodeViewModel.tgID)
         }
         .onChange(of: authCodeViewModel.tgID) { _, newValue in
-            photoVM.tgID = newValue
+            photoVM.setTGID(newValue)
         }
         .onChange(of: authCodeViewModel.PhotoS3URL) { _, newValue in
             photoVM.loadPhotoFromURL(newValue)

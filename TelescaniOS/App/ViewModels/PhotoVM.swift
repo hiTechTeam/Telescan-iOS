@@ -23,8 +23,28 @@ final class ProfilePhotoViewModel: ObservableObject {
         }
     }
     
+    func setTGID(_ newTGID: Int?) {
+        tgID = newTGID
+        // Сбрасываем локальное фото
+        uiImage = nil
+        profileImage = .noPhoto
+        ProfileImageStorage.delete()
+        
+        // Загружаем новое фото, если есть URL
+        if let photoURL = UserDefaults.standard.string(forKey: photoS3UrlKey) {
+            loadPhotoFromURL(photoURL)
+        }
+    }
+    
     func loadPhotoFromURL(_ urlString: String?) {
-        guard let urlString, let url = URL(string: urlString) else { return }
+        guard let urlString, let url = URL(string: urlString) else {
+            // Нет URL — сбрасываем фото
+            uiImage = nil
+            profileImage = .noPhoto
+            ProfileImageStorage.delete()
+            return
+        }
+        
         Task {
             do {
                 let data = try await fetchData(from: url)
