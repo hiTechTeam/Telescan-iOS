@@ -20,7 +20,6 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
         distanceTimer?.invalidate()
     }
     
-    
     func loadUserIfNeeded(tgID: String) async {
         guard userCache[tgID] == nil else { return }
         

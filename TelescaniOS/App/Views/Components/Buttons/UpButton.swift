@@ -42,6 +42,11 @@ struct UpButton: View {
                     
                     if viewModel.codeStatus == true {
                         showSheet = false
+                        
+                        if let tgID = UserDefaults.standard.object(forKey: Keys.tgIdKey.rawValue) as? Int {
+                            BLEManager.shared.restartAdvertising(id: String(tgID))
+                        }
+                        
                     }
                 }
             }

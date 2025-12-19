@@ -16,4 +16,5 @@ extension Image {
     static let met: Image = Image(systemName: "clock.fill")
     static let copyUsernameButton: Image = Image("copy-icon")
     static let tsIconGraySmall: Image = Image("tsIconGraySmall")
+    static let noPhoto: Image = Image(systemName: "person.crop.square.on.square.angled.fill")
 }

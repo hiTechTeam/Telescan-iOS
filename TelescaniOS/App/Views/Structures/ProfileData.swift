@@ -4,6 +4,11 @@ struct ProfileDataView: View {
     
     @EnvironmentObject var coordinator: AppCoordinator
     @ObservedObject var authCodeViewModel: CodeViewModel
+    @StateObject private var photoVM = ProfilePhotoViewModel()
+    
+    init(authCodeViewModel: CodeViewModel) {
+        self.authCodeViewModel = authCodeViewModel
+    }
     
     var body: some View {
         ZStack {
@@ -12,7 +17,8 @@ struct ProfileDataView: View {
             
             ScrollView {
                 VStack {
-                    ProfilePhotoView(authCodeViewModel: authCodeViewModel)
+                    ProfilePhotoView(viewModel: photoVM)
+                    
                     VStack(spacing: 16) {
                         VStack(spacing: 8) {
                             HStack {
@@ -41,6 +47,14 @@ struct ProfileDataView: View {
                 }
             }
         }
+        .onAppear {
+            photoVM.tgID = authCodeViewModel.tgID
+        }
+        .onChange(of: authCodeViewModel.tgID) { _, newValue in
+            photoVM.tgID = newValue
+        }
+        .onChange(of: authCodeViewModel.PhotoS3URL) { _, newValue in
+            photoVM.loadPhotoFromURL(newValue)
+        }
     }
 }
-
