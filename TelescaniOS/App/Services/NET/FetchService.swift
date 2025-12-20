@@ -59,7 +59,7 @@ final class FetchService {
         guard let httpResponse = response as? HTTPURLResponse,
               (200...299).contains(httpResponse.statusCode) else {
             if let str = String(data: data, encoding: .utf8) {
-                print("Server response error:", str)  
+                print("Server response error:", str)
             }
             throw URLError(.badServerResponse)
         }
@@ -120,8 +120,30 @@ final class FetchService {
         return responseData
     }
     
-    func uploadProfileImage(tgID: Int, image: UIImage) async throws -> String {
-        
+//    func uploadProfileImage(tgID: Int, image: UIImage) async throws -> String {
+//        
+//        guard let imageData = image.jpegData(compressionQuality: 0.9) else {
+//            throw NSError(domain: "encode_error", code: 0)
+//        }
+//        
+//        let body = UploadProfileImageRequest(tg_id: tgID, img: imageData.base64EncodedString())
+//        let bodyData = try JSONEncoder().encode(body)
+//        
+//        guard let url = URL(string: Links.telescanApiUploadPhoto) else {
+//            throw URLError(.badURL)
+//        }
+//        
+//        let decoded: UploadProfileImageResponse = try await _fetch(
+//            url: url,
+//            method: HTTPMethods.POST.rawValue,
+//            headers: ["Content-Type": "application/json"],
+//            body: bodyData
+//        )
+//        
+//        return decoded.photoS3URL
+//    }
+    
+    func updateProfileImage(tgID: Int, image: UIImage) async throws -> String {
         guard let imageData = image.jpegData(compressionQuality: 0.9) else {
             throw NSError(domain: "encode_error", code: 0)
         }
@@ -129,7 +151,7 @@ final class FetchService {
         let body = UploadProfileImageRequest(tg_id: tgID, img: imageData.base64EncodedString())
         let bodyData = try JSONEncoder().encode(body)
         
-        guard let url = URL(string: Links.telescanApiUploadPhoto) else {
+        guard let url = URL(string: Links.telescanApiUpdatePhoto) else {
             throw URLError(.badURL)
         }
         
@@ -143,26 +165,24 @@ final class FetchService {
         return decoded.photoS3URL
     }
     
-    func updateProfileImage(tgID: Int, image: UIImage) async throws -> String {
-        guard let imageData = image.jpegData(compressionQuality: 0.9) else {
-            throw NSError(domain: "encode_error", code: 0)
-        }
-        
-        let body = UploadProfileImageRequest(tg_id: tgID, img: imageData.base64EncodedString())
+    func deleteProfileImage(tgID: Int) async throws {
+        let body = UpdateUserPhotoRequestByTGID(
+            tg_id: tgID,
+            img: nil
+        )
+
         let bodyData = try JSONEncoder().encode(body)
-        
-        guard let url = URL(string: Links.telescanApiUpdatePhoto) else { // новый endpoint
+
+        guard let url = URL(string: Links.telescanApiUpdatePhoto) else {
             throw URLError(.badURL)
         }
-        
-        let decoded: UploadProfileImageResponse = try await _fetch(
+
+        let _: UploadProfileImageResponse = try await _fetch(
             url: url,
             method: HTTPMethods.POST.rawValue,
             headers: ["Content-Type": "application/json"],
             body: bodyData
         )
-        
-        return decoded.photoS3URL
     }
     
 }

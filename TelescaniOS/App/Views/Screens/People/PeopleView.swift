@@ -1,4 +1,5 @@
 import SwiftUI
+import Kingfisher
 
 struct PeopleView: View {
     
@@ -79,7 +80,7 @@ struct PeopleView: View {
                     .environmentObject(peopleViewModel)
                     .presentationDetents([.large])
                     .presentationDragIndicator(.hidden)
-            
+                
                 
             }
         }
@@ -97,15 +98,17 @@ struct PeopleRowContent: View {
                let url = user.photoURL,
                let imageURL = URL(string: url) {
                 
-                AsyncImage(url: imageURL) { image in
-                    image.resizable()
-                } placeholder: {
-                    Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .foregroundColor(.gray)
-                }
-                .frame(width: 56, height: 56)
-                .clipShape(Circle())
+                KFImage(imageURL)
+                    .placeholder {
+                        Image(systemName: "person.crop.circle.fill")
+                            .resizable()
+                            .foregroundColor(.gray)
+                    }
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 56, height: 56)
+                    .clipShape(Circle())
+                    .clipped()
                 
             } else {
                 Image(systemName: "person.crop.circle.fill")
@@ -153,24 +156,33 @@ struct ProfileSheetView: View {
                 if let user = peopleViewModel.userCache[id],
                    let url = user.photoURL,
                    let imageURL = URL(string: url) {
-                    AsyncImage(url: imageURL) { image in
-                        image.resizable()
-                            .scaledToFit()
-                            .frame(width: 390, height: 390)
+                    
+                    GeometryReader { geo in
+                        let maxSize = min(geo.size.width, geo.size.height) - 24
+                        let strokeWidth: CGFloat = 4
+
+                        KFImage(imageURL)
+                            .placeholder {
+                                Image(systemName: "person.crop.circle.fill")
+                                    .resizable()
+                                    .foregroundColor(.gray)
+                            }
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: maxSize, height: maxSize)
                             .clipShape(Circle())
                             .overlay(
                                 Circle()
-                                    .strokeBorder(Color.primary.opacity(0.5), lineWidth: 4)
-                                    .padding(-4)
-                                    .opacity(0.5)
+                                    .stroke(Color.primary.opacity(0.3), lineWidth: strokeWidth)
+                                    .frame(
+                                        width: maxSize + strokeWidth,
+                                        height: maxSize + strokeWidth
+                                    )
                             )
                             .shadow(radius: 10)
-                    } placeholder: {
-                        Image(systemName: "person.crop.circle.fill")
-                            .resizable()
-                            .foregroundColor(.gray)
-                            .frame(width: 300, height: 300)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
+                    
                 } else {
                     Image(systemName: "person.crop.circle.fill")
                         .resizable()
@@ -203,11 +215,9 @@ struct ProfileSheetView: View {
                         CopyUsernameField(username: username)
                     }
                 }
-//                .padding(.bottom, 4)
             }
-            .padding(.top, 60) // отступ чтобы фото не налезало на кнопку
+            .padding(.top, 60)
             
-            // Кнопка закрытия поверх контента
             Button(action: { dismiss() }) {
                 Image(systemName: "xmark.circle.fill")
                     .font(.system(size: 28))

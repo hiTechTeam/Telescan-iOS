@@ -25,7 +25,7 @@ struct ProfilePhotoView: View {
                         .clipShape(Circle())
                         .overlay(
                             Circle()
-                                .strokeBorder(Color.primary.opacity(0.5), lineWidth: 4)
+                                .strokeBorder(Color.primary.opacity(0.3), lineWidth: 4)
                                 .padding(-4)
                                 .opacity(0.5)
                         )

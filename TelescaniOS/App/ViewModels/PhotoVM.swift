@@ -1,16 +1,20 @@
 import SwiftUI
 
 final class ProfilePhotoViewModel: ObservableObject {
-
-    @Published var profileImage: Image = Image.noPhoto
+    
+    @Published var profileImage: Image = .noPhoto
     @Published var uiImage: UIImage? = nil
     
     private let photoS3UrlKey = "photoS3Url"
     @Published var tgID: Int?
     
     init() {
+        if let storedTGID = UserDefaults.standard.object(forKey: Keys.tgIdKey.rawValue) as? Int {
+            self.tgID = storedTGID
+        }
         loadPhotoIfNeeded()
     }
+    
     
     func loadPhotoIfNeeded() {
         if let saved = ProfileImageStorage.load() {
@@ -24,17 +28,21 @@ final class ProfilePhotoViewModel: ObservableObject {
     }
     
     func setTGID(_ newTGID: Int?) {
+        
+        guard tgID != newTGID else { return }
+        
         tgID = newTGID
-        // Сбрасываем локальное фото
+        if let newTGID {
+            UserDefaults.standard.set(newTGID, forKey: Keys.tgIdKey.rawValue)
+        }
+        
         uiImage = nil
         profileImage = .noPhoto
         ProfileImageStorage.delete()
         
-        // Загружаем новое фото, если есть URL
-        if let photoURL = UserDefaults.standard.string(forKey: photoS3UrlKey) {
-            loadPhotoFromURL(photoURL)
-        }
+        loadPhotoIfNeeded()
     }
+    
     
     func loadPhotoFromURL(_ urlString: String?) {
         guard let urlString, let url = URL(string: urlString) else {
@@ -66,28 +74,33 @@ final class ProfilePhotoViewModel: ObservableObject {
             await MainActor.run {
                 self.uiImage = newImage
             }
-
+            
             guard let uiImg = newImage else {
-                await MainActor.run {
-                    self.profileImage = .noPhoto
-                }
+                self.uiImage = nil
+                self.profileImage = .noPhoto
                 ProfileImageStorage.delete()
                 UserDefaults.standard.removeObject(forKey: photoS3UrlKey)
+                
+                guard let tgID else { return }
+                
+                Task {
+                    try? await FetchService.fetch.deleteProfileImage(tgID: tgID)
+                }
                 return
             }
-
+            
             await MainActor.run {
                 self.profileImage = Image(uiImage: uiImg)
             }
-
+            
             ProfileImageStorage.save(uiImg)
-
+            
             guard let tgID else { return }
-
+            
             do {
                 let photoURL = try await FetchService.fetch
                     .updateProfileImage(tgID: tgID, image: uiImg)
-
+                
                 UserDefaults.standard.set(photoURL, forKey: photoS3UrlKey)
             } catch {
                 print("Failed to upload profile image:", error)
