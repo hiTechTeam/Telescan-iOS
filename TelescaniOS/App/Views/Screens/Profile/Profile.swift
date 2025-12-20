@@ -15,6 +15,7 @@ struct Profile: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                             showInfoSheet = true
                         }) {
                             Image.infoImage

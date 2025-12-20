@@ -106,7 +106,7 @@ struct PeopleRowContent: View {
                     }
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 56, height: 56)
+                    .frame(width: 62, height: 62)
                     .clipShape(Circle())
                     .clipped()
                 
@@ -159,8 +159,8 @@ struct ProfileSheetView: View {
                     
                     GeometryReader { geo in
                         let maxSize = min(geo.size.width, geo.size.height) - 24
-                        let strokeWidth: CGFloat = 4
-
+                        let strokeWidth: CGFloat = 6
+                        
                         KFImage(imageURL)
                             .placeholder {
                                 Image(systemName: "person.crop.circle.fill")
@@ -173,13 +173,10 @@ struct ProfileSheetView: View {
                             .clipShape(Circle())
                             .overlay(
                                 Circle()
-                                    .stroke(Color.primary.opacity(0.3), lineWidth: strokeWidth)
-                                    .frame(
-                                        width: maxSize + strokeWidth,
-                                        height: maxSize + strokeWidth
-                                    )
+                                    .strokeBorder(Color.gray, lineWidth: strokeWidth)
+                                    .padding(-strokeWidth)
+                                    .opacity(0.3)
                             )
-                            .shadow(radius: 10)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                     

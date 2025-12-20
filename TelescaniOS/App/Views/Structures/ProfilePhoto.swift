@@ -10,6 +10,7 @@ struct ProfilePhotoView: View {
     @State private var showCameraPicker: Bool = false
     @State private var showGalleryPicker: Bool = false
     @State private var isPreviewing = false
+    @State private var tempCameraImage: UIImage? = nil
     
     private let imageSizeEmpty: CGFloat = 120
     private let imageSizeFilled: CGFloat = 240
@@ -25,11 +26,10 @@ struct ProfilePhotoView: View {
                         .clipShape(Circle())
                         .overlay(
                             Circle()
-                                .strokeBorder(Color.primary.opacity(0.3), lineWidth: 4)
+                                .strokeBorder(Color.gray, lineWidth: 4)
                                 .padding(-4)
-                                .opacity(0.5)
+                                .opacity(0.3)
                         )
-                        .shadow(radius: 5)
                 } else {
                     viewModel.profileImage
                         .resizable()
@@ -40,9 +40,15 @@ struct ProfilePhotoView: View {
             }
             .padding(.vertical, 40)
             .onTapGesture { showPhotoOptions = true }
-            .onLongPressGesture(pressing: { pressing in
-                isPreviewing = pressing
-            }) {}
+            .onLongPressGesture(
+                pressing: { pressing in
+                    if pressing {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    }
+                    isPreviewing = pressing
+                },
+                perform: {}
+            )
             
             if isPreviewing, let uiImage = viewModel.uiImage {
                 Image(uiImage: uiImage)
@@ -50,9 +56,9 @@ struct ProfilePhotoView: View {
                     .scaledToFill()
                     .frame(width: 390, height: 390)
                     .clipShape(Circle())
-                    .shadow(radius: 20)
                     .transition(.opacity)
                     .zIndex(10)
+                    .padding(.vertical, 24)
             }
         }
         .confirmationDialog(Inc.Profile.photoOptions.localized, isPresented: $showPhotoOptions) {
@@ -72,8 +78,13 @@ struct ProfilePhotoView: View {
             Button(Inc.Common.cancel.localized, role: .cancel) {}
         }
         .fullScreenCover(isPresented: $showCameraPicker) {
-            CameraPicker(image: $viewModel.uiImage)
-                .onDisappear { viewModel.updateProfileImage(with: viewModel.uiImage) }
+            CameraPicker(image: $tempCameraImage)
+                .onDisappear {
+                    if let selected = tempCameraImage {
+                        viewModel.updateProfileImage(with: selected)
+                    }
+                    tempCameraImage = nil
+                }
         }
         .photosPicker(isPresented: $showGalleryPicker, selection: $selectedItem, matching: .images)
         .onChange(of: selectedItem) { _, newItem in

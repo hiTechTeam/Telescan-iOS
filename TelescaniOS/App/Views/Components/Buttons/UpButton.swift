@@ -13,6 +13,7 @@ struct UpButton: View {
     
     var body: some View {
         Button {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             onUp()
             showSheet = true
         } label: {

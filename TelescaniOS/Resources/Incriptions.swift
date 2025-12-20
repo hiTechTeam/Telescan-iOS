@@ -244,15 +244,15 @@ struct IncLogos {
 
 struct Links {
     
-    static let local = "http:/localhost:80/"
-    static let tunnel = local
+    static let local = "http://localhost:80"
+    static let origin = "https://bwfyw-206-217-134-170.a.free.pinggy.link"
     
     static let telescanBot = "https://t.me/tgtelescan_bot"
-    static let telescanApiTunnel =  tunnel + "/v1/code/"
-    static let telescanApiGetuser = tunnel + "/v1/users/"
-    static let telescanApiUploadPhoto = tunnel + "/v1/users/upload-photo"
-    static let telescanApiUpdatePhoto = tunnel + "/v1/users/update-photo"
-    static let telescanApiDeletePhoto = tunnel + "/v1/users/delete-photo"
+    static let telescanApiTunnel =  origin + "/v1/code/"
+    static let telescanApiGetuser = origin + "/v1/users/"
+    static let telescanApiUploadPhoto = origin + "/v1/users/upload-photo"
+    static let telescanApiUpdatePhoto = origin + "/v1/users/update-photo"
+    static let telescanApiDeletePhoto = origin + "/v1/users/delete-photo"
     
 }
 
