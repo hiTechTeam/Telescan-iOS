@@ -16,19 +16,6 @@ struct People: View {
             PeopleView()
                 .navigationTitle(peopNearleInc)
                 .navigationBarTitleDisplayMode(.large)
-            //                .toolbar {
-            //                    ToolbarItem(placement: .navigationBarTrailing) {
-            //                        Button {
-            //                            showMet = true
-            //                        } label: {
-            //                            Image.met
-            //                                .foregroundColor(.gray)
-            //                        }
-            //                    }
-            //                }
-            //                .navigationDestination(isPresented: $showMet) {
-            //                    MetView()
-            //                }
         }
         .tabItem {
             if coordinator.isScaning {

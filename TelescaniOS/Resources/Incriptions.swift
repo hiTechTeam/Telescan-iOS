@@ -244,8 +244,8 @@ struct IncLogos {
 
 struct Links {
     
-    static let local = "http:/localhost:80/v1/code/"
-    static let tunnel = "https://nzber-206-217-134-170.a.free.pinggy.link"
+    static let local = "http:/localhost:80/"
+    static let tunnel = local
     
     static let telescanBot = "https://t.me/tgtelescan_bot"
     static let telescanApiTunnel =  tunnel + "/v1/code/"
