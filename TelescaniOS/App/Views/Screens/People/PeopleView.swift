@@ -2,10 +2,9 @@ import SwiftUI
 import Kingfisher
 
 struct PeopleView: View {
-    
     @EnvironmentObject var coordinator: AppCoordinator
     @EnvironmentObject var peopleViewModel: PeopleViewModel
-    @State private var selectedID: String? = nil
+    @State private var selectedID: String?
     @State private var showProfileSheet = false
     
     var body: some View {
@@ -35,8 +34,6 @@ struct PeopleView: View {
                             .padding(.horizontal, 16) // отступ слева/справа
                             .frame(maxWidth: .infinity, alignment: .leading)
                         }
-                        
-                        
                     } else {
                         List {
                             ForEach(Array(peopleViewModel.devices.keys), id: \.self) { id in
@@ -80,8 +77,6 @@ struct PeopleView: View {
                     .environmentObject(peopleViewModel)
                     .presentationDetents([.large])
                     .presentationDragIndicator(.hidden)
-                
-                
             }
         }
     }
@@ -139,9 +134,7 @@ struct PeopleRowContent: View {
     }
 }
 
-
 struct ProfileSheetView: View {
-    
     @EnvironmentObject var peopleViewModel: PeopleViewModel
     @Environment(\.dismiss) private var dismiss
     let id: String
@@ -215,12 +208,15 @@ struct ProfileSheetView: View {
             }
             .padding(.top, 60)
             
-            Button(action: { dismiss() }) {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 28))
-                    .foregroundColor(.gray)
-                    .opacity(0.5)
-            }
+            Button(
+                action: { dismiss() },
+                label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 28))
+                        .foregroundColor(.gray)
+                        .opacity(0.5)
+                }
+            )
             .padding(.top, 20)
             .padding(.trailing, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)

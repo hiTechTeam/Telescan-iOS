@@ -3,7 +3,7 @@ import SwiftUI
 struct UsernamePlaceholder: View {
     
     // MARK: - Inputs
-    var username: String? = nil
+    var username: String?
     var codeStatus: Bool?
     var isLoading: Bool = false
     

@@ -3,7 +3,7 @@ import SwiftUI
 final class ProfilePhotoViewModel: ObservableObject {
     
     @Published var profileImage: Image = .noPhoto
-    @Published var uiImage: UIImage? = nil
+    @Published var uiImage: UIImage?
     
     private let photoS3UrlKey = "photoS3Url"
     @Published var tgID: Int?
@@ -14,7 +14,6 @@ final class ProfilePhotoViewModel: ObservableObject {
         }
         loadPhotoIfNeeded()
     }
-    
     
     func loadPhotoIfNeeded() {
         if let saved = ProfileImageStorage.load() {
@@ -42,7 +41,6 @@ final class ProfilePhotoViewModel: ObservableObject {
         
         loadPhotoIfNeeded()
     }
-    
     
     func loadPhotoFromURL(_ urlString: String?) {
         guard let urlString, let url = URL(string: urlString) else {

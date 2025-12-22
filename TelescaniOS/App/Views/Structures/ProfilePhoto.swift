@@ -5,12 +5,12 @@ struct ProfilePhotoView: View {
     
     @ObservedObject var viewModel: ProfilePhotoViewModel
     
-    @State private var selectedItem: PhotosPickerItem? = nil
+    @State private var selectedItem: PhotosPickerItem?
     @State private var showPhotoOptions: Bool = false
     @State private var showCameraPicker: Bool = false
     @State private var showGalleryPicker: Bool = false
     @State private var isPreviewing = false
-    @State private var tempCameraImage: UIImage? = nil
+    @State private var tempCameraImage: UIImage?
     
     private let imageSizeEmpty: CGFloat = 120
     private let imageSizeFilled: CGFloat = 240

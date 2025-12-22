@@ -32,6 +32,5 @@ struct ScanToggleView: View {
             }
         }
         
-        
     }
 }

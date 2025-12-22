@@ -27,7 +27,7 @@ struct MainContentView: View {
             }
         }
         .alert(Inc.Scanning.justTurnScaning.localized, isPresented: $showScanAlert) {
-            Button(Inc.Common.ok, role: .cancel) { }
+            Button(Inc.Common.okey, role: .cancel) { }
         } message: {
             Text(Inc.Scanning.scanAlertText.localized)
         }

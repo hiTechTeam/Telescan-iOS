@@ -6,8 +6,6 @@ struct ScanToggleReg: View {
     
     private let spacing: CGFloat = 16
     
-    
-    // MARK: - Body
     var body: some View {
         VStack(spacing: spacing) {
             ScanToggle(isScaning: $isScaning)

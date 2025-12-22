@@ -1,5 +1,5 @@
 protocol ProfileStorageProtocol {
-    func fetch(id: String) -> ProfileInfo? // TODO: Put in a separate protocol later
+    func fetch(id: String) -> ProfileInfo?
     func save(_ profile: ProfileInfo)
     func delete(id: String)
     func clear()

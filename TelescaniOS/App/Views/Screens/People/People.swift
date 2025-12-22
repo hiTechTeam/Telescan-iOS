@@ -28,5 +28,3 @@ struct People: View {
         .badge(peopleViewModel.devices.count)
     }
 }
-
-

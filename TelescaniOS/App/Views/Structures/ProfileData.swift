@@ -26,7 +26,7 @@ struct ProfileDataView: View {
                                     .font(.system(size: 12))
                                     .frame(width: 175, alignment: .leading)
                                 
-                                Text(Inc.Registration.currentCode.localized + (authCodeViewModel.Code))
+                                Text(Inc.Registration.currentCode.localized + (authCodeViewModel.code))
                                     .font(.system(size: 12))
                                     .opacity(0.5)
                                     .frame(width: 175, alignment: .trailing)
@@ -47,7 +47,7 @@ struct ProfileDataView: View {
                 }
             }
         }
-        .onChange(of: authCodeViewModel.PhotoS3URL) { _, newValue in
+        .onChange(of: authCodeViewModel.photoS3URL) { _, newValue in
             photoVM.loadPhotoFromURL(newValue)
         }
     }

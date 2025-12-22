@@ -1,9 +1,9 @@
 struct UploadProfileImageRequest: Encodable {
-    let tg_id: Int
+    let tgId: Int
     let img: String
 }
 
 struct UpdateUserPhotoRequestByTGID: Codable {
-    let tg_id: Int
+    let tgId: Int
     let img: String?
 }

@@ -28,8 +28,8 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
                 let data = try await FetchService.fetch.fetchUserDataByTGID(for: intID)
                 let user = NearbyUser(
                     id: tgID,
-                    tgName: data.tg_name,
-                    tgUsername: data.tg_username,
+                    tgName: data.tgName,
+                    tgUsername: data.tgUsername,
                     photoURL: data.photoS3URL
                 )
                 Task { @MainActor in
@@ -41,7 +41,6 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
         }
     }
     
-    // MARK: - Toggle управление сканированием
     func toggleScanning(_ enabled: Bool) {
         if enabled {
             BLEManager.shared.startScanning()
@@ -66,13 +65,16 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
         }
     }
     
-    func distanceFromRSSI(_ rssi: Int, txPower: Int = -59, n: Double = 2) -> Int {
-        let ratio = Double(txPower - rssi) / (10 * n)
+    func distanceFromRSSI(
+        _ rssi: Int,
+        txPower: Int = -59,
+        pathLossExponent: Double = 2
+    ) -> Int {
+        let ratio = Double(txPower - rssi) / (10 * pathLossExponent)
         let distance = pow(10.0, ratio)
         return max(1, Int(distance.rounded()))
     }
     
-    // MARK: - BLEManagerDelegate
     func didDiscoverDevice(id: String, rssi: Int) {
         guard id.range(of: validIDPattern, options: .regularExpression) != nil else { return }
         Task { @MainActor in
@@ -105,4 +107,3 @@ final class PeopleViewModel: ObservableObject, BLEManagerDelegate {
         }
     }
 }
-

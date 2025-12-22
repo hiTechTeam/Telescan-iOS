@@ -21,7 +21,7 @@ struct UpButton: View {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(Color.gray.opacity(0.5))
                     .frame(width: 46, height: 46)
-                Image(.upChevron)
+                Image.upChevron
                     .scaleEffect(0.8)
             }
         }

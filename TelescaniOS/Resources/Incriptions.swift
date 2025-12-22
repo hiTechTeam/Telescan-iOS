@@ -26,7 +26,7 @@ struct Inc {
         // EN: Nearby
         // RU: Рядом
         
-        static let ok: String = "Ok"
+        static let okey: String = "Ok"
         static let Telescan: String = "Telescan"
     }
     
@@ -113,7 +113,7 @@ struct Inc {
         // EN: Next
         // RU: Далее
         
-        static let go: String = "go"
+        static let goStart: String = "go"
         // EN: Go
         // RU: Начать
         
@@ -129,7 +129,6 @@ struct Inc {
         static let scanning: String = "scanning"
         // EN: Scanning
         // RU: Сканирование
-        
         
         static let justTurnScaning: String = "justTurnScaning"
         // EN: Turn on scaning
@@ -245,7 +244,7 @@ struct IncLogos {
 struct Links {
     
     static let local = "http://localhost:80"
-    static let origin = "https://bwfyw-206-217-134-170.a.free.pinggy.link"
+    static let origin = "https://yuudy-206-217-134-170.a.free.pinggy.link"
     
     static let telescanBot = "https://t.me/tgtelescan_bot"
     static let telescanApiTunnel =  origin + "/v1/code/"
@@ -253,7 +252,6 @@ struct Links {
     static let telescanApiUploadPhoto = origin + "/v1/users/upload-photo"
     static let telescanApiUpdatePhoto = origin + "/v1/users/update-photo"
     static let telescanApiDeletePhoto = origin + "/v1/users/delete-photo"
-    
 }
 
 enum SelectedTab: Int {
@@ -274,9 +272,8 @@ enum Keys: String {
     case isReg = "isReg"
 }
 
-
 enum HTTPStatus: Int {
-    case ok = 200
+    case okey = 200
     case created = 201
     case badRequest = 400
     case unauthorized = 401
@@ -286,8 +283,8 @@ enum HTTPStatus: Int {
 }
 
 enum HTTPMethods: String {
-    case GET = "GET"
-    case POST = "POST"
-    case PUT = "PUT"
-    case DELETE = "DELETE"
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
 }

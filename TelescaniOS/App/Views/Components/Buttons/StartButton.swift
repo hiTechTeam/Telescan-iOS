@@ -1,15 +1,11 @@
 import SwiftUI
 
 struct StartButton: View {
-    
-    // MARK: - Env
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
-    // MARK: - Inputs
     var title: String
     var onStart: () -> Void
     
-    // MARK: - Constants
     private let fontSize: CGFloat = 14
     private let buttonWidth: CGFloat = 280
     private let buttonHeight: CGFloat = 48
@@ -23,28 +19,29 @@ struct StartButton: View {
     private let iconWidth: CGFloat = 18
     private let iconHeight: CGFloat = 21
     
-    // MARK: - Body
     var body: some View {
-        Button(action: {
-            onStart()
-        }) {
-            HStack() {
-                Text(title)
-                    .font(.system(size: fontSize, weight: .semibold))
-                    .tracking(tracking)
-                    .foregroundColor(Color.dark)
-                Image.tgIconDark
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: iconWidth, height: iconHeight)
+        Button(
+            action: {
+                onStart()
+            },
+            label: {
+                HStack {
+                    Text(title)
+                        .font(.system(size: fontSize, weight: .semibold))
+                        .tracking(tracking)
+                        .foregroundColor(Color.dark)
+                    Image.tgIconDark
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: iconWidth, height: iconHeight)
+                }
+                .frame(width: buttonWidth, height: buttonHeight)
+                .background(Color.white)
+                .cornerRadius(cornerRadius)
+                .shadow(color: .black.opacity(shadowOpacity), radius: shadowRadius, x: shadowX, y: shadowY)
+                .padding(.bottom, paddingButtom)
             }
-            .frame(width: buttonWidth, height: buttonHeight)
-            .background(Color.white)
-            .cornerRadius(cornerRadius)
-            .shadow(color: .black.opacity(shadowOpacity), radius: shadowRadius, x: shadowX, y: shadowY)
-            .padding(.bottom, paddingButtom)
-        }
+        )
         .background(Color.clear)
     }
 }
-

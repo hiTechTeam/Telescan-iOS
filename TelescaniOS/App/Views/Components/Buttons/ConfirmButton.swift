@@ -2,11 +2,9 @@ import SwiftUI
 
 struct ConfirmButton: View {
     
-    // MARK: - Inputs and Binds
     @Binding var codeStatus: Bool?
     var onConfirm: () -> Void
     
-    // MARK: - Constants
     private let fontSize: CGFloat = 20
     private let buttonWidth: CGFloat = 360
     private let buttonHeight: CGFloat = 60
@@ -19,22 +17,24 @@ struct ConfirmButton: View {
     private let strokeIfFalse: CGFloat = 3
     private let confirmButton: String = Inc.Onboarding.confirmButton.localized
     
-    // MARK: - Body
     var body: some View {
-        Button(action: {
-            if codeStatus == true {
-                onConfirm()
+        Button(
+            action: {
+                if codeStatus == true {
+                    onConfirm()
+                }
+            },
+            label: {
+                Text(confirmButton)
+                    .font(.system(size: fontSize, weight: .bold))
+                    .tracking(tracking)
+                    .foregroundColor(codeStatus == true ? Color.white : Color.primary.opacity(foregroundOpacity))
+                    .frame(width: buttonWidth, height: buttonHeight)
+                    .background(codeStatus == true ? Color.bl2 :  Color.primary.opacity(foregroundOpacity))
+                    .cornerRadius(cornerRadius)
+                    .padding(.bottom, paddingButtom)
             }
-        }) {
-            Text(confirmButton)
-                .font(.system(size: fontSize, weight: .bold))
-                .tracking(tracking)
-                .foregroundColor(codeStatus == true ? Color.white : Color.primary.opacity(foregroundOpacity))
-                .frame(width: buttonWidth, height: buttonHeight)
-                .background(codeStatus == true ? Color.bl2 :  Color.primary.opacity(foregroundOpacity))
-                .cornerRadius(cornerRadius)
-                .padding(.bottom, paddingButtom)
-        }
+        )
         .disabled(codeStatus != true)
     }
 }

@@ -10,17 +10,20 @@ struct Profile: View {
     var body: some View {
         NavigationStack {
             ProfileDataView(authCodeViewModel: authVM)
-                .navigationTitle(authVM.TgName ?? profileInc)
+                .navigationTitle(authVM.tgName ?? profileInc)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                            showInfoSheet = true
-                        }) {
-                            Image.infoImage
-                                .foregroundColor(.gray)
-                        }
+                        Button(
+                            action: {
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                showInfoSheet = true
+                            },
+                            label: {
+                                Image.infoImage
+                                    .foregroundColor(.gray)
+                            }
+                        )
                     }
                 }
                 .sheet(isPresented: $showInfoSheet) {
@@ -31,15 +34,15 @@ struct Profile: View {
         }
         .onAppear {
             if let tgName = UserDefaults.standard.string(forKey: Keys.tgNameKey.rawValue) {
-                authVM.TgName = tgName
+                authVM.tgName = tgName
             }
             
             if let code = UserDefaults.standard.string(forKey: Keys.cleanCodeKey.rawValue) {
-                authVM.Code = code
+                authVM.code = code
             }
             
             if let username = UserDefaults.standard.string(forKey: Keys.usernameKey.rawValue) {
-                authVM.TgUsername = username
+                authVM.tgUsername = username
             }
         }
         .tabItem { Label(profileInc, systemImage: IncLogos.personFillViewwfinder) }

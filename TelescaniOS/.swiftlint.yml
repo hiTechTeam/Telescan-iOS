@@ -1,0 +1,18 @@
+disabled_rules:
+  - trailing_whitespace
+  - force_cast
+  - force_try
+
+opt_in_rules:
+  - empty_count
+  - explicit_init
+  - closure_spacing
+
+line_length:
+  warning: 120
+  ignores_comments: true
+
+excluded:
+  - Pods
+  - DerivedData
+  - .build

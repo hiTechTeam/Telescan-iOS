@@ -2,7 +2,7 @@ import SwiftUI
 
 final class AppCoordinatorState: ObservableObject {
     @Published var isRegistered: Bool
-    @Published var showSplash: Bool = true /// ???:
+    @Published var showSplash: Bool = true
     @Published var isScaning: Bool = false
 
     init(isRegistered: Bool = false, isScaning: Bool = false) {
@@ -10,4 +10,3 @@ final class AppCoordinatorState: ObservableObject {
         self.isScaning = isScaning
     }
 }
-

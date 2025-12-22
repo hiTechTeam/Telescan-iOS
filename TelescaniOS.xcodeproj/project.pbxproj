@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B94FA3EE2EF6AE010024A510 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B94FA3ED2EF6AE010024A510 /* Kingfisher */; };
+		B94FA5632EF8336C0024A510 /* InMemoryLogging in Frameworks */ = {isa = PBXBuildFile; productRef = B94FA5622EF8336C0024A510 /* InMemoryLogging */; };
+		B94FA5652EF8336C0024A510 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = B94FA5642EF8336C0024A510 /* Logging */; };
+		B94FA5682EF833760024A510 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B94FA5672EF833760024A510 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,7 +20,17 @@
 		B9559D6D2EBC4AAA00FC3377 /* Exceptions for "TelescaniOS" folder in "Telescan" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				.env,
+				.gitignore,
+				.swiftlint.yml,
 				Configuration/Info.plist,
+				LICENSE,
+				NOTICE,
+				PRIVACY_POLICY.md,
+				project.yml,
+				README.md,
+				SECURITY.md,
+				WHITEPAPER.md,
 			);
 			target = B9559D572EBC4A0200FC3377 /* Telescan */;
 		};
@@ -40,7 +52,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B94FA3EE2EF6AE010024A510 /* Kingfisher in Frameworks */,
+				B94FA5682EF833760024A510 /* Kingfisher in Frameworks */,
+				B94FA5652EF8336C0024A510 /* Logging in Frameworks */,
+				B94FA5632EF8336C0024A510 /* InMemoryLogging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +87,7 @@
 				B9559D542EBC4A0200FC3377 /* Sources */,
 				B9559D552EBC4A0200FC3377 /* Frameworks */,
 				B9559D562EBC4A0200FC3377 /* Resources */,
+				B94FA5212EF749CA0024A510 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -83,7 +98,9 @@
 			);
 			name = Telescan;
 			packageProductDependencies = (
-				B94FA3ED2EF6AE010024A510 /* Kingfisher */,
+				B94FA5622EF8336C0024A510 /* InMemoryLogging */,
+				B94FA5642EF8336C0024A510 /* Logging */,
+				B94FA5672EF833760024A510 /* Kingfisher */,
 			);
 			productName = TelescaniOS;
 			productReference = B9559D582EBC4A0200FC3377 /* Telescan.app */;
@@ -97,7 +114,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					B9559D572EBC4A0200FC3377 = {
 						CreatedOnToolsVersion = 16.4;
@@ -114,7 +131,8 @@
 			mainGroup = B9559D4F2EBC4A0100FC3377;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				B94FA3EC2EF6AE010024A510 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				B94FA5612EF8336C0024A510 /* XCRemoteSwiftPackageReference "swift-log" */,
+				B94FA5662EF833760024A510 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B9559D592EBC4A0200FC3377 /* Products */;
@@ -135,6 +153,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B94FA5212EF749CA0024A510 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint >/dev/null; then\n  swiftlint || echo \"SwiftLint failed, but build continues\"\nelse\n  echo \"warning: SwiftLint not installed\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B9559D542EBC4A0200FC3377 /* Sources */ = {
@@ -273,6 +312,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UF2FP85G5V;
@@ -281,11 +321,12 @@
 				INFOPLIST_FILE = TelescaniOS/Configuration/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "The app uses Bluetooth to detect nearby devices.";
-				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "The app advertises its device via Bluetooth.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "We need Bluetooth to discover and connect to nearby mesh peers";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the camera to select your profile photo.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
@@ -311,6 +352,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UF2FP85G5V;
@@ -319,11 +361,12 @@
 				INFOPLIST_FILE = TelescaniOS/Configuration/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "The app uses Bluetooth to detect nearby devices.";
-				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "The app advertises its device via Bluetooth.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "We need Bluetooth to discover and connect to nearby mesh peers";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the camera to select your profile photo.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
@@ -368,7 +411,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B94FA3EC2EF6AE010024A510 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		B94FA5612EF8336C0024A510 /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.0;
+			};
+		};
+		B94FA5662EF833760024A510 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
 			requirement = {
@@ -379,9 +430,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B94FA3ED2EF6AE010024A510 /* Kingfisher */ = {
+		B94FA5622EF8336C0024A510 /* InMemoryLogging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B94FA3EC2EF6AE010024A510 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = B94FA5612EF8336C0024A510 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = InMemoryLogging;
+		};
+		B94FA5642EF8336C0024A510 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B94FA5612EF8336C0024A510 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+		B94FA5672EF833760024A510 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B94FA5662EF833760024A510 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

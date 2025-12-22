@@ -10,4 +10,3 @@ final class GoButtonViewModel: ObservableObject {
         action()
     }
 }
-

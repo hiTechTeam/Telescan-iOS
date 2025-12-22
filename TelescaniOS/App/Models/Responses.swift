@@ -1,19 +1,18 @@
 struct GetUserDataByHashedCodeResponse: Codable {
-    let tg_id: Int?
-    let tg_name: String?
-    let tg_username: String?
+    let tgId: Int?
+    let tgName: String?
+    let tgUsername: String?
     let photoS3URL: String?
     let hashedCode: String?
 }
 
 struct GetUserDataByTGID: Codable {
-    let tg_name: String?
-    let tg_username: String?
+    let tgName: String?
+    let tgUsername: String?
     let photoS3URL: String?
 }
 
-
 struct UploadProfileImageResponse: Codable {
-    let tg_id: Int
+    let tgId: Int
     let photoS3URL: String
 }

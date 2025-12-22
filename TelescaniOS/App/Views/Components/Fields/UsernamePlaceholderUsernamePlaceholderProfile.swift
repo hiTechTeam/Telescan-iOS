@@ -38,13 +38,13 @@ struct UsernamePlaceholderProfile: View {
             .frame(width: fieldWidth, height: fieldHeight)
         }
         .onAppear {
-            if let username = authVM.TgUsername {
+            if let username = authVM.tgUsername {
                 savedUsername = username
             } else if let username = UserDefaults.standard.string(forKey: Keys.usernameKey.rawValue) {
                 savedUsername = username
             }
         }
-        .onChange(of: authVM.TgUsername) { _, newValue in
+        .onChange(of: authVM.tgUsername) { _, newValue in
             if let confirmed = newValue {
                 savedUsername = confirmed
             }

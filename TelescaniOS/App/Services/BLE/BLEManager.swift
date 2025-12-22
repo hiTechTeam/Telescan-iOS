@@ -52,7 +52,6 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
         startCleanupTimer()
     }
     
-    // MARK: - Scanning
     public func startScanning() {
         print("startScanning called")
         queue.async { [weak self] in
@@ -84,7 +83,6 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
         }
     }
     
-    // MARK: - Advertising
     public func restartAdvertising(id: String) {
         queue.async { [weak self] in
             guard let self, let peripheral = self.peripheral else { return }
@@ -141,7 +139,6 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
         }
     }
     
-    // MARK: - Reset
     public func reset() {
         print("reset called")
         queue.async { [weak self] in
@@ -156,7 +153,6 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
         }
     }
     
-    // MARK: - Device cleanup
     private func startCleanupTimer() {
         cleanupTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             self?.checkForLostDevices()
@@ -165,19 +161,20 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
     
     private func checkForLostDevices() {
         let now = Date()
-        for (id, lastSeen) in devicesLastSeen {
-            if now.timeIntervalSince(lastSeen) > deviceTimeout {
-                devicesLastSeen.removeValue(forKey: id)
-                DispatchQueue.main.async { [weak self] in
-                    self?.delegate?.didLoseDevice(id: id)
-                    print("Device lost: \(id)")
-                }
+        
+        for (id, lastSeen) in devicesLastSeen
+        where now.timeIntervalSince(lastSeen) > deviceTimeout {
+            
+            devicesLastSeen.removeValue(forKey: id)
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.delegate?.didLoseDevice(id: id)
+                print("Device lost: \(id)")
             }
         }
     }
 }
 
-// MARK: - CBCentralManagerDelegate
 extension BLEManager: CBCentralManagerDelegate {
     
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -205,12 +202,11 @@ extension BLEManager: CBCentralManagerDelegate {
     public func centralManager(_ central: CBCentralManager,
                                willRestoreState dict: [String: Any]) {
         if let peripherals = dict[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] {
-            for p in peripherals { devicesLastSeen[p.name ?? ""] = Date() }
+            for peripheral in peripherals { devicesLastSeen[peripheral.name ?? ""] = Date() }
         }
     }
 }
 
-// MARK: - CBPeripheralManagerDelegate
 extension BLEManager: CBPeripheralManagerDelegate {
     
     public func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {

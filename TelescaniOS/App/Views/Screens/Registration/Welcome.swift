@@ -28,7 +28,7 @@ struct Welcome: View {
     private let zOne: Double = 1
     
     private var backroundCircle: some View {
-        Image(colorScheme == .dark ? .gradientCircleDark : .gradientCircleLight)
+        (colorScheme == .dark ? Image.gradientCircleDark : Image.gradientCircleLight)
             .resizable()
             .scaledToFill()
             .frame(width: gradientSize, height: gradientSize)

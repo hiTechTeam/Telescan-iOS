@@ -2,7 +2,6 @@ import Foundation
 import CryptoKit
 import PhotosUI
 
-//@MainActor
 final class FetchService {
     
     // MARK: - Singleton
@@ -14,7 +13,7 @@ final class FetchService {
     private let formatJSON: String = "application/json"
     private let contentType: String = "Content-Type"
     
-    private let at: String = "@"
+    private let atSymbol: String = "@"
     private let hashedCode: String = "hashed_code"
     private let hexoFormat: String = "%02x"
     
@@ -26,7 +25,7 @@ final class FetchService {
     
     private func _fetch<T: Decodable>(
         url: URL,
-        method: String = HTTPMethods.GET.rawValue,
+        method: String = HTTPMethods.get.rawValue,
         queryItems: [URLQueryItem]? = nil,
         headers: [String: String]? = nil,
         body: Data? = nil
@@ -50,7 +49,7 @@ final class FetchService {
             }
         }
         
-        if let body = body, method != HTTPMethods.GET.rawValue {
+        if let body = body, method != HTTPMethods.get.rawValue {
             request.httpBody = body
         }
         
@@ -81,13 +80,13 @@ final class FetchService {
         
         let json: GetUserDataByHashedCodeResponse = try await _fetch(
             url: url,
-            method: HTTPMethods.GET.rawValue
+            method: HTTPMethods.get.rawValue
         )
         
         let responseData = GetUserDataByHashedCodeResponse(
-            tg_id: json.tg_id,
-            tg_name: json.tg_name,
-            tg_username: json.tg_username != nil ? (at + json.tg_username!) : nil,
+            tgId: json.tgId,
+            tgName: json.tgName,
+            tgUsername: json.tgUsername != nil ? (atSymbol + json.tgUsername!) : nil,
             photoS3URL: json.photoS3URL,
             hashedCode: hashedCodeData
         )
@@ -108,47 +107,24 @@ final class FetchService {
         
         let json: GetUserDataByHashedCodeResponse = try await _fetch(
             url: url,
-            method: HTTPMethods.GET.rawValue
+            method: HTTPMethods.get.rawValue
         )
         
         let responseData = GetUserDataByTGID(
-            tg_name: json.tg_name,
-            tg_username: json.tg_username != nil ? ("@" + json.tg_username!) : nil,
+            tgName: json.tgName,
+            tgUsername: json.tgUsername != nil ? ("@" + json.tgUsername!) : nil,
             photoS3URL: json.photoS3URL
         )
         
         return responseData
     }
     
-//    func uploadProfileImage(tgID: Int, image: UIImage) async throws -> String {
-//        
-//        guard let imageData = image.jpegData(compressionQuality: 0.9) else {
-//            throw NSError(domain: "encode_error", code: 0)
-//        }
-//        
-//        let body = UploadProfileImageRequest(tg_id: tgID, img: imageData.base64EncodedString())
-//        let bodyData = try JSONEncoder().encode(body)
-//        
-//        guard let url = URL(string: Links.telescanApiUploadPhoto) else {
-//            throw URLError(.badURL)
-//        }
-//        
-//        let decoded: UploadProfileImageResponse = try await _fetch(
-//            url: url,
-//            method: HTTPMethods.POST.rawValue,
-//            headers: ["Content-Type": "application/json"],
-//            body: bodyData
-//        )
-//        
-//        return decoded.photoS3URL
-//    }
-    
     func updateProfileImage(tgID: Int, image: UIImage) async throws -> String {
         guard let imageData = image.jpegData(compressionQuality: 0.9) else {
             throw NSError(domain: "encode_error", code: 0)
         }
         
-        let body = UploadProfileImageRequest(tg_id: tgID, img: imageData.base64EncodedString())
+        let body = UploadProfileImageRequest(tgId: tgID, img: imageData.base64EncodedString())
         let bodyData = try JSONEncoder().encode(body)
         
         guard let url = URL(string: Links.telescanApiUpdatePhoto) else {
@@ -157,7 +133,7 @@ final class FetchService {
         
         let decoded: UploadProfileImageResponse = try await _fetch(
             url: url,
-            method: HTTPMethods.POST.rawValue,
+            method: HTTPMethods.post.rawValue,
             headers: ["Content-Type": "application/json"],
             body: bodyData
         )
@@ -167,7 +143,7 @@ final class FetchService {
     
     func deleteProfileImage(tgID: Int) async throws {
         let body = UpdateUserPhotoRequestByTGID(
-            tg_id: tgID,
+            tgId: tgID,
             img: nil
         )
 
@@ -179,7 +155,7 @@ final class FetchService {
 
         let _: UploadProfileImageResponse = try await _fetch(
             url: url,
-            method: HTTPMethods.POST.rawValue,
+            method: HTTPMethods.post.rawValue,
             headers: ["Content-Type": "application/json"],
             body: bodyData
         )

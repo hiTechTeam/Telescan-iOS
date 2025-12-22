@@ -58,7 +58,7 @@ struct InfoSheetView: View {
                 }
             }
             
-            Section (
+            Section(
                 
                 header: Text(Inc.Info.openSourceText.localized)
                     .font(.system(size: 12))
@@ -98,8 +98,6 @@ struct InfoSheetView: View {
         .listStyle(.insetGrouped)
     }
 }
-
-
 
 struct InfoItem: View {
     var icon: String
