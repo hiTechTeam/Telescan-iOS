@@ -13,11 +13,11 @@ struct AppCoordinatorView: View {
             }
         }
         .environmentObject(coordinator)
-        .overlay {
-            if coordinator.showSplash {
-                SplashOverlay()
-            }
-        }
+//        .overlay {
+//            if coordinator.showSplash {
+//                SplashOverlay()
+//            }
+//        }
         .environmentObject(coordinator)
         
     }
