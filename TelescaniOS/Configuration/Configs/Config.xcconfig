@@ -1,6 +1,0 @@
-// Conf.xcconfig
-
-/// Links
-API_ORIGIN = https://zoxmb-206-217-134-170.a.free.pinggy.link
-LOCALHOST = http://localhost:80
-TELESCAN_BOT = https://t.me/tgtelescan_bot
