@@ -20,9 +20,9 @@
 		B9559D6D2EBC4AAA00FC3377 /* Exceptions for "TelescaniOS" folder in "Telescan" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				.env,
 				.gitignore,
 				.swiftlint.yml,
+				Configuration/Configs/Config.xcconfig,
 				Configuration/Info.plist,
 				LICENSE,
 				NOTICE,

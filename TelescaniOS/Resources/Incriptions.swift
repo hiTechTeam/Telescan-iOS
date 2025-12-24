@@ -1,3 +1,5 @@
+import Foundation
+
 struct Inc {
     
     // MARK: - Alerts
@@ -243,10 +245,10 @@ struct IncLogos {
 
 struct Links {
     
-    static let local = "http://localhost:80"
-    static let origin = "https://yuudy-206-217-134-170.a.free.pinggy.link"
+    static let telescanBot = AppConfig.telescanBot
+    static let local = AppConfig.localHost
+    static let origin = AppConfig.apiOrigin
     
-    static let telescanBot = "https://t.me/tgtelescan_bot"
     static let telescanApiTunnel =  origin + "/v1/code/"
     static let telescanApiGetuser = origin + "/v1/users/"
     static let telescanApiUploadPhoto = origin + "/v1/users/upload-photo"

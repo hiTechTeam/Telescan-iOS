@@ -4,7 +4,7 @@ struct AppCoordinatorView: View {
     
     @EnvironmentObject var coordinator: AppCoordinator
     
-    private var contentVIew: some View {
+    var body: some View {
         Group {
             if coordinator.isRegistered {
                 MainContentView()
@@ -13,16 +13,5 @@ struct AppCoordinatorView: View {
             }
         }
         .environmentObject(coordinator)
-//        .overlay {
-//            if coordinator.showSplash {
-//                SplashOverlay()
-//            }
-//        }
-        .environmentObject(coordinator)
-        
-    }
-    
-    var body: some View {
-        contentVIew
     }
 }

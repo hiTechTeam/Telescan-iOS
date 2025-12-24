@@ -9,7 +9,6 @@ final class FetchService {
     
     private init() {}
     
-    private let POST: String = "POST"
     private let formatJSON: String = "application/json"
     private let contentType: String = "Content-Type"
     
