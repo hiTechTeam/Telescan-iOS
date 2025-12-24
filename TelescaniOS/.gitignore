@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Configuration/Configs/Config.xcconfig
+=======
+TelescaniOS/Release.xcconfig
+>>>>>>> 645e8d2 (fix info.plist and .xcconfig env variable load)
