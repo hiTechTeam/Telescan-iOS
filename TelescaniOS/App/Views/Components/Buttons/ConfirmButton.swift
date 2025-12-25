@@ -3,38 +3,60 @@ import SwiftUI
 struct ConfirmButton: View {
     
     @Binding var codeStatus: Bool?
+    
     var onConfirm: () -> Void
     
+    private let title: String = Inc.Onboarding.confirmButton.localized
     private let fontSize: CGFloat = 20
     private let buttonWidth: CGFloat = 360
     private let buttonHeight: CGFloat = 60
     private let cornerRadius: CGFloat = 13
     private let foregroundOpacity: CGFloat = 0.2
     private let backgroundOpacity: CGFloat = 0.2
-    private let paddingButtom: CGFloat = 16
+    private let paddingBottom: CGFloat = 16
     private let tracking: CGFloat = 1.05
-    private let strokeIfTrue: CGFloat = 6
-    private let strokeIfFalse: CGFloat = 3
-    private let confirmButton: String = Inc.Onboarding.confirmButton.localized
     
+    private var isEnabled: Bool {
+        codeStatus == true
+    }
+    
+    private var foregroundColor: Color {
+        isEnabled
+        ? .white
+        : .primary.opacity(foregroundOpacity)
+    }
+    
+    private var backgroundColor: Color {
+        isEnabled
+        ? .bl2
+        : .primary.opacity(backgroundOpacity)
+    }
+    
+    private func onTap() {
+        guard isEnabled else { return }
+        onConfirm()
+    }
+    
+    private var buttonText: some View {
+        Text(title)
+            .font(.system(size: fontSize, weight: .bold))
+            .tracking(tracking)
+            .foregroundColor(foregroundColor)
+            .frame(width: buttonWidth, height: buttonHeight)
+            .background(backgroundColor)
+            .cornerRadius(cornerRadius)
+            .padding(.bottom, paddingBottom)
+    }
+    
+    private var content: some View {
+        Button(action: onTap) {
+            buttonText
+        }
+        .disabled(!isEnabled)
+    }
+    
+    // MARK: - Body
     var body: some View {
-        Button(
-            action: {
-                if codeStatus == true {
-                    onConfirm()
-                }
-            },
-            label: {
-                Text(confirmButton)
-                    .font(.system(size: fontSize, weight: .bold))
-                    .tracking(tracking)
-                    .foregroundColor(codeStatus == true ? Color.white : Color.primary.opacity(foregroundOpacity))
-                    .frame(width: buttonWidth, height: buttonHeight)
-                    .background(codeStatus == true ? Color.bl2 :  Color.primary.opacity(foregroundOpacity))
-                    .cornerRadius(cornerRadius)
-                    .padding(.bottom, paddingButtom)
-            }
-        )
-        .disabled(codeStatus != true)
+        content
     }
 }

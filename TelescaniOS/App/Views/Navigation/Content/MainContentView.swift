@@ -3,6 +3,7 @@ import SwiftUI
 struct MainContentView: View {
     
     @EnvironmentObject var coordinator: AppCoordinator
+    
     @State private var selectedTab: SelectedTab = .near
     @State private var previousTab: SelectedTab = .near
     @State private var showScanAlert = false

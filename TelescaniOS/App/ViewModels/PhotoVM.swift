@@ -118,7 +118,6 @@ final class ProfilePhotoViewModel: ObservableObject {
     }
 }
 
-
 extension UIImage {
     
     /// Resize image keeping aspect ratio

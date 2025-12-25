@@ -1,7 +1,100 @@
-#
+//
 //  project.yml
 //  Telescan
 //
-//  Created by Ruslan Chukavin on 21.12.2025.
-//
 
+name: Telescan
+options:
+  bundleIdPrefix: com.telescan
+  deploymentTarget:
+    iOS: 16.0
+  xcodeVersion: "15.0"
+  developmentLanguage: en
+  usesTabs: false
+  indentWidth: 4
+  tabWidth: 4
+
+packages:
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher
+    from: 7.0.0
+
+targets:
+  Telescan:
+    type: application
+    platform: iOS
+    deploymentTarget: 16.0
+    sources:
+      - path: App
+        excludes:
+          - "**/.*"
+      - path: Configuration
+      - path: Resources
+      - path: TelescanApp.swift
+      - path: LaunchScreen.storyboard
+    dependencies:
+      - package: Kingfisher
+    settings:
+      base:
+        PRODUCT_NAME: Telescan
+        PRODUCT_BUNDLE_IDENTIFIER: com.telescan.app
+        INFOPLIST_FILE: Configuration/Info.plist
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""  
+        SWIFT_VERSION: 5.9
+        ENABLE_BITCODE: NO
+        SWIFT_OPTIMIZATION_LEVEL: -Onone
+      configs:
+        Debug:
+          base:
+            SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+        Release:
+          base:
+            SWIFT_ACTIVE_COMPILATION_CONDITIONS: ""
+    prebuildScripts:
+      - name: SwiftLint
+        script: |
+          if which swiftlint >/dev/null; then
+            swiftlint
+          else
+            echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+          fi
+        basedOnDependencyAnalysis: false
+    postCompileScripts:
+      - name: SwiftFormat
+        script: |
+          if which swiftformat >/dev/null; then
+            swiftformat .
+          else
+            echo "warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat"
+          fi
+        basedOnDependencyAnalysis: false
+
+schemes:
+  Telescan:
+    build:
+      targets:
+        Telescan: all
+    run:
+      config: Debug
+      environmentVariables:
+        OS_ACTIVITY_MODE: disable
+    test:
+      config: Debug
+      gatherCoverageData: true
+      coverageTargets:
+        - Telescan
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+
+fileGroups:
+  - README.md
+  - WHITEPAPER.md
+  - PRIVACY_POLICY.md
+  - SECURITY.md
+  - NOTICE
+  - LICENSE

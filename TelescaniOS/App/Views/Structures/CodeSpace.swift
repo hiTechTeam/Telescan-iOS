@@ -8,7 +8,7 @@ struct CodeSpace: View {
     
     private let frameWidth: CGFloat = 360
     
-    private var codeSpace: some View {
+    private var content: some View {
         VStack(spacing: 16) {
             VStack(spacing: 4) {
                 TitleField(text: Inc.Registration.enterCode.localized)
@@ -39,7 +39,8 @@ struct CodeSpace: View {
         }
     }
     
+    // MARK: - Body
     var body: some View {
-        codeSpace
+        content
     }
 }

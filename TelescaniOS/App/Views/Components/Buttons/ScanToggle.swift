@@ -5,7 +5,9 @@ struct ScanToggle: View {
     
     @EnvironmentObject var coordinator: AppCoordinator
     @EnvironmentObject var peopleVM: PeopleViewModel
+    
     @Binding var isScaning: Bool
+    
     @State private var showBluetoothAlert = false
     
     private let frameWidth: CGFloat = 360
@@ -49,7 +51,7 @@ struct ScanToggle: View {
             }
     }
     
-    private var scanToggleView: some View {
+    private var content: some View {
         HStack {
             iconEye
             scanToggle
@@ -60,7 +62,8 @@ struct ScanToggle: View {
         .cornerRadius(cornerRadius)
     }
     
+    // MARK: - Body
     var body: some View {
-        scanToggleView
+        content
     }
 }

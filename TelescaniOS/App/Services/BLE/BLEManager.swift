@@ -1,10 +1,13 @@
 import Foundation
 import CoreBluetooth
+import Logging
 
 public final class BLEManager: NSObject, BLEManagerProtocol {
     
     public static let shared = BLEManager()
     public weak var delegate: BLEManagerDelegate?
+    
+    private let logger = Logger(label: "BLEManager")
     
     public var isBluetoothAvailable: Bool {
         central?.state == .poweredOn && peripheral?.state == .poweredOn
@@ -30,7 +33,7 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
     
     private override init() {
         super.init()
-        print("BLEManager init")
+        logger.info("BLEManager init")
         
         central = CBCentralManager(
             delegate: self,
@@ -53,7 +56,7 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
     }
     
     public func startScanning() {
-        print("startScanning called")
+        logger.info("startScanning called")
         queue.async { [weak self] in
             guard let self else { return }
             
@@ -68,18 +71,18 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
             central?.scanForPeripherals(withServices: [serviceUUID], options: opts)
             isScanningActive = true
             shouldRestoreScanning = false
-            print("Scanning started")
+            self.logger.info("Scanning started")
         }
     }
     
     public func stopScanning() {
-        print("stopScanning called")
+        logger.info("stopScanning called")
         queue.async { [weak self] in
             guard let self = self, let central = self.central else { return }
             if !self.isScanningActive { return }
             central.stopScan()
             self.isScanningActive = false
-            print("Scanning stopped")
+            self.logger.info("Scanning stopped")
         }
     }
     
@@ -101,7 +104,7 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
                 peripheral.stopAdvertising()
                 peripheral.startAdvertising(adv)
                 self.isAdvertisingActive = true
-                print("Advertising restarted with id: \(id)")
+                self.logger.info("Advertising restarted with id: \(id)")
             }
             
             self.restartWorkItem = workItem
@@ -112,7 +115,7 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
     }
     
     public func startAdvertising(id: String) {
-        print("startAdvertising called with id: \(id)")
+        logger.info("startAdvertising called with id: \(id)")
         queue.async { [weak self] in
             guard let self = self, let peripheral = self.peripheral else { return }
             self.pendingAdvertisingID = id
@@ -124,23 +127,23 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
                 ]
                 peripheral.stopAdvertising()
                 peripheral.startAdvertising(adv)
-                print("Advertising started for id: \(id)")
+                self.logger.info("Advertising started for id: \(id)")
             }
         }
     }
     
     public func stopAdvertising() {
-        print("stopAdvertising called")
+        logger.info("stopAdvertising called")
         queue.async { [weak self] in
             guard let self = self else { return }
             self.peripheral?.stopAdvertising()
             self.isAdvertisingActive = false
-            print("Advertising stopped")
+            self.logger.info("Advertising stopped")
         }
     }
     
     public func reset() {
-        print("reset called")
+        logger.info("reset called")
         queue.async { [weak self] in
             guard let self = self else { return }
             self.peripheral?.stopAdvertising()
@@ -149,7 +152,7 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
             self.isScanningActive = false
             self.pendingAdvertisingID = nil
             self.devicesLastSeen.removeAll()
-            print("BLEManager reset complete")
+            self.logger.info("BLEManager reset complete")
         }
     }
     
@@ -169,7 +172,7 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
             
             DispatchQueue.main.async { [weak self] in
                 self?.delegate?.didLoseDevice(id: id)
-                print("Device lost: \(id)")
+                self?.logger.info("Device lost: \(id)")
             }
         }
     }
@@ -178,7 +181,7 @@ public final class BLEManager: NSObject, BLEManagerProtocol {
 extension BLEManager: CBCentralManagerDelegate {
     
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        print("centralManagerDidUpdateState: \(central.state.rawValue)")
+        logger.info("centralManagerDidUpdateState: \(central.state.rawValue)")
         if central.state == .poweredOn {
             if shouldRestoreScanning {
                 startScanning()
@@ -195,7 +198,7 @@ extension BLEManager: CBCentralManagerDelegate {
         DispatchQueue.main.async {
             self.delegate?.didDiscoverDevice(id: name, rssi: RSSI.intValue)
             self.delegate?.didUpdateDevice(id: name, rssi: RSSI.intValue)
-            print("Discovered/Updated device: id=\(name) rssi=\(RSSI.intValue)")
+            self.logger.debug("Discovered/Updated device: id=\(name) rssi=\(RSSI.intValue)")
         }
     }
     
@@ -210,7 +213,7 @@ extension BLEManager: CBCentralManagerDelegate {
 extension BLEManager: CBPeripheralManagerDelegate {
     
     public func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
-        print("peripheralManagerDidUpdateState: \(peripheral.state.rawValue)")
+        logger.info("peripheralManagerDidUpdateState: \(peripheral.state.rawValue)")
         if peripheral.state == .poweredOn, let id = pendingAdvertisingID {
             startAdvertising(id: id)
         }
@@ -219,10 +222,10 @@ extension BLEManager: CBPeripheralManagerDelegate {
     public func peripheralManagerDidStartAdvertising(_ peripheral: CBPeripheralManager, error: Error?) {
         if let error = error {
             delegate?.didFail(with: error)
-            print("Advertising failed: \(error)")
+            logger.info("Advertising failed: \(error)")
         } else {
             isAdvertisingActive = true
-            print("Advertising started successfully")
+            logger.info("Advertising started successfully")
         }
     }
     

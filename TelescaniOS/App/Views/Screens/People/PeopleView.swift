@@ -2,8 +2,10 @@ import SwiftUI
 import Kingfisher
 
 struct PeopleView: View {
+    
     @EnvironmentObject var coordinator: AppCoordinator
     @EnvironmentObject var peopleViewModel: PeopleViewModel
+    
     @State private var selectedID: String?
     @State private var showProfileSheet = false
     
@@ -20,7 +22,7 @@ struct PeopleView: View {
                     if peopleViewModel.devices.isEmpty {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 12) {
-                                Image(systemName: "wave.3.up")
+                                Image.wave3Up
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 28, height: 28)
@@ -30,8 +32,8 @@ struct PeopleView: View {
                                     .font(.system(size: 14, weight: .regular))
                                     .foregroundColor(.gray)
                             }
-                            .padding(.top, 20)       // отступ сверху от таб-вью
-                            .padding(.horizontal, 16) // отступ слева/справа
+                            .padding(.top, 20)
+                            .padding(.horizontal, 16)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     } else {
@@ -50,24 +52,6 @@ struct PeopleView: View {
                         }
                         .scrollContentBackground(.hidden)
                     }
-                    
-                } else {
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Image(systemName: "pause.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 28, height: 28)
-                                .foregroundColor(.gray)
-                            
-                            Text(Inc.Scanning.turnedOffScanning.localized)
-                                .font(.system(size: 14, weight: .regular))
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.top, 20)       // отступ сверху от таб-вью
-                        .padding(.horizontal, 16) // отступ слева/справа
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    }
                 }
             }
         }
@@ -83,7 +67,9 @@ struct PeopleView: View {
 }
 
 struct PeopleRowContent: View {
+    
     @EnvironmentObject var peopleViewModel: PeopleViewModel
+    
     let id: String
     
     var body: some View {
@@ -95,7 +81,7 @@ struct PeopleRowContent: View {
                 
                 KFImage(imageURL)
                     .placeholder {
-                        Image(systemName: "person.crop.circle.fill")
+                        Image.personCropCircleFill
                             .resizable()
                             .foregroundColor(.gray)
                     }
@@ -106,7 +92,7 @@ struct PeopleRowContent: View {
                     .clipped()
                 
             } else {
-                Image(systemName: "person.crop.circle.fill")
+                Image.personCropCircleFill
                     .resizable()
                     .foregroundColor(.gray)
                     .frame(width: 56, height: 56)
@@ -135,17 +121,17 @@ struct PeopleRowContent: View {
 }
 
 struct ProfileSheetView: View {
+    
     @EnvironmentObject var peopleViewModel: PeopleViewModel
     @Environment(\.dismiss) private var dismiss
+    
     let id: String
     
     var body: some View {
         ZStack {
-            // Основной контент
             VStack {
                 Spacer(minLength: 0)
                 
-                // Фото по центру
                 if let user = peopleViewModel.userCache[id],
                    let url = user.photoURL,
                    let imageURL = URL(string: url) {
@@ -156,7 +142,7 @@ struct ProfileSheetView: View {
                         
                         KFImage(imageURL)
                             .placeholder {
-                                Image(systemName: "person.crop.circle.fill")
+                                Image.personCropCircleFill
                                     .resizable()
                                     .foregroundColor(.gray)
                             }
@@ -174,7 +160,7 @@ struct ProfileSheetView: View {
                     }
                     
                 } else {
-                    Image(systemName: "person.crop.circle.fill")
+                    Image.personCropCircleFill
                         .resizable()
                         .foregroundColor(.gray)
                         .frame(width: 300, height: 300)
@@ -182,7 +168,6 @@ struct ProfileSheetView: View {
                 
                 Spacer()
                 
-                // Нижняя часть
                 VStack(alignment: .leading, spacing: 28) {
                     VStack(alignment: .leading, spacing: 12) {
                         Text(peopleViewModel.userCache[id]?.tgName ?? "Unknown")
@@ -211,7 +196,7 @@ struct ProfileSheetView: View {
             Button(
                 action: { dismiss() },
                 label: {
-                    Image(systemName: "xmark.circle.fill")
+                    Image.xmarkCircleFill
                         .font(.system(size: 28))
                         .foregroundColor(.gray)
                         .opacity(0.5)

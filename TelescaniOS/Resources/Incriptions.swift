@@ -234,7 +234,7 @@ struct Inc {
         // EN: This is an open-source project developed in the open and driven by the community. If you’re interested in contributing, shaping the architecture, improving features, or sharing     your ideas, you’re very welcome to join the development. Any contribution — from feedback to pull requests, is appreciated and helps the project grow.
         // RU: Проект развивается как open-source, и мы открыты к сообществу. Если вам интересно поучаствовать в создании продукта, повлиять на архитектуру и функциональность или предложить       свои идеи, вы можете свободно подключиться к разработке. Любой вклад, от замечаний до pull request’ов, приветствуется и влияет на развитие проекта.
         
-        static let currentVersion = " 0.0.0"
+        static let currentVersion = " 1.0.0"
     }
 }
 

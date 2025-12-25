@@ -7,11 +7,9 @@ struct UsernamePlaceholder: View {
     var codeStatus: Bool?
     var isLoading: Bool = false
     
-    // MARK: - State
     @State private var animate = false
     @State private var shakeOffset: CGFloat = .zero
     
-    // MARK: - Constants
     private let usernameField: String = Inc.Registration.usernamePlaceholder
     private let incorrectCodeText: String = Inc.Registration.incorrectCode.localized
     private let fieldWidth: CGFloat = 360
@@ -26,12 +24,10 @@ struct UsernamePlaceholder: View {
     private let scaleLarge: CGFloat = 1.1
     private let scaleAnimDuration: Double = 0.3
     private let generalAnimDuration: Double = 0.25
-    private let shakeInitialIndex: Int = 0
     private let shakeRepeats: Int = 2
     private let shakeOffsetAbs: CGFloat = 4
     private let shakeStepDuration: Double = 0.05
     
-    // MARK: - Computed values
     private var displayedText: String {
         if let name = username {
             return name
@@ -41,12 +37,14 @@ struct UsernamePlaceholder: View {
         }
         return usernameField
     }
+    
     private var computedFontSize: CGFloat {
         if let status = codeStatus {
             return status ? fontSizeNormal : fontSizeIncorrect
         }
         return fontSizeNormal
     }
+    
     private var backgroundColor: Color {
         if let name = username, !name.isEmpty {
             return Color.blue.opacity(animate ? animatedOpacity : activeOpacity)
@@ -56,6 +54,7 @@ struct UsernamePlaceholder: View {
         }
         return .clear
     }
+    
     private var textColor: Color {
         if let name = username, !name.isEmpty {
             return .blue
@@ -66,7 +65,6 @@ struct UsernamePlaceholder: View {
         return .gray
     }
     
-    // MARK: - Functions
     private func animateField() {
         withAnimation(.easeOut(duration: scaleAnimDuration)) {
             animate = true
@@ -77,10 +75,11 @@ struct UsernamePlaceholder: View {
             }
         }
     }
+    
     private func shakeField() {
-        for index in shakeInitialIndex ..< (shakeInitialIndex + shakeRepeats) {
-            let delay = Double(index - shakeInitialIndex) * shakeStepDuration
-            let target: CGFloat = (index.isMultiple(of: shakeRepeats) ? -shakeOffsetAbs : shakeOffsetAbs)
+        for index in 0..<shakeRepeats {
+            let delay = Double(index) * shakeStepDuration
+            let target: CGFloat = (index.isMultiple(of: 2) ? -shakeOffsetAbs : shakeOffsetAbs)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                 withAnimation(.linear(duration: shakeStepDuration)) {
@@ -97,16 +96,17 @@ struct UsernamePlaceholder: View {
         }
     }
     
-    // MARK: - Body
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: cornerRadius)
-                .fill(backgroundColor)
-                .frame(width: fieldWidth, height: fieldHeight)
-                .scaleEffect(animate ? scaleLarge : scaleSmall)
-                .offset(x: shakeOffset)
-                .animation(.easeInOut(duration: generalAnimDuration), value: animate)
-            
+    private var fieldBackground: some View {
+        RoundedRectangle(cornerRadius: cornerRadius)
+            .fill(backgroundColor)
+            .frame(width: fieldWidth, height: fieldHeight)
+            .scaleEffect(animate ? scaleLarge : scaleSmall)
+            .offset(x: shakeOffset)
+            .animation(.easeInOut(duration: generalAnimDuration), value: animate)
+    }
+    
+    private var contentText: some View {
+        Group {
             if isLoading {
                 ProgressView()
                     .frame(height: fieldHeight)
@@ -118,14 +118,25 @@ struct UsernamePlaceholder: View {
                     .padding(.horizontal, paddingHorizontal)
                     .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
             }
-            
         }
-        .onChange(of: codeStatus) { _, newValue in
-            if newValue == false {
-                shakeField()
-            } else if username != nil {
-                animateField()
+    }
+    
+    private var content: some View {
+        ZStack {
+            fieldBackground
+            contentText
+        }
+    }
+    
+    // MARK: - Body
+    var body: some View {
+        content
+            .onChange(of: codeStatus) { _, newValue in
+                if newValue == false {
+                    shakeField()
+                } else if username != nil {
+                    animateField()
+                }
             }
-        }
     }
 }

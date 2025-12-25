@@ -6,10 +6,14 @@ struct ScanToggleReg: View {
     
     private let spacing: CGFloat = 16
     
-    var body: some View {
+    private var content: some View {
         VStack(spacing: spacing) {
             ScanToggle(isScaning: $isScaning)
             Description(text: Inc.Scanning.scanToggleDescription.localized)
         }
+    }
+    
+    var body: some View {
+        content
     }
 }
