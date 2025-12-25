@@ -252,4 +252,4 @@ This project is licensed under the [MIT License](./LICENSE).
 
 ---
 
-_For detailed technical information, see [WHITEPAPER.md](WHITEPAPER.md)_
+_For detailed technical information, see [WHITEPAPER.md](TelescaniOS/WHITEPAPER.md)_
