@@ -132,9 +132,6 @@ sequenceDiagram
         B->>B: Load profile via API
         B->>B: Show Alice's profile
     end
-
-    classDef blackText fill:none,color:#000,stroke:none;
-    class A,B blackText;
 ```
 
 </div>
