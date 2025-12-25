@@ -122,11 +122,13 @@ sequenceDiagram
     participant B as Bob
 
     rect rgb(220, 230, 241)
+        note over A,B #000: Discovery Phase
         A->>A: startAdvertising("123456789")
         B->>B: startScanning()
     end
 
     rect rgb(241, 220, 230)
+        note over A,B #000: Profile Display
         A->>B: BLE Advertisement<br/>localName: "123456789"<br/>serviceUUID: FFF0
         B->>B: didDiscoverDevice(id: "123456789", rssi: -45)
         B->>B: Load profile via API
