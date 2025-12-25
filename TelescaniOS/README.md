@@ -2,7 +2,7 @@
 
 [![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)](https://swift.org)
 [![iOS](https://img.shields.io/badge/iOS-16.0+-blue.svg)](https://developer.apple.com/ios/)
-[![License](https://img.shields.io/badge/License-Unlicense-green.svg)](https://unlicense.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 Telescan is a privacy-first iOS application that enables users to discover and connect with people nearby through their Telegram profiles using Bluetooth Low Energy (BLE). It operates as a Telegram extension, providing secure profile sharing without requiring direct internet connectivity for discovery.
 
