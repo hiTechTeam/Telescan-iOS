@@ -156,19 +156,19 @@ Profile data is exchanged through a centralized API using hashed authentication 
 ```mermaid
 graph LR
     subgraph "Telegram Extension"
-        TG[User interacts with<br/>Telegram Bot]
-        CODE[Generate 8-char code]
+        TG["User interacts with Telegram Bot"]
+        CODE["Generate 8-char code"]
     end
 
     subgraph "Mobile App"
-        INPUT[User enters code]
-        HASH[SHA256(code)]
-        API[API Call with hash]
+        INPUT["User enters code"]
+        HASH["SHA256 code"]
+        API["API Call with hash"]
     end
 
     subgraph "Backend"
-        VERIFY[Verify hash against DB]
-        PROFILE[Return profile data]
+        VERIFY["Verify hash against DB"]
+        PROFILE["Return profile data"]
     end
 
     TG --> CODE
