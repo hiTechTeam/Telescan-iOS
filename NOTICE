@@ -1,0 +1,41 @@
+# Telescan - Privacy-First Proximity Social Network
+
+Copyright (c) 2025 Ruslan Chukavin
+
+This project is released into the public domain under The Unlicense.
+See the LICENSE file for details.
+
+## Third-Party Dependencies
+
+This project includes or depends on the following third-party software:
+
+### Kingfisher
+
+- **License**: MIT License
+- **Copyright**: 2015 Wei Wang
+- **Source**: https://github.com/onevcat/Kingfisher
+- **Used for**: Image loading and caching in the iOS application
+
+### SwiftUI and CoreBluetooth
+
+- **License**: Apple Software License Agreement
+- **Copyright**: Apple Inc.
+- **Source**: Built-in iOS frameworks
+- **Used for**: UI framework and Bluetooth Low Energy functionality
+
+## Acknowledgments
+
+- Icons and assets are either created by the developer or sourced from free resources
+- BLE implementation follows Apple's CoreBluetooth best practices
+- Network security uses standard HTTPS/TLS protocols
+
+## Contact
+
+For licensing questions or concerns:
+
+- Email: r66cha@gmail.com
+- Telegram: @ruslanrocketman1
+
+---
+
+This NOTICE file is part of the Telescan project and is governed by The [MIT License](./LICENSE).

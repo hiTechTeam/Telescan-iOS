@@ -23,13 +23,7 @@
 				.gitignore,
 				.swiftlint.yml,
 				Configuration/Info.plist,
-				LICENSE,
-				NOTICE,
-				PRIVACY_POLICY.md,
 				project.yml,
-				README.md,
-				SECURITY.md,
-				WHITEPAPER.md,
 			);
 			target = B9559D572EBC4A0200FC3377 /* Telescan */;
 		};
@@ -319,7 +313,7 @@
 			baseConfigurationReferenceAnchor = B9559D5A2EBC4A0200FC3377 /* TelescaniOS */;
 			baseConfigurationReferenceRelativePath = Configuration/Configs/Debug.xcconfig;
 			buildSettings = {
-				API_ORIGIN = "https://jxopi-206-217-134-170.a.free.pinggy.link";
+				API_ORIGIN = "https://uylta-206-217-134-170.a.free.pinggy.link";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -364,7 +358,7 @@
 			baseConfigurationReferenceAnchor = B9559D5A2EBC4A0200FC3377 /* TelescaniOS */;
 			baseConfigurationReferenceRelativePath = Configuration/Configs/Release.xcconfig;
 			buildSettings = {
-				API_ORIGIN = "https://jxopi-206-217-134-170.a.free.pinggy.link";
+				API_ORIGIN = "https://uylta-206-217-134-170.a.free.pinggy.link";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -414,7 +408,7 @@
 				B9559D622EBC4A0500FC3377 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		B9559D632EBC4A0500FC3377 /* Build configuration list for PBXNativeTarget "Telescan" */ = {
 			isa = XCConfigurationList;
@@ -423,7 +417,7 @@
 				B9559D652EBC4A0500FC3377 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 
