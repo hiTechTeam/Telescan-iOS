@@ -65,15 +65,16 @@ graph TB
     API --> DB
     API --> S3
 
-    style TG fill:#e1f5fe
-    style UI fill:#e1f5fe
-    style BLE fill:#f3e5f5
-    style NET fill:#f3e5f5
-    style STORAGE fill:#f3e5f5
-    style VM fill:#f3e5f5
-    style API fill:#e8f5e9
-    style DB fill:#e8f5e9
-    style S3 fill:#e8f5e9
+    style TG fill:#e1f5fe,stroke:#000,color:#000
+    style CODE fill:#e3f2fd,stroke:#000,color:#000
+    style UI fill:#e1f5fe,stroke:#000,color:#000
+    style BLE fill:#f3e5f5,stroke:#000,color:#000
+    style NET fill:#f3e5f5,stroke:#000,color:#000
+    style STORAGE fill:#f3e5f5,stroke:#000,color:#000
+    style VM fill:#f3e5f5,stroke:#000,color:#000
+    style API fill:#e8f5e9,stroke:#000,color:#000
+    style DB fill:#e8f5e9,stroke:#000,color:#000
+    style S3 fill:#e8f5e9,stroke:#000,color:#000
 ```
 
 </div>
@@ -104,6 +105,9 @@ classDiagram
     }
 
     BLEManager --> AdvertisementData
+
+    style BLEManager fill:#f3e5f5,stroke:#000,color:#000
+    style AdvertisementData fill:#f3e5f5,stroke:#000,color:#000
 ```
 
 </div>
@@ -128,6 +132,9 @@ sequenceDiagram
         B->>B: Load profile via API
         B->>B: Show Alice's profile
     end
+
+    classDef blackText fill:none,color:#000,stroke:none;
+    class A,B blackText;
 ```
 
 </div>
@@ -172,9 +179,13 @@ graph LR
     API --> VERIFY
     VERIFY --> PROFILE
 
-    style TG fill:#e3f2fd
-    style INPUT fill:#f3e5f5
-    style VERIFY fill:#e8f5e9
+    style TG fill:#e3f2fd,stroke:#000,color:#000
+    style CODE fill:#e3f2fd,stroke:#000,color:#000
+    style INPUT fill:#f3e5f5,stroke:#000,color:#000
+    style HASH fill:#b3e5fc,stroke:#000,color:#000
+    style API fill:#c8e6c9,stroke:#000,color:#000
+    style VERIFY fill:#e8f5e9,stroke:#000,color:#000
+    style PROFILE fill:#e8f5e9,stroke:#000,color:#000
 ```
 
 </div>
@@ -208,6 +219,9 @@ classDiagram
     }
 
     ProfileInfo --> NearbyUser
+
+    style ProfileInfo fill:#e3f2fd,stroke:#000,color:#000
+    style NearbyUser fill:#f3e5f5,stroke:#000,color:#000
 ```
 
 </div>
@@ -227,10 +241,11 @@ graph LR
     API --> DB[(Database Lookup)]
     DB --> PROFILE[Profile Data]
 
-    style CODE fill:#ffccbc
-    style SHA256 fill:#b3e5fc
-    style API fill:#c8e6c9
-    style DB fill:#d1c4e9
+    style CODE fill:#ffccbc,stroke:#000,color:#000
+    style SHA256 fill:#b3e5fc,stroke:#000,color:#000
+    style API fill:#c8e6c9,stroke:#000,color:#000
+    style DB fill:#d1c4e9,stroke:#000,color:#000
+    style PROFILE fill:#e8f5e9,stroke:#000,color:#000
 ```
 
 </div>
@@ -326,9 +341,11 @@ graph LR
     TX[Reference TX Power<br/>-59 dBm at 1m] --> CALC
     N[Path Loss Exponent<br/>2.0] --> CALC
 
-    style RSSI fill:#e3f2fd
-    style CALC fill:#b3e5fc
-    style DIST fill:#c8e6c9
+    style RSSI fill:#e3f2fd,stroke:#000,color:#000
+    style CALC fill:#b3e5fc,stroke:#000,color:#000
+    style DIST fill:#c8e6c9,stroke:#000,color:#000
+    style TX fill:#f3e5f5,stroke:#000,color:#000
+    style N fill:#f3e5f5,stroke:#000,color:#000
 ```
 
 </div>
@@ -407,10 +424,10 @@ graph TD
     M --> N[Photo Update]
     N --> O[API Upload]
 
-    style A fill:#e3f2fd
-    style G fill:#f3e5f5
-    style I fill:#e8f5e9
-    style L fill:#c8e6c9
+    style A fill:#e3f2fd,stroke:#000,color:#000
+    style G fill:#f3e5f5,stroke:#000,color:#000
+    style I fill:#e8f5e9,stroke:#000,color:#000
+    style L fill:#c8e6c9,stroke:#000,color:#000
 ```
 
 </div>
@@ -449,9 +466,11 @@ graph TB
     LINK --> DEEPLINK
     DEEPLINK --> APP
 
-    style BOT fill:#e3f2fd
-    style EXT fill:#f3e5f5
-    style APP fill:#e8f5e9
+    style BOT fill:#e3f2fd,stroke:#000,color:#000
+    style EXT fill:#f3e5f5,stroke:#000,color:#000
+    style APP fill:#e8f5e9,stroke:#000,color:#000
+    style CODE fill:#b3e5fc,stroke:#000,color:#000
+    style LINK fill:#c8e6c9,stroke:#000,color:#000
 ```
 
 </div>
@@ -479,17 +498,17 @@ graph TB
 ```mermaid
 graph TD
     B[Battery Monitor] --> C{Level?}
-    C -->|&gt;20%| P[Normal Mode]
+    C -->|>20%| P[Normal Mode]
     C -->|10-20%| BA[Balanced Mode]
-    C -->|&lt;10%| PS[Power Saver]
+    C -->|<10%| PS[Power Saver]
 
     P --> F1[Continuous scanning<br/>Real-time updates]
     BA --> F2[5s scan intervals<br/>Reduced updates]
     PS --> F3[Manual scan only<br/>Minimal background]
 
-    style P fill:#4caf50,color:#fff
-    style BA fill:#ffc107
-    style PS fill:#f44336,color:#fff
+    style P fill:#4caf50,color:#000
+    style BA fill:#ffc107,color:#000
+    style PS fill:#f44336,color:#000
 ```
 
 </div>
@@ -516,10 +535,10 @@ graph TD
     B --> D[Relay Profile Data]
     D --> C
 
-    style A fill:#e3f2fd
-    style B fill:#f3e5f5
-    style C fill:#e8f5e9
-    style D fill:#c8e6c9
+    style A fill:#e3f2fd,stroke:#000,color:#000
+    style B fill:#f3e5f5,stroke:#000,color:#000
+    style C fill:#e8f5e9,stroke:#000,color:#000
+    style D fill:#c8e6c9,stroke:#000,color:#000
 ```
 
 </div>
@@ -554,4 +573,4 @@ As a Telegram extension, Telescan serves as both a practical tool for social net
 
 ---
 
-_This document is released into the public domain under The Unlicense._
+_This document is released into the public domain under The [MIT License](./LICENSE).._
