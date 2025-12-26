@@ -23,6 +23,15 @@ Telescan is a privacy-first iOS application that enables users to discover and c
 
 Data is being transmitted to the user in the visible area of the device.
 
+### Logo
+
+![Data transmitted](./TelescaniOS/Resources/docs/images/logos.png)
+
+The Telescan logo represents a stylized Telegram paper plane emitting a signal, symbolizing nearby discovery and connection.
+
+- **Light Theme**: Designed for light backgrounds
+- **Dark Theme**: Designed for dark backgrounds
+
 ## Architecture
 
 Telescan consists of three main components:
