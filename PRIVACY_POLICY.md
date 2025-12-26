@@ -53,7 +53,7 @@ Your profile data is fetched directly from Telegram's API using your authenticat
 We implement appropriate technical and organizational measures to protect your information:
 
 - **Encryption**: All network communications use HTTPS/TLS encryption.
-- **Hashing**: Authentication codes are SHA256 hashed before any transmission.
+- **Hashing**: Authentication codes are [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hashed before any transmission.
 - **Local Processing**: BLE data and distance calculations are processed locally on your device.
 - **Minimal Storage**: Profile data is cached temporarily and cleared when devices go out of range.
 - **No Persistent Identifiers**: We do not use permanent device identifiers or tracking cookies.
@@ -62,7 +62,7 @@ We implement appropriate technical and organizational measures to protect your i
 
 - **Profile Data**: Stored on our servers only as long as your Telegram account remains active and you use the service.
 - **Cached Data**: Profile information is cached locally on your device for brief periods (typically minutes) and automatically cleared.
-- **Authentication Data**: Hashed codes are not retained after successful authentication.
+- **Authentication Data**: The hashed codes are saved after successful authentication.
 
 ## Your Rights and Choices
 
@@ -75,7 +75,7 @@ You have the following rights regarding your data:
 
 ## Children's Privacy
 
-Telescan is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.
+Telescan is not intended for children under 13 years of age.
 
 ## International Data Transfers
 
@@ -90,8 +90,6 @@ We may update this Privacy Policy from time to time. We will notify you of any c
 If you have any questions about this Privacy Policy, please contact us:
 
 - **Email**: r66cha@gmail.com
-- **Telegram**: @ruslanrocketman1
-- **Developer**: Ruslan Chukavin
 
 ## Compliance
 

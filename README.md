@@ -4,7 +4,7 @@
 [![iOS](https://img.shields.io/badge/iOS-16.0+-blue.svg)](https://developer.apple.com/ios/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-![About Telescan](./TelescaniOS/Resources/docs/images/slide1.png)
+![About Telescan](./docs/images/slide1.png)
 
 Telescan is a privacy-first iOS application that enables users to discover and connect with people nearby through their Telegram profiles using Bluetooth Low Energy (BLE). It operates as a Telegram extension, providing secure profile sharing without requiring direct internet connectivity for discovery.
 
@@ -19,13 +19,13 @@ Telescan is a privacy-first iOS application that enables users to discover and c
 
 ## Data transmitted
 
-![Data transmitted](./TelescaniOS/Resources/docs/images/slide2.png)
+![Data transmitted](./docs/images/slide2.png)
 
 Data is being transmitted to the user in the visible area of the device.
 
 ### Logo
 
-![Data transmitted](./TelescaniOS/Resources/docs/images/logos.png)
+![Logos](./docs/images/logos.png)
 
 The Telescan logo represents a stylized Telegram paper plane emitting a signal, symbolizing nearby discovery and connection.
 

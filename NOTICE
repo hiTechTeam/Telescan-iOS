@@ -1,0 +1,40 @@
+# Telescan is a social network focused on the proximity interaction
+
+Copyright (c) 2025 Ruslan Chukavin
+
+This project is distributed under the [MIT License](./LICENSE).
+For more detailed information, see the full text of the license in the file [LICENSE](./LICENSE)
+
+## Third party dependencies
+
+This project includes or depends on the following third-party software:
+
+### Kingfisher
+
+- **License**: MIT License.
+- **Copyright**: Wei Wang, 2015
+- **Source**: https://github.com/onevcat/Kingfisher.
+- **Used for**: Loading and caching images in iOS app.
+
+### SwiftUI and CoreBluetooth
+
+- **License**: Apple Software License Agreement.
+- **Copyright**: Apple Inc.
+- **Source**: iOS built-in platforms.
+- **Used for**: UI platform and Bluetooth Low Energy function.
+
+## Acknowledgments
+
+- Icons and resources are either created by the developer or obtained from free resources.
+- BLE implementation follows Apple CoreBluetooth best practices.
+- Network security uses standard HTTPS/TLS protocols.
+
+## Contact
+
+For licensing questions or problems:
+
+- Email: r66cha@gmail.com
+
+---
+
+This NOTICE file is part of the Telescan project and is governed by the [MIT License](./LICENSE).

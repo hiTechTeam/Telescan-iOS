@@ -1,34 +1,34 @@
-# Telescan Technical Whitepaper
+#Telescan Technical document
 
 ## Abstract
 
-Telescan is a Bluetooth Low Energy (BLE) based application that enables users to discover and connect with people nearby through their Telegram profiles. It operates as a Telegram extension, providing secure profile sharing without requiring direct internet connectivity for discovery. This whitepaper details the technical architecture, BLE discovery mechanisms, profile exchange protocols, and privacy features that enable seamless social networking in physical proximity.
+Telescan is a Bluetooth Low Energy (BLE) based app that allows users to find people nearby and connect with them through their Telegram profiles. It works as a Telegram extension, allowing secure profile sharing. This paper details the technical architecture, BLE discovery mechanisms, profile sharing protocols, and privacy features that enable seamless social media communication in physical proximity.
 
-## Table of Contents
+## Contents
 
 1. [Introduction](#introduction)
 2. [Architecture Overview](#architecture-overview)
-3. [Bluetooth Discovery](#bluetooth-discovery)
-4. [Profile Exchange Protocol](#profile-exchange-protocol)
+3. [Bluetooth discovery](#bluetooth-discovery)
+4. [Profile exchange protocol](#profile-exchange-protocol)
 5. [Security and Authentication](#security-and-authentication)
-6. [Privacy Features](#privacy-features)
+6. [Privacy features](#privacy-features)
 7. [Distance Estimation](#distance-estimation)
 8. [User Interface Flow](#user-interface-flow)
-9. [Telegram Integration](#telegram-integration)
-10. [Conclusion](#conclusion)
+9. [Telegram integration](#telegram-integration)
+10. [Output](#output)
 
 ## Introduction
 
-Telescan addresses the challenge of connecting with people in physical proximity while maintaining privacy and leveraging existing social networks. By integrating with Telegram as an extension, Telescan provides a bridge between digital identities and real-world interactions.
+Telescan solves the problem of connecting with people in physical proximity while maintaining privacy and leveraging existing social networks. By integrating with Telegram as an extension, Telescan provides a bridge between digital identity and real-world interactions.
 
 ### Key Features
 
-- **Proximity-based Discovery**: Uses BLE to detect nearby users
-- **Telegram Integration**: Seamless connection to Telegram profiles
-- **Privacy-First**: No permanent identifiers or location tracking
-- **Ephemeral Connections**: Connections exist only while devices are in range
-- **Secure Authentication**: SHA256 hashed codes for profile verification
-- **Distance Estimation**: RSSI-based approximate distance calculation
+- **Proximity Based Discovery**: Uses BLE to detect nearby users.
+- **Telegram integration**: seamless connection to Telegram profiles.
+- **Privacy First**: No persistent IDs or location tracking.
+- **Ephemeral Connections**: Connections only exist when devices are within range.
+- **Secure Authentication**: [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hashes for profile verification.
+- **Distance Estimator**: Distance estimation based on [RSSI](https://en.wikipedia.org/wiki/Received_signal_strength_indicator).
 
 ## Architecture Overview
 
@@ -81,7 +81,7 @@ graph TB
 
 ## Bluetooth Discovery
 
-Telescan implements a BLE-based discovery system where each user broadcasts their Telegram ID as an advertising identifier.
+Telescan implements a BLE-based discovery system in which each user transmits their Telegram ID as an advertising ID.
 
 ### BLE Service Configuration
 
@@ -122,13 +122,13 @@ sequenceDiagram
     participant B as Bob
 
     rect rgb(220, 230, 241)
-        note over A,B #000: Discovery Phase
+        note over A,B: Discovery Phase
         A->>A: startAdvertising("123456789")
         B->>B: startScanning()
     end
 
-    rect rgb(241, 220, 230)
-        note over A,B #000: Profile Display
+    rect rgba(241, 220, 230, 1)
+        note over A,B: Profile Display
         A->>B: BLE Advertisement<br/>localName: "123456789"<br/>serviceUUID: FFF0
         B->>B: didDiscoverDevice(id: "123456789", rssi: -45)
         B->>B: Load profile via API
@@ -140,10 +140,10 @@ sequenceDiagram
 
 Key characteristics:
 
-- **Service UUID**: FFF0 for Telescan-specific discovery
-- **Local Name**: Telegram ID as string identifier
-- **No GATT Services**: Pure advertising-based discovery
-- **Timeout Management**: Devices removed after 5 seconds of no signal
+- **Service UUID**: FFF0 for Telescan-specific discovery.
+- **Local name**: Telegram identifier as a string identifier.
+- **No GATT services**: purely promotional discovery.
+- **Timeout control**: Devices are removed after 5 seconds of no signal.
 
 ## Profile Exchange Protocol
 
@@ -189,13 +189,13 @@ graph LR
 
 </div>
 
-### API Endpoints
+### API Methods
 
-| Endpoint           | Method | Purpose                      |
-| ------------------ | ------ | ---------------------------- |
-| `/api/tunnel`      | GET    | Get user data by hashed code |
-| `/api/getuser`     | GET    | Get user data by Telegram ID |
-| `/api/updatephoto` | POST   | Update profile photo         |
+| Method | Purpose                      |
+| ------ | ---------------------------- |
+| GET    | Get user data by hashed code |
+| GET    | Get user data by Telegram ID |
+| POST   | Update profile photo         |
 
 ### Data Structures
 
@@ -204,17 +204,17 @@ graph LR
 ```mermaid
 classDiagram
     class ProfileInfo {
-        +id: String (TG ID)
+        +tgId: Int (TG ID)
         +tgName: String?
         +tgusername: String
         +photoS3URL: String?
     }
 
     class NearbyUser {
-        +id: String
+        +tgId: Int
         +tgName: String?
         +tgUsername: String?
-        +photoURL: String?
+        +photoS3URL: String?
     }
 
     ProfileInfo --> NearbyUser
@@ -326,7 +326,7 @@ graph TD
 
 ## Distance Estimation
 
-Telescan provides approximate distance estimation using BLE RSSI values.
+Telescan provides approximate distance estimation using BLE [RSSI](https://en.wikipedia.org/wiki/Received_signal_strength_indicator) values.
 
 ### RSSI to Distance Conversion
 
@@ -360,6 +360,27 @@ func distanceFromRSSI(
     return max(1, Int(distance.rounded()))
 }
 ```
+
+### How Distance is Calculated
+
+Telescan estimates the distance to another device based on the strength of the Bluetooth signal it receives:
+
+1. **RSSI**: The device measures the signal strength (in dBm) from a nearby device. Stronger signals indicate closer proximity.
+2. **TX Power**: The known transmit power at a reference distance (usually 1 meter).
+3. **Path Loss Exponent**: Represents how quickly the signal weakens in the environment (2.0 for open space, higher for obstacles).
+4. **Calculation**: The difference between TX Power and RSSI is adjusted by the path loss exponent to estimate distance.
+
+**Formula (simplified):**
+
+\[\text{distance} = 10^{\frac{\text{TX} - \text{RSSI}}{10 \cdot n}}\]
+
+Where:
+
+- `TX` — reference transmit power at 1 meter
+- `RSSI` — measured signal strength
+- `n` — path loss exponent
+
+> This provides only an approximate distance, as walls, objects, and interference can affect the signal.
 
 ### Accuracy Considerations
 
@@ -476,32 +497,26 @@ graph TB
 
 ### Code Generation Process
 
-1. **Bot Interaction**: User interacts with @TelescanBot
-2. **Code Creation**: Bot generates unique 8-character code
-3. **Secure Storage**: Code hashed and stored server-side
-4. **App Linking**: Code displayed for manual entry in app
-5. **Verification**: App hashes code and retrieves profile
-
-### Deep Linking
-
-- **URL Scheme**: `telescan://code/{code}`
-- **Fallback**: Manual code entry
-- **Security**: Codes expire after first use
+1. **Interaction with bot**: user interacts with [@tgtelescan_bot](https://t.me/tgtelescan_bot).
+2. **Code Generation**: The bot generates a unique 8-digit code.
+3. **Secure Storage**: The code is hashed and stored on the server side.
+4. **App Linking**: The code is displayed for manual entry in the app.
+5. **Verification**: the application hashes the code and receives the profile.
 
 ## Conclusion
 
-Telescan demonstrates how modern mobile technology can facilitate meaningful social connections while prioritizing user privacy and security. By leveraging Bluetooth Low Energy for proximity detection and integrating seamlessly with Telegram's ecosystem, Telescan provides a privacy-first approach to social discovery.
+Telescan demonstrates how modern mobile technologies can facilitate meaningful social connections while prioritizing user privacy and security. Using Bluetooth Low Energy for proximity detection and seamlessly integrating with the Telegram ecosystem, Telescan provides an approach to social discovery.
 
-The system's design emphasizes:
+The system design emphasizes:
 
-- **User Privacy**: Ephemeral connections with minimal data retention
-- **Security**: Cryptographic authentication without permanent credentials
-- **Simplicity**: Intuitive interface requiring no complex setup
-- **Integration**: Natural extension of existing social networks
-- **Efficiency**: Battery-optimized operation for extended use
+- **User privacy**: temporary connections with minimal data storage.
+- **Security**: cryptographic authentication without persistent credentials.
+- **Simplicity**: intuitive interface that does not require complex setup.
+- **Integration**: natural extension of existing social networks.
+- **Efficiency**: Battery operation optimized for long-term use.
 
-As a Telegram extension, Telescan serves as both a practical tool for social networking and a reference implementation for privacy-preserving proximity-based applications.
+As an extension of Telegram, Telescan serves as both a practical tool for social networking and a reference implementation of proximity-based applications.
 
 ---
 
-_This document is released into the public domain under The [MIT License](./LICENSE).._
+_This document is released into the public domain under The [MIT License](./LICENSE)._

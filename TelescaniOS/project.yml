@@ -17,7 +17,10 @@ options:
 packages:
   Kingfisher:
     url: https://github.com/onevcat/Kingfisher
-    from: 7.0.0
+    from: 8.6.2
+  Kingfisher:
+    url: https://github.com/apple/swift-log
+    from: 1.8.0
 
 targets:
   Telescan:
@@ -34,13 +37,14 @@ targets:
       - path: LaunchScreen.storyboard
     dependencies:
       - package: Kingfisher
+      - package: SwiftLog
     settings:
       base:
         PRODUCT_NAME: Telescan
         PRODUCT_BUNDLE_IDENTIFIER: com.telescan.app
         INFOPLIST_FILE: Configuration/Info.plist
         CODE_SIGN_STYLE: Automatic
-        DEVELOPMENT_TEAM: ""  
+        DEVELOPMENT_TEAM: "hiTechTeam"  
         SWIFT_VERSION: 5.9
         ENABLE_BITCODE: NO
         SWIFT_OPTIMIZATION_LEVEL: -Onone
