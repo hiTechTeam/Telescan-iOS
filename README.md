@@ -6,7 +6,9 @@
 
 ![About Telescan](./docs/images/slide1.png)
 
-Telescan is a privacy-first iOS application that enables users to discover and connect with people nearby through their Telegram profiles using Bluetooth Low Energy (BLE). It operates as a Telegram extension, providing secure profile sharing without requiring direct internet connectivity for discovery.
+Telescan is an iOS app that allows users to find people nearby and connect with them through their Telegram profiles using Bluetooth Low Energy (BLE). It works as a Telegram extension, allowing secure sharing of profiles without the need for a direct Internet connection to be discovered.
+
+\*Development also planned for Android
 
 ## Features
 
@@ -14,8 +16,8 @@ Telescan is a privacy-first iOS application that enables users to discover and c
 - **Telegram Integration**: Linking to existing Telegram accounts
 - **Privacy-First**: No permanent identifiers or location tracking
 - **Ephemeral Connections**: Connections exist only while devices are in range
-- **Secure Authentication**: SHA256 hashed codes for profile verification
-- **Distance Estimation**: RSSI-based approximate distance calculation
+- **Secure Authentication**: [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hashed codes for profile verification
+- **Distance Estimation**: [RSSI](https://en.wikipedia.org/wiki/Received_signal_strength_indicator)-based approximate distance calculation
 
 ## Data transmitted
 
@@ -146,13 +148,13 @@ Handles all Bluetooth operations:
 - Advertising device presence with Telegram ID
 - Scanning for nearby devices
 - Managing connection timeouts
-- Calculating approximate distances via RSSI
+- Calculating approximate distances via [RSSI](https://en.wikipedia.org/wiki/Received_signal_strength_indicator)
 
 ### FetchService
 
 Manages network communication:
 
-- SHA256 code hashing
+- [SHA-256](https://en.wikipedia.org/wiki/SHA-2) code hashing
 - API request handling
 - Profile data fetching
 - Image upload functionality
