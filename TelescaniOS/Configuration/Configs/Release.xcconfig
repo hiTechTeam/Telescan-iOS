@@ -1,6 +1,6 @@
 // Release.xcconfig
 
 /// Links
-API_ORIGIN = https://jxopi-206-217-134-170.a.free.pinggy.link
+API_ORIGIN = https://boefn-206-217-134-170.a.free.pinggy.link
 LOCALHOST = http://localhost:80
 TELESCAN_BOT = https://t.me/tgtelescan_bot

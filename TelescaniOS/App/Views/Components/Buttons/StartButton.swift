@@ -10,7 +10,7 @@ struct StartButton: View {
     private let fontSize: CGFloat = 14
     private let buttonWidth: CGFloat = 360
     private let buttonHeight: CGFloat = 60
-    private let cornerRadius: CGFloat = 48
+    private let cornerRadius: CGFloat = 13
     private let paddingBottom: CGFloat = 16
     private let tracking: CGFloat = 1.0
     private let shadowOpacity: CGFloat = 0.15
