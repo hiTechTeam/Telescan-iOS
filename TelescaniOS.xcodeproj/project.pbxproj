@@ -10,6 +10,7 @@
 		B94FA5632EF8336C0024A510 /* InMemoryLogging in Frameworks */ = {isa = PBXBuildFile; productRef = B94FA5622EF8336C0024A510 /* InMemoryLogging */; };
 		B94FA5652EF8336C0024A510 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = B94FA5642EF8336C0024A510 /* Logging */; };
 		B94FA5682EF833760024A510 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B94FA5672EF833760024A510 /* Kingfisher */; };
+		B96D48C02F01A942004220CA /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = B96D48BF2F01A938004220CA /* LICENSE.md */; };
 		B979B2D92F013FB300801FD0 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B979B2D82F013FAB00801FD0 /* README.md */; };
 		B98E8FD42F00949B00D882A0 /* Testing in Frameworks */ = {isa = PBXBuildFile; productRef = B98E8FD32F00949B00D882A0 /* Testing */; };
 		B98E8FD62F00949B00D882A0 /* _TestDiscovery in Frameworks */ = {isa = PBXBuildFile; productRef = B98E8FD52F00949B00D882A0 /* _TestDiscovery */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		B9559D582EBC4A0200FC3377 /* Telescan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Telescan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B96D48BF2F01A938004220CA /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		B979B2D82F013FAB00801FD0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B98E8FEC2F00964600D882A0 /* TelescanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TelescanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				B979B2D82F013FAB00801FD0 /* README.md */,
+				B96D48BF2F01A938004220CA /* LICENSE.md */,
 				B9559D5A2EBC4A0200FC3377 /* TelescaniOS */,
 				B98E8FED2F00964600D882A0 /* TelescanTests */,
 				B9559D592EBC4A0200FC3377 /* Products */,
@@ -240,6 +243,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B96D48C02F01A942004220CA /* LICENSE.md in Sources */,
 				B979B2D92F013FB300801FD0 /* README.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
