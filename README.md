@@ -2,7 +2,7 @@
 
 ## All information about the project
 
-**Full documentation, architecture description, diagrams, specifications, instructions and roadmap** are in the open repository:
+**Full documentation, architecture description, diagrams, specifications, instructions, discussions and roadmap** are in the open repository:
 
 🔗 **https://github.com/hiTechTeam/Telescan-info.git**
 
