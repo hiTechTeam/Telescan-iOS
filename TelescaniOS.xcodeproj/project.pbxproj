@@ -27,7 +27,7 @@
 
 /* Begin PBXFileReference section */
 		B9559D582EBC4A0200FC3377 /* Telescan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Telescan.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B979B2D82F013FAB00801FD0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = README.md; sourceTree = "<group>"; };
+		B979B2D82F013FAB00801FD0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B98E8FEC2F00964600D882A0 /* TelescanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TelescanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
