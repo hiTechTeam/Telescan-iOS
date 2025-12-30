@@ -1,3 +1,5 @@
+# Telescan-iOS
+
 **Telescan** — **iOS implementation** of a Swift application for peer-to-peer communication between devices via Bluetooth Low Energy (BLE).
 
 ## All information about the project
