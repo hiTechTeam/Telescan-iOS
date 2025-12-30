@@ -10,8 +10,6 @@
 		B94FA5632EF8336C0024A510 /* InMemoryLogging in Frameworks */ = {isa = PBXBuildFile; productRef = B94FA5622EF8336C0024A510 /* InMemoryLogging */; };
 		B94FA5652EF8336C0024A510 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = B94FA5642EF8336C0024A510 /* Logging */; };
 		B94FA5682EF833760024A510 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B94FA5672EF833760024A510 /* Kingfisher */; };
-		B96D48C02F01A942004220CA /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = B96D48BF2F01A938004220CA /* LICENSE.md */; };
-		B979B2D92F013FB300801FD0 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B979B2D82F013FAB00801FD0 /* README.md */; };
 		B98E8FD42F00949B00D882A0 /* Testing in Frameworks */ = {isa = PBXBuildFile; productRef = B98E8FD32F00949B00D882A0 /* Testing */; };
 		B98E8FD62F00949B00D882A0 /* _TestDiscovery in Frameworks */ = {isa = PBXBuildFile; productRef = B98E8FD52F00949B00D882A0 /* _TestDiscovery */; };
 /* End PBXBuildFile section */
@@ -49,6 +47,9 @@
 			exceptions = (
 				B9173DA72F009B4C0066695D /* Exceptions for "TelescaniOS" folder in "Telescan" target */,
 			);
+			explicitFileTypes = {
+				Configuration/Info.plist = text.xml;
+			};
 			path = TelescaniOS;
 			sourceTree = "<group>";
 		};
@@ -243,8 +244,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B96D48C02F01A942004220CA /* LICENSE.md in Sources */,
-				B979B2D92F013FB300801FD0 /* README.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +271,7 @@
 			baseConfigurationReferenceRelativePath = Configuration/Configs/Debug.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				API_ORIGIN = "https://boefn-206-217-134-170.a.free.pinggy.link";
+				API_ORIGIN = "";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -343,7 +342,7 @@
 			baseConfigurationReferenceRelativePath = Configuration/Configs/Release.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				API_ORIGIN = "https://boefn-206-217-134-170.a.free.pinggy.link";
+				API_ORIGIN = "";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -406,7 +405,7 @@
 			baseConfigurationReferenceAnchor = B9559D5A2EBC4A0200FC3377 /* TelescaniOS */;
 			baseConfigurationReferenceRelativePath = Configuration/Configs/Debug.xcconfig;
 			buildSettings = {
-				API_ORIGIN = "https://boefn-206-217-134-170.a.free.pinggy.link";
+				API_ORIGIN = "https://sjsej-2a00-1370-8182-21d9-4167-a27f-a00d-b877.a.free.pinggy.link";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -451,7 +450,7 @@
 			baseConfigurationReferenceAnchor = B9559D5A2EBC4A0200FC3377 /* TelescaniOS */;
 			baseConfigurationReferenceRelativePath = Configuration/Configs/Release.xcconfig;
 			buildSettings = {
-				API_ORIGIN = "https://boefn-206-217-134-170.a.free.pinggy.link";
+				API_ORIGIN = "https://sjsej-2a00-1370-8182-21d9-4167-a27f-a00d-b877.a.free.pinggy.link";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -499,11 +498,20 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UF2FP85G5V;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = hiTeam.TelescanTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
@@ -521,11 +529,20 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UF2FP85G5V;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = hiTeam.TelescanTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;

@@ -1,16 +1,13 @@
 //
 //  BLEManagerTests.swift
-//  TelescanTests
 //
 
 import Testing
 import CoreBluetooth
 @testable import Telescan
 
-@Suite("BLEManager — main tests.")
-struct BLEManagerBasicTests {
-
-    // MARK: - Singleton
+@Suite("BLEManager — basic tests.")
+struct BLEManagerTests {
 
     @Test("Singleton returns the same instance.")
     func singletonReturnsSameInstance() {
@@ -18,8 +15,6 @@ struct BLEManagerBasicTests {
         let instance2 = BLEManager.shared
         #expect(instance1 === instance2)
     }
-
-    // MARK: - Delegate
 
     @Test("Delegate is configured and stored on the weak link.")
     func delegateIsWeakReference() {
@@ -40,8 +35,6 @@ struct BLEManagerBasicTests {
         #expect(true)
     }
 
-    // MARK: - Bluetooth Availability
-
     @Test("isBluetoothAvailable returned Bool (true/false it depends of environment).")
     func bluetoothAvailabilityReturnsBool() {
         let available = BLEManager.shared.isBluetoothAvailable
@@ -49,8 +42,6 @@ struct BLEManagerBasicTests {
         // The main thing is that it returns Bool, and it doesn't crash or nil
         #expect(available == true || available == false)
     }
-
-    // MARK: - Reset
 
     @Test("reset() clean active operations and allows you to start over.")
     func resetClearsActiveOperations() async throws {
@@ -66,8 +57,6 @@ struct BLEManagerBasicTests {
         try await Task.sleep(for: .milliseconds(300))
         #expect(true) // If you got here, it didn't crash
     }
-
-    // MARK: - Error Handling (very important test for simulator)
 
     @Test("A possible error is expected in the simulator or when Bluetooth is turned off.")
     func errorReportedWhenBluetoothUnavailable() async throws {
@@ -87,8 +76,6 @@ struct BLEManagerBasicTests {
             try await Task.sleep(for: .seconds(3))
         }
     }
-
-    // MARK: - Sequential Operations
 
     @Test("The start/stop/restart sequence does not cause crashes.")
     func sequentialOperationsDoNotCrash() async throws {

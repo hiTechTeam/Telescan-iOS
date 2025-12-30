@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Logging
+import Kingfisher
 
 @main
 struct Telescan: App {
@@ -20,35 +21,23 @@ struct Telescan: App {
     }
     
     private func cleanAppStorage() {
-        
-        logger.debug("Clearing app storage (Debug mode)")
-        
-        // 1. Clear UserDefaults (all saved settings, tokens, codes, etc.)
+        logger.debug("Clearing application storage (in Debug mode only)")
+
         if let bundleID = Bundle.main.bundleIdentifier {
             UserDefaults.standard.removePersistentDomain(forName: bundleID)
             UserDefaults.standard.synchronize()
             logger.debug("UserDefaults cleared")
         }
-        
-        // 2. Clear URLCache (cached network responses and images)
+
         URLCache.shared.removeAllCachedResponses()
         logger.debug("URLCache cleared")
-        
-        // 3. Clear app's caches directory
-        let fileManager = FileManager.default
-        let cachesURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
-        
-        do {
-            let cachesContents = try fileManager.contentsOfDirectory(at: cachesURL, includingPropertiesForKeys: nil)
-            for file in cachesContents {
-                try fileManager.removeItem(at: file)
-            }
-            logger.debug("Caches directory cleared")
-        } catch {
-            logger.debug("Error clearing caches: \(error.localizedDescription)")
+
+        ImageCache.default.clearMemoryCache()
+        ImageCache.default.clearDiskCache {
+            Logger(label: "cleanAppStorage").debug("Kingfisher cache cleared")
         }
-        
-        logger.debug("Full app storage cleanup completed")
+
+        logger.debug("Storage cleanup complete")
     }
     
     var body: some Scene {
@@ -56,6 +45,4 @@ struct Telescan: App {
             coordinator.start()
         }
     }
-    
-    
 }

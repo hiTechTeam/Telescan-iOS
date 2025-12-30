@@ -7,7 +7,11 @@ final class FetchService {
     // MARK: - Singleton
     static let fetch = FetchService()
     
-    private init() {}
+    private let session: URLSession
+    
+    private init(session: URLSession = .shared) {
+        self.session = session
+    }
     
     private let formatJSON: String = "application/json"
     private let contentType: String = "Content-Type"
@@ -52,7 +56,7 @@ final class FetchService {
             request.httpBody = body
         }
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await session.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse,
               (200...299).contains(httpResponse.statusCode) else {
@@ -145,13 +149,13 @@ final class FetchService {
             tgId: tgID,
             img: nil
         )
-
+        
         let bodyData = try JSONEncoder().encode(body)
-
+        
         guard let url = URL(string: Links.telescanApiUpdatePhoto) else {
             throw URLError(.badURL)
         }
-
+        
         let _: UploadProfileImageResponse = try await _fetch(
             url: url,
             method: HTTPMethods.post.rawValue,

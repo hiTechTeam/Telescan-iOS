@@ -1,4 +1,4 @@
-struct UploadProfileImageRequest: Encodable {
+struct UploadProfileImageRequest: Encodable, Decodable {
     let tgId: Int
     let img: String
 }
