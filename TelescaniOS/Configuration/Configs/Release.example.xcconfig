@@ -1,0 +1,4 @@
+// Copy this file to Debug.xcconfig and fill your values
+API_BASE_URL = https://your-tunnel.pinggy.io
+LOCALHOST = http://localhost:80
+TELESCAN_BOT = https://t.me/tgtelescan_bot
