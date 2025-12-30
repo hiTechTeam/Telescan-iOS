@@ -1,6 +1,0 @@
-// Debug.xcconfig
-
-/// Links
-API_ORIGIN = https://sjsej-2a00-1370-8182-21d9-4167-a27f-a00d-b877.a.free.pinggy.link
-LOCALHOST = http://localhost:80
-TELESCAN_BOT = https://t.me/tgtelescan_bot
